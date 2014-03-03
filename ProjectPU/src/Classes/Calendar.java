@@ -8,8 +8,13 @@ public class Calendar {
 	public Calendar(){
 		appointments = new ArrayList<Appointment>();
 	}
-	public String test(){
-		return "HEI!";
+	
+	public void hideAppointment(){
+		//BLABLA
+	}
+	
+	public void deleteAppointment(Appointment appoint){
+		appointments.remove(appoint);
 	}
 
 }
