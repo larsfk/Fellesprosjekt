@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Calendar {
 
-	ArrayList<appointment> appointments = new ArrayList<appointment>();
-
+	public Calendar()
+	ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+	
+	
 }
