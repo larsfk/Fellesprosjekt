@@ -26,7 +26,7 @@ public class Calendar {
 		}
 	}
 	
-	public void editAppointment(Appointment appoint, ){
+	public void editAppointment(Appointment appoint){
 		
 	}
 
