@@ -16,5 +16,10 @@ public class Calendar {
 	public void deleteAppointment(Appointment appoint){
 		appointments.remove(appoint);
 	}
+	
+	public String test(){
+		return "HEI!";
+
+	}
 
 }
