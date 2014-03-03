@@ -3,22 +3,31 @@ package Classes;
 import java.util.ArrayList;
 
 public class Calendar {
-	public ArrayList<Appointment> appointments;
+	private ArrayList<Appointment> appointments = new ArrayList<Appointment>();
 
 	public Calendar(){
-		appointments = new ArrayList<Appointment>();
 	}
 
-	public void hideAppointment(){
-		//BLABLA
+	public void hideAppointment(Appointment appoint){
+		if (appointments.contains(appoint)){
+			appoint.setHidden(true);			
+		}
+	}
+	
+	public void addAppointment(Appointment appoint){
+		if(!appointments.contains(appoint)){
+			appointments.add(appoint);
+		}
 	}
 
 	public void deleteAppointment(Appointment appoint){
-		appointments.remove(appoint);
+		if (appointments.contains(appoint)){
+			appointments.remove(appoint);
+		}
 	}
-
-	public String test(){
-		return "HEI!";
+	
+	public void editAppointment(Appointment appoint, ){
+		
 	}
 
 }

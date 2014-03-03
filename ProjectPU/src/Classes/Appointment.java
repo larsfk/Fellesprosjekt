@@ -13,6 +13,7 @@ public class Appointment {
 	String description = null;
 	Date alarm;
 	ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+	boolean hidden = false;
 
 	public Appointment(int appID, Date stime, Date ftime, int dur, String meetpl, String descr, Date alarm){
 		//Appointment.appointmentID = appID;
@@ -22,5 +23,15 @@ public class Appointment {
 		meetingplace = meetpl;
 		description = descr;
 	}
+	public void setHidden(boolean hide){
+		hidden = hide;
+	}
+	
+	public int getAppointmentID(){
+		return appointmentID;
+	}
+	
+	
+	
 
 }
