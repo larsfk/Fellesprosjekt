@@ -18,31 +18,36 @@ public class Appointment {
 	boolean hidden = false;
 
 	public Appointment(int appID, Date stime, Date ftime, String meetpl, String descr, Date alarm){
-		//Appointment.appointmentID = appID;
+		this.appointmentID=appID;
 		setStarttime(stime);
 		setFinishingtime(ftime);
 		setMeetingplace(meetpl);
 		setDescription(descr);
 	}
 	public Appointment(int appID, Date stime, int dur, String meetpl, String descr, Date alarm){
-		//Appointment.appointmentID = appID;
-		starttime = stime;
-		duration = dur;
-		meetingplace = meetpl;
-		description = descr;
+		this.appointmentID=appID;
+		setStarttime(stime);
+		setDuration(dur);
+		setMeetingplace(meetpl);
+		setDescription(descr);
 	}
 	
-	public void addParticipant(){
+	public void addParticipant(Person par){
+		if (!par.status = false){
+			participants.add(par);
+		}
+	}
+	
+	public void removeParticipant(Person par){
 		//blabla
 	}
-	
-	public void removeParticipant(){
-		//blabla
-	}
-	
 	
 	public void setHidden(boolean hide){
 		hidden = hide;
+	}
+	
+	public int getAppointmentID(){
+		return appointmentID;
 	}
 	
 	public Date getDate(){
@@ -83,15 +88,12 @@ public class Appointment {
 	
 	public void setFinishingtime(Date ftime){
 		finishingtime = ftime;
-		duration = finishingtime.getTime()-starttime.getTime();
+		duration = (finishingtime.getTime()-starttime.getTime())/60000; //i minutt
 	}
 	
 	public void setDuration(int dur){
 		if (dur > 0){
 			duration = dur;
-//			long date = starttime.getDate();
-//			long hours = starttime.getHours();
-//			long min = starttime.getMinutes();
 			final long ONE_MINUTE_IN_MILLIS=60000;//millisecs
 			long t=starttime.getTime();
 			finishingtime=new Date(t + (dur * ONE_MINUTE_IN_MILLIS));	
