@@ -21,9 +21,9 @@ public class MainProgramTesting {
 		
 		cal1.addAppointment(appoint1);
 		
-		cc.getAr().add(cal1);
-		cc.getAr().add(cal2);
-		cc.getAr().add(cal3);
+		cc.addCalendar(cal1);
+		cc.addCalendar(cal2);
+		cc.addCalendar(cal3);
 	}
 	public static void main(String[] args) {
 		MainProgramTesting mpt = new MainProgramTesting();

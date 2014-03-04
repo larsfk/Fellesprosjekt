@@ -1,10 +1,11 @@
 package Classes;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class MainProgram {
-	private String options = "Hello!\n"; //ID er index i kalenderlisten
+	private String welcome = "Hello!\n"; //ID er index i kalenderlisten
 	
 	//Burde CalendarClient inneholde alle kalendere? I så fall skal denne listen fylles med disse:
 	
@@ -13,16 +14,35 @@ public class MainProgram {
 	private Calendar activeCalendar; //Blir dette nå en kopi eller jobber jeg i rett kalender når jeg setter verdier til den?
 
 	private  void run() {
-		MainProgramTesting test = new MainProgramTesting();		
-		this.cc = test.cc;
-		calendars = cc.getAr();
+		CalendarClient cc = new CalendarClient();
+		Calendar cal1 = new Calendar();
+		Calendar cal2 = new Calendar();
+		Calendar cal3 = new Calendar();
+		Date date1 = new Date();
+		Date date2 = new Date();
+		Date date3 = new Date();
+		
+		Appointment appoint1; 
+		date2.setHours(17);
+		date3.setDate(5);
+		appoint1 = new Appointment(1,date1,date2,"Hos Cox","Progging",date3);
+		
+		cal1.addAppointment(appoint1);
+		
+		cc.addCalendar(cal1);
+		cc.addCalendar(cal2);
+		cc.addCalendar(cal3);
+
+		calendars = cc.getcalendarList();
 		
 		
-		System.out.println(options);
+		System.out.println(welcome);
 		Scanner sc = new Scanner(System.in);
 		//String input = sc.nextLine();
 		//while (input.compareTo("x")!=0){ //denne gjelder kun den ytteste løkka. problem om vi skal ha det med
-		System.out.println(test.cal1.getAppointments());
+		
+		System.out.println(cc.getcalendarList().get(0));
+		
 		int personID = -1; 
 		while (personID < 0 || personID > calendars.size()){
 			System.out.println("Who are you? Type number");
