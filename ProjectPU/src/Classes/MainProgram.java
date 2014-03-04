@@ -8,25 +8,30 @@ public class MainProgram {
 	
 	//Burde CalendarClient inneholde alle kalendere? I så fall skal denne listen fylles med disse:
 	
-	CalendarClient cc = new CalendarClient();
-	ArrayList<Calendar> calendars = cc.getAr();
+	CalendarClient cc; //= new CalendarClient();
+	ArrayList<Calendar> calendars; // = cc.getAr();
 	private Calendar activeCalendar; //Blir dette nå en kopi eller jobber jeg i rett kalender når jeg setter verdier til den?
 
 	private  void run() {
+		MainProgramTesting test = new MainProgramTesting();		
+		this.cc = test.cc;
+		calendars = cc.getAr();
+		
+		
 		System.out.println(options);
 		Scanner sc = new Scanner(System.in);
 		//String input = sc.nextLine();
 		//while (input.compareTo("x")!=0){ //denne gjelder kun den ytteste løkka. problem om vi skal ha det med
-
+		System.out.println(test.cal1.getAppointments());
 		int personID = -1; 
-		while (personID < 0 ){ //|| personID > calendars.size()
+		while (personID < 0 || personID > calendars.size()){
 			System.out.println("Who are you? Type number");
 			for (int i = 0;i<calendars.size();i++){
 				System.out.println("(" + i + ") " + calendars.get(i).getUserEmail()); //email is the identificator
 			}
 			personID = sc.nextInt();
 		}
-		//Passord?
+		//Sammenligne passord med database
 		activeCalendar = calendars.get(personID);
 
 		System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3. Show this calendar\n4. Show several calendars");
@@ -42,9 +47,9 @@ public class MainProgram {
 
 		}
 		else if (option == 2){
-			int numApp = activeCalendar.getAppointments().size();
-			for (int i = 0;i<numApp;i++){ //Antall avtaler i kalenderen
-				System.out.println("(" + i + ") " + activeCalendar.getAppointments().get(i)); //getAppointments skal returnere element i
+			int numApp = activeCalendar.getAppointments().size(); //Number of appointments in the active calendar
+			for (int i = 0;i<numApp;i++){ 
+				System.out.println("(" + i + ") " + activeCalendar.getAppointments().get(i)); //returns element i in calendar appointments
 			}
 			int appID = -1;
 			while (appID < 0){ // ||appID > numApp
