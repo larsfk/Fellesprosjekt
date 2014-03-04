@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Appointment {
 	private int appointmentID = 0;
+	private Date date;
 	private Date starttime;
 	private Date finishingtime;
 	private int duration = 0;
@@ -16,10 +17,16 @@ public class Appointment {
 	private ArrayList<Person> participants = new ArrayList<Person>();
 	boolean hidden = false;
 
-	public Appointment(int appID, Date stime, Date ftime, int dur, String meetpl, String descr, Date alarm){
+	public Appointment(int appID, Date stime, Date ftime, String meetpl, String descr, Date alarm){
 		//Appointment.appointmentID = appID;
 		starttime = stime;
 		finishingtime = ftime;
+		meetingplace = meetpl;
+		description = descr;
+	}
+	public Appointment(int appID, Date stime, int dur, String meetpl, String descr, Date alarm){
+		//Appointment.appointmentID = appID;
+		starttime = stime;
 		duration = dur;
 		meetingplace = meetpl;
 		description = descr;
@@ -36,6 +43,10 @@ public class Appointment {
 	
 	public void setHidden(boolean hide){
 		hidden = hide;
+	}
+	
+	public Date getDate(){
+		return date;
 	}
 	
 	public Date getStarttime(){
@@ -58,6 +69,9 @@ public class Appointment {
 		return alarm;
 	}
 	
+	public void setDate(Date day){
+		date = day;
+	}
 	
 	public void setStarttime(Date stime){
 		starttime = stime; 
