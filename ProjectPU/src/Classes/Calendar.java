@@ -5,10 +5,13 @@ import java.util.ArrayList;
 
 public class Calendar {
 	private ArrayList<Appointment> appointments = new ArrayList<Appointment>();
-
+	private String userEmail;
 	public Calendar(){
 	}
-
+	public String getUserEmail(){
+		return userEmail;
+	}
+	
 	public void hideAppointment(Appointment appoint){
 		if (appointments.contains(appoint)){
 			appoint.setHidden(true);			
