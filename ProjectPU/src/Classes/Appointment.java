@@ -1,6 +1,6 @@
 package Classes;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -70,6 +70,11 @@ public class Appointment {
 	public void setDuration(int dur){
 		if (dur > 0){
 			duration = dur;
+			int day = starttime.getDay();
+			int hours = starttime.getHours();
+			int min = starttime.getMinutes();
+			finishingtime.set
+			
 		}
 	}
 	

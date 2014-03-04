@@ -1,9 +1,12 @@
 package Classes;
 
+import java.util.ArrayList;
+
 public class CalendarClient {
 
 	Calendar calendar = new Calendar();
-	Person person = new Person();
+	Person person;
+	private ArrayList<Calendar> ar = new ArrayList<Calendar>();
 
 	//Lage database med hvilken kalender som tilh¿rer hvem!
 	
@@ -11,21 +14,13 @@ public class CalendarClient {
 	//		
 	//	}
 
-	//Logge inn skal ligge i calendarClient - ulikt klassediagram
-	public boolean loggedIn(){
-		String email = person.getEmail();
-		String password;
-		//		if()
+
+	public ArrayList<Calendar> getAr(){
+		return ar;
 	}
-
-	//	public static void main(String[] args) {
-	//		
-	//	}
-
-
+	
 	public String showWeekCalendar(){
-
-		return null;
+		
 	}
 
 	public String showMyCalendar(){
