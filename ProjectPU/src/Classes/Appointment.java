@@ -9,7 +9,7 @@ public class Appointment {
 	private Date date;
 	private Date starttime;
 	private Date finishingtime;
-	private int duration = 0;
+	private long duration = 0;
 	private String meetingplace = null;
 	private String description = null;
 	private Date alarm;
@@ -19,10 +19,10 @@ public class Appointment {
 
 	public Appointment(int appID, Date stime, Date ftime, String meetpl, String descr, Date alarm){
 		//Appointment.appointmentID = appID;
-		starttime = stime;
-		finishingtime = ftime;
-		meetingplace = meetpl;
-		description = descr;
+		setStarttime(stime);
+		setFinishingtime(ftime);
+		setMeetingplace(meetpl);
+		setDescription(descr);
 	}
 	public Appointment(int appID, Date stime, int dur, String meetpl, String descr, Date alarm){
 		//Appointment.appointmentID = appID;
@@ -57,7 +57,7 @@ public class Appointment {
 		return finishingtime;
 	}
 	
-	public int getDuration(){
+	public long getDuration(){
 		return duration;
 	}
 	
@@ -67,6 +67,10 @@ public class Appointment {
 	
 	public Date getAlarm(){
 		return alarm;
+	}
+	
+	public String getDescription(){
+		return description;
 	}
 	
 	public void setDate(Date day){
@@ -79,16 +83,18 @@ public class Appointment {
 	
 	public void setFinishingtime(Date ftime){
 		finishingtime = ftime;
+		duration = finishingtime.getTime()-starttime.getTime();
 	}
 	
 	public void setDuration(int dur){
 		if (dur > 0){
 			duration = dur;
-			int day = starttime.getDay();
-			int hours = starttime.getHours();
-			int min = starttime.getMinutes();
-			finishingtime.set
-			
+//			long date = starttime.getDate();
+//			long hours = starttime.getHours();
+//			long min = starttime.getMinutes();
+			final long ONE_MINUTE_IN_MILLIS=60000;//millisecs
+			long t=starttime.getTime();
+			finishingtime=new Date(t + (dur * ONE_MINUTE_IN_MILLIS));	
 		}
 	}
 	
@@ -98,6 +104,10 @@ public class Appointment {
 	
 	public void setAlarm(Date al){
 		alarm = al;
+	}
+	
+	public void setDescription(String descr){
+		description = descr; 
 	}
 	
 	public void changeStatus(Participant par, boolean ans){
