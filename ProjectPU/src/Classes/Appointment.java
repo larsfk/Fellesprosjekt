@@ -115,6 +115,9 @@ public class Appointment {
 	public void changeStatus(Participant par, boolean ans){
 		par.ans = ans;
 	}
-	
+	@Override
+	public String toString(){
+		return "AppointmentID: " + appointmentID + ", Date: " + date;
+	}
 	
 }
