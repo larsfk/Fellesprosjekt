@@ -9,15 +9,15 @@ public class MainProgram {
 	
 	//Burde CalendarClient inneholde alle kalendere? I så fall skal denne listen fylles med disse:
 	
-	CalendarClient cc; //= new CalendarClient();
+	// CalendarClient cc; //= new CalendarClient();
 	ArrayList<Calendar> calendars; // = cc.getAr();
 	private Calendar activeCalendar; //Blir dette nå en kopi eller jobber jeg i rett kalender når jeg setter verdier til den?
 
 	private  void run() {
 		CalendarClient cc = new CalendarClient();
-		Calendar cal1 = new Calendar();
-		Calendar cal2 = new Calendar();
-		Calendar cal3 = new Calendar();
+		Calendar cal1 = new Calendar("rebcox@gmail.com");
+		Calendar cal2 = new Calendar("tonygj@gmail.com");
+		Calendar cal3 = new Calendar("ida@sagdahl.com");
 		Date date1 = new Date();
 		Date date2 = new Date();
 		Date date3 = new Date();
@@ -28,6 +28,7 @@ public class MainProgram {
 		appoint1 = new Appointment(1,date1,date2,"Hos Cox","Progging",date3);
 		
 		cal1.addAppointment(appoint1);
+		
 		
 		cc.addCalendar(cal1);
 		cc.addCalendar(cal2);
@@ -53,6 +54,7 @@ public class MainProgram {
 		}
 		//Sammenligne passord med database
 		activeCalendar = calendars.get(personID);
+		//cc.setPerson()
 
 		System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3. Show this calendar\n4. Show several calendars");
 		int option = sc.nextInt();
