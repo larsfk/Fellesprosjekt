@@ -1,6 +1,7 @@
 package Classes;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class CalendarClient {
@@ -47,12 +48,14 @@ public class CalendarClient {
 		
 		ArrayList<Appointment> appointments = person.calendar.getAppointments();
 
+		Collections.sort(appointments, new dateComparator());
+		
 		//		myCalendar.get(i).set(j)
-		for(int i=1; i < appointments.size(); i++){
-			if(appointments.get(i).getDate().getDay() > 0 && appointments.get(i).getDate().getDay() < 8){
-				
-			}
-		}
+//		for(int i=1; i < appointments.size(); i++){
+//			if(appointments.get(i).getDate() > 0 && appointments.get(i).getDate() < 7){
+//				
+//			}
+//		}
 	}
 
 	public String showGroupCalendar(){

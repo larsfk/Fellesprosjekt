@@ -1,22 +1,22 @@
 package Classes;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Person {
 	private String name;
 	private String adress;
 	private int SSN; 
 	private String email; 
-	Calendar calendar = new Calendar();
-
-	public Person(String name, String adress, int SSN, Calendar calendar, String email){
+	private final Calendar calendar;
+	
+	public Person(String name, String adress, int SSN, String email){
 		this.name = name;
 		this.adress = adress;
 		this.SSN = SSN;
-		this.calendar = calendar;
+		this.calendar = new Calendar(email);
 		this.email = email;
 	}
-
+	
 	public void setAppointment(Appointment appoint){
 		calendar.addAppointment(appoint);
 	}
