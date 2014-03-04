@@ -13,6 +13,7 @@ public class Appointment {
 	String description = null;
 	Date alarm;
 	ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+	ArrayList<Person> participants = new ArrayList<Person>();
 	boolean hidden = false;
 
 	public Appointment(int appID, Date stime, Date ftime, int dur, String meetpl, String descr, Date alarm){
@@ -76,6 +77,10 @@ public class Appointment {
 	
 	public void setAlarm(Date al){
 		alarm = al;
+	}
+	
+	public void changeStatus(Participant par){
+		
 	}
 	
 	
