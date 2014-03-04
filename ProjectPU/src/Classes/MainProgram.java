@@ -15,6 +15,7 @@ public class MainProgram {
 
 	private  void run() {
 		CalendarClient cc = new CalendarClient();
+		
 		Calendar cal1 = new Calendar("rebcox@gmail.com");
 		Calendar cal2 = new Calendar("tonygj@gmail.com");
 		Calendar cal3 = new Calendar("ida@sagdahl.com");
@@ -42,8 +43,6 @@ public class MainProgram {
 		//String input = sc.nextLine();
 		//while (input.compareTo("x")!=0){ //denne gjelder kun den ytteste løkka. problem om vi skal ha det med
 		
-		System.out.println(cc.getcalendarList().get(0));
-		
 		int personID = -1; 
 		while (personID < 0 || personID > calendars.size()){
 			System.out.println("Who are you? Type number");
@@ -70,15 +69,15 @@ public class MainProgram {
 		}
 		else if (option == 2){
 			int numApp = activeCalendar.getAppointments().size(); //Number of appointments in the active calendar
-			for (int i = 0;i<numApp;i++){ 
-				System.out.println("(" + i + ") " + activeCalendar.getAppointments().get(i)); //returns element i in calendar appointments
-			}
 			int appID = -1;
 			while (appID < 0){ // ||appID > numApp
 				System.out.println("Which appointment would you like to delete?");
+				for (int i = 0;i<numApp;i++){ 
+					System.out.println("(" + i + ") " + activeCalendar.getAppointments().get(i)); //returns element i in calendar appointments
+				}
 				appID = sc.nextInt();
 			}
-			activeCalendar.getAppointments().remove(appID);
+			activeCalendar.deleteAppointment(activeCalendar.getAppointments().get(appID));
 		}
 		else if (option == 3){
 			//Skrive ut kalender, TONY
@@ -86,6 +85,7 @@ public class MainProgram {
 		}
 		else if (option == 4){
 			//Skrive ut flere kalendere, TONY
+			//System.out.println(cc.showGroupCalendar());
 		}
 		else{
 			System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3. Show this calendar\n4. Show several calendars");
