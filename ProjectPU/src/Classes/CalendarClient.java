@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class CalendarClient {
 
-	Calendar calendar = new Calendar();
+//	Calendar calendar = new Calendar();
 	Person person;
 	private ArrayList<Calendar> calendarList = new ArrayList<Calendar>();
 	private ArrayList<ArrayList<String>> myCalendar = new ArrayList<ArrayList<String>>();
@@ -20,6 +20,9 @@ public class CalendarClient {
 	//		System.out.println();
 	//	}
 
+	public void setPerson(Person person){
+		this.person = person;
+	}
 
 	public ArrayList<Calendar> getcalendarList(){
 		return calendarList;
@@ -39,11 +42,14 @@ public class CalendarClient {
 		myCalendar.get(6).set(0, "L¿r");
 		myCalendar.get(7).set(0, "S¿n");
 
-		ArrayList<Appointment> appointments = calendar.getAppointments();
+		if(person == null)
+			return "You havn't choosen a person!";
+		
+		ArrayList<Appointment> appointments = person.calendar.getAppointments();
 
 		//		myCalendar.get(i).set(j)
 		for(int i=1; i < appointments.size(); i++){
-			if(appointments.get(i).getDate().getDay() > 1){
+			if(appointments.get(i).getDate().getDay() > 0 && appointments.get(i).getDate().getDay() < 8){
 				
 			}
 		}
