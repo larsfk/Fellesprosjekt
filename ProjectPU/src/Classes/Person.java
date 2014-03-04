@@ -8,7 +8,7 @@ public class Person {
 	private int SSN; 
 	private String email; 
 	Calendar calendar = new Calendar();
-	
+
 	public Person(String name, String adress, int SSN, Calendar calendar, String email){
 		this.name = name;
 		this.adress = adress;
@@ -16,7 +16,11 @@ public class Person {
 		this.calendar = calendar;
 		this.email = email;
 	}
-	
+
+	public void setAppointment(Appointment appoint){
+		calendar.addAppointment(appoint);
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -44,9 +48,4 @@ public class Person {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public void setAppointment(Appointment appoint){
-		calendar.addAppointment(appoint);
-	}
-	
 }
