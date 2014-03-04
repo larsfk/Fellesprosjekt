@@ -32,11 +32,13 @@ public class Appointment {
 		setDescription(descr);
 	}
 	
-	public void addParticipant(){
-		//blabla
+	public void addParticipant(Person par){
+		if (!par.status = false){
+			participants.add(par);
+		}
 	}
 	
-	public void removeParticipant(){
+	public void removeParticipant(Person par){
 		//blabla
 	}
 	
