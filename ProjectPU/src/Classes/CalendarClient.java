@@ -16,23 +16,36 @@ public class CalendarClient {
 
 	//Lage database med hvilken kalender som tilh¿rer hvem!
 
-//	public static void main(String[] args) {
-//		System.out.println();
-//	}
+	//	public static void main(String[] args) {
+	//		System.out.println();
+	//	}
 
 
 	public ArrayList<Calendar> getcalendarList(){
 		return calendarList;
 	}
-	
+
 	public void addCalendar(Calendar calendar){
 		calendarList.add(calendar);
 	}
 
 	public String showMyWeekCalendar(){ //SlŒtt sammen denne med showMyCalendar
-		if(day > 0 && day < 8){
-//			myCalendar.get(i).set(j)
-			for(int i=0; i<)
+		myCalendar.get(0).set(0, "Dag/tid");
+		myCalendar.get(1).set(0, "Man");
+		myCalendar.get(2).set(0, "Tirs");
+		myCalendar.get(3).set(0, "Ons");
+		myCalendar.get(4).set(0, "Tors");
+		myCalendar.get(5).set(0, "Fre");
+		myCalendar.get(6).set(0, "L¿r");
+		myCalendar.get(7).set(0, "S¿n");
+
+		ArrayList<Appointment> appointments = calendar.getAppointments();
+
+		//		myCalendar.get(i).set(j)
+		for(int i=1; i < appointments.size(); i++){
+			if(appointments.get(i).getDate().getDay() > 1){
+				
+			}
 		}
 	}
 
