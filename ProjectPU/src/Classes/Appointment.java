@@ -12,9 +12,7 @@ public class Appointment {
 	private String meetingplace = null;
 	private String description = null;
 	private Date alarm;
-	private ArrayList<Appointment> appointments = new ArrayList<Appointment>();
 	private ArrayList<Person> participants = new ArrayList<Person>();
-	boolean hidden = false;
 
 	public Appointment(int appID, Date stime, Date ftime, String meetpl, String descr, Date alarm){
 		this.appointmentID=appID;
@@ -39,10 +37,6 @@ public class Appointment {
 	
 	public void removeParticipant(Person par){
 		//blabla
-	}
-	
-	public void setHidden(boolean hide){
-		hidden = hide;
 	}
 	
 	public int getAppointmentID(){

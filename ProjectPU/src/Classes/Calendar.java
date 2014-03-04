@@ -5,9 +5,32 @@ import java.util.ArrayList;
 
 public class Calendar {
 	private ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+	private ArrayList<Boolean> isHidden = new ArrayList<Boolean>();
+	private ArrayList<Boolean> isParticipating = new ArrayList<Boolean>();
 	private final String userEmail;
+	boolean hidden = false;
+
+
+	public void setHidden(Appointment appoint){
+		if (appointments.contains(appoint)){
+			isHidden.add(appointments.indexOf(appoint), true);
+		}
+	}
+	
+	public void setNotGoing(Appointment appoint){
+		if (appointments.contains(appoint)){
+			isParticipating.add(appointments.indexOf(appoint), false);
+		}
+	}
+	
 	public Calendar(String userEmail){
 		this.userEmail = userEmail;
+		for (int i = 0;i<isParticipating.size();i++){
+			isParticipating.set(i, false);
+		}
+		for (int i = 0;i<isHidden.size();i++){
+			isHidden.set(i, false);
+		}
 	}
 	public String getUserEmail(){
 		return userEmail;
@@ -24,8 +47,14 @@ public class Calendar {
 	
 	public void addAppointment(Appointment appoint){
 		if(!appointments.contains(appoint)){
-			appointments.add(appoint);
+			for (int i = 0; i < appointments.size(); i++){
+				if (appoint.getStarttime().compareTo(appointments.get(i).getStarttime())<0){
+					appointments.add(i,appoint);
+				}
+			}
+		appoint.addParticipant(par)
 		}
+		
 	}
 
 	public void deleteAppointment(Appointment appoint){
