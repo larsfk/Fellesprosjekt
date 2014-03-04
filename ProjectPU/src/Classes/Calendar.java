@@ -5,12 +5,14 @@ import java.util.ArrayList;
 
 public class Calendar {
 	private ArrayList<Appointment> appointments = new ArrayList<Appointment>();
-	private String userEmail;
-	public Calendar(){
+	private final String userEmail;
+	public Calendar(String userEmail){
+		this.userEmail = userEmail;
 	}
 	public String getUserEmail(){
 		return userEmail;
 	}
+	
 	public ArrayList<Appointment> getAppointments(){
 		return appointments;
 	}
