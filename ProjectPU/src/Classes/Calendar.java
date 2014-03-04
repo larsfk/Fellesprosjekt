@@ -1,5 +1,6 @@
 package Classes;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class Calendar {
@@ -26,8 +27,8 @@ public class Calendar {
 		}
 	}
 	
-	public void editAppointment(Appointment appoint){
-		
+	public void editAppointment(Appointment appoint, Date starttime){
+		appoint.starttime = starttime;
 	}
 
 }
