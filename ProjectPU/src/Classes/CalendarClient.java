@@ -46,7 +46,7 @@ public class CalendarClient {
 		if(person == null)
 			return "You havn't choosen a person!";
 		
-		ArrayList<Appointment> appointments = person.calendar.getAppointments();
+		ArrayList<Appointment> appointments = person.getCalendar().getAppointments();
 
 		Collections.sort(appointments, new dateComparator());
 		
