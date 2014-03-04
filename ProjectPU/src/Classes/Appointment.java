@@ -50,7 +50,7 @@ public class Appointment {
 	}
 	
 	public String getDate(){
-		return starttime.getDate()+"."+ starttime.getMonth()+1+"."+starttime.getYear()+1900;
+		return starttime.getDate()+"."+ (starttime.getMonth()+1)+"."+ (starttime.getYear()+1900);
 	}
 	
 	public Date getStarttime(){
