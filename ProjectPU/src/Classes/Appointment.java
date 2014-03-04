@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Appointment {
 	private int appointmentID = 0;
+	private Date date;
 	private Date starttime;
 	private Date finishingtime;
 	private int duration = 0;
@@ -38,6 +39,10 @@ public class Appointment {
 		hidden = hide;
 	}
 	
+	public Date getDate(){
+		return date;
+	}
+	
 	public Date getStarttime(){
 		return starttime;
 	}
@@ -58,6 +63,9 @@ public class Appointment {
 		return alarm;
 	}
 	
+	public void setDate(Date day){
+		date = day;
+	}
 	
 	public void setStarttime(Date stime){
 		starttime = stime; 
