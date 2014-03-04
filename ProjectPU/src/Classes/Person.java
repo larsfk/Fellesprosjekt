@@ -32,6 +32,10 @@ public class Person {
 	public String getAdress() {
 		return adress;
 	}
+	
+	public Calendar getCalendar(){
+		return calendar;
+	}
 
 	public void setAdress(String adress) {
 		this.adress = adress;
