@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class Appointment {
 	private int appointmentID = 0;
-	private Date date;
 	private Date starttime;
 	private Date finishingtime;
 	private long duration = 0;
@@ -50,8 +49,8 @@ public class Appointment {
 		return appointmentID;
 	}
 	
-	public Date getDate(){
-		return date;
+	public String getDate(){
+		return starttime.getDate()+"."+ starttime.getMonth()+1+"."+starttime.getYear()+1900;
 	}
 	
 	public Date getStarttime(){
@@ -76,10 +75,6 @@ public class Appointment {
 	
 	public String getDescription(){
 		return description;
-	}
-	
-	public void setDate(Date day){
-		date = day;
 	}
 	
 	public void setStarttime(Date stime){
@@ -115,6 +110,9 @@ public class Appointment {
 	public void changeStatus(Participant par, boolean ans){
 		par.ans = ans;
 	}
-	
+	@Override
+	public String toString(){
+		return "AppointmentID: " + appointmentID + ", Date: " + getDate();
+	}
 	
 }
