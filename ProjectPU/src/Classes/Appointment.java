@@ -17,10 +17,16 @@ public class Appointment {
 	private ArrayList<Person> participants = new ArrayList<Person>();
 	boolean hidden = false;
 
-	public Appointment(int appID, Date stime, Date ftime, int dur, String meetpl, String descr, Date alarm){
+	public Appointment(int appID, Date stime, Date ftime, String meetpl, String descr, Date alarm){
 		//Appointment.appointmentID = appID;
 		starttime = stime;
 		finishingtime = ftime;
+		meetingplace = meetpl;
+		description = descr;
+	}
+	public Appointment(int appID, Date stime, int dur, String meetpl, String descr, Date alarm){
+		//Appointment.appointmentID = appID;
+		starttime = stime;
 		duration = dur;
 		meetingplace = meetpl;
 		description = descr;
