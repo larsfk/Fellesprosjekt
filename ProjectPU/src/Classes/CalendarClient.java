@@ -13,7 +13,7 @@ public class CalendarClient {
 
 	//Logge inn skal ligge i calendarClient - ulikt klassediagram
 	public boolean loggedIn(){
-		String email = person.email;
+		String email = person.getEmail();
 		String password;
 		//		if()
 	}
@@ -22,11 +22,6 @@ public class CalendarClient {
 	//		
 	//	}
 
-
-	//Logge inn skal ligge i calendarClient - ulikt klassediagram
-	public boolean loggedIn(){
-		if 
-	}
 
 	public String showWeekCalendar(){
 
