@@ -27,11 +27,23 @@ public class Appointment {
 		hidden = hide;
 	}
 	
-	public int getAppointmentID(){
-		return appointmentID;
+	public Date getStarttime(){
+		return starttime;
 	}
 	
+	public Date getFinishingtime(){
+		return finishingtime;
+	}
 	
+	public int getDuration(){
+		return duration;
+	}
 	
-
+	public String getMeetingplace(){
+		return meetingplace;
+	}
+	
+	public Date getAlarm(){
+		return alarm;
+	}
 }

@@ -27,8 +27,28 @@ public class Calendar {
 		}
 	}
 	
-	public void editAppointment(Appointment appoint, Date starttime){
+	public void editStarttime(Appointment appoint, Date starttime){
 		appoint.starttime = starttime;
+	}
+	
+	public void editFinishtime(Appointment appoint, Date finishtime){
+		appoint.finishingtime = finishtime;
+	}
+	
+	public void editDuration(Appointment appoint, int duration){
+		appoint.duration = duration;
+	}
+	
+	public void editMeetingplace(Appointment appoint, String meetpl){
+		appoint.meetingplace = meetpl;
+	}
+	
+	public void editDescription(Appointment appoint, String descr){
+		appoint.description = descr;
+	}
+	
+	public void editAlarm(Appointment appoint, Date alarm){
+		appoint.alarm = alarm;
 	}
 
 }
