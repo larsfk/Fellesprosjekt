@@ -23,6 +23,16 @@ public class Appointment {
 		meetingplace = meetpl;
 		description = descr;
 	}
+	
+	public void addParticipant(){
+		//blabla
+	}
+	
+	public void removeParticipant(){
+		//blabla
+	}
+	
+	
 	public void setHidden(boolean hide){
 		hidden = hide;
 	}
@@ -46,4 +56,27 @@ public class Appointment {
 	public Date getAlarm(){
 		return alarm;
 	}
+	
+	
+	public void setStarttime(Date stime){
+		starttime = stime; 
+	}
+	
+	public void setFinishingtime(Date ftime){
+		finishingtime = ftime;
+	}
+	
+	public void setDuration(int dur){
+		duration = dur;
+	}
+	
+	public void setMeetingplace(String meetpl){
+		meetingplace = meetpl;
+	}
+	
+	public void setAlarm(Date al){
+		alarm = al;
+	}
+	
+	
 }
