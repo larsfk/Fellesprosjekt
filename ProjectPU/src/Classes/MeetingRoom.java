@@ -64,5 +64,9 @@ public class MeetingRoom {
 	public int getCapasity(){
 		return Capasity;
 	}
+	
+	public int getID(){
+		return ID;
+	}
 
 }
