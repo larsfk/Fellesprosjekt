@@ -8,6 +8,11 @@ public class CalendarClient {
 //	public static void main(String[] args) {
 //		
 //	}
+	
+	//Logge inn skal ligge i calendarClient - ulikt klassediagram
+	public boolean loggedIn(){
+		if 
+	}
 
 	public String showWeekCalendar(){
 		
