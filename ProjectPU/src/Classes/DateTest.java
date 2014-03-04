@@ -9,6 +9,7 @@ public class DateTest {
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		System.out.println("" + date.getDate());
+		System.out.println("" + date.getDay());
 
 	}
 
