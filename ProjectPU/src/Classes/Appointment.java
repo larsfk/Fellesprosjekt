@@ -18,18 +18,18 @@ public class Appointment {
 	boolean hidden = false;
 
 	public Appointment(int appID, Date stime, Date ftime, String meetpl, String descr, Date alarm){
-		//Appointment.appointmentID = appID;
+		this.appointmentID=appID;
 		setStarttime(stime);
 		setFinishingtime(ftime);
 		setMeetingplace(meetpl);
 		setDescription(descr);
 	}
 	public Appointment(int appID, Date stime, int dur, String meetpl, String descr, Date alarm){
-		//Appointment.appointmentID = appID;
-		starttime = stime;
-		duration = dur;
-		meetingplace = meetpl;
-		description = descr;
+		this.appointmentID=appID;
+		setStarttime(stime);
+		setDuration(dur);
+		setMeetingplace(meetpl);
+		setDescription(descr);
 	}
 	
 	public void addParticipant(){
