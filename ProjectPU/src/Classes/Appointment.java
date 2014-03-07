@@ -1,7 +1,6 @@
 package Classes;
 
 import java.util.Calendar;
-import java.sql.Time;
 import java.util.ArrayList;
 
 public class Appointment {
@@ -30,13 +29,25 @@ public class Appointment {
 	}
 	
 	public void addParticipant(Person par){
-		//if (!par.status = false){
 			participants.add(par);
-		//}
+			/*
+			 * 
+			 * DATABASE
+			 * 
+			 * 
+			 */
 	}
 	
 	public void removeParticipant(Person par){
-		//blabla
+		if (participants.contains(par)){
+			participants.remove(par);
+		}
+		/*
+		 * 
+		 * DATABASE
+		 * 
+		 * 
+		 */
 	}
 	
 	public int getAppointmentID(){
