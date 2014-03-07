@@ -30,9 +30,9 @@ public class Appointment {
 	}
 	
 	public void addParticipant(Person par){
-		if (!par.status = false){
+		//if (!par.status = false){
 			participants.add(par);
-		}
+		//}
 	}
 	
 	public void removeParticipant(Person par){
@@ -77,15 +77,17 @@ public class Appointment {
 	
 	public void setFinishingtime(Calendar ftime){
 		finishingtime = ftime;
-		duration = (finishingtime.getTime()-starttime.getTime())/60000; //i minutt
+		duration = (finishingtime.getTimeInMillis()-starttime.getTimeInMillis())/60000; //i minutt
 	}
 	
 	public void setDuration(int dur){
 		if (dur > 0){
 			duration = dur;
-			final long ONE_MINUTE_IN_MILLIS=60000;//millisecs
-			long t=starttime.getTime();
-			finishingtime=new Calendar(t + (dur * ONE_MINUTE_IN_MILLIS));	
+			// final long ONE_MINUTE_IN_MILLIS=60000;//millisecs
+			//feiling if-setning pga casting
+			int t = (int) starttime.getTimeInMillis()/60000;
+			finishingtime = Calendar.getInstance();
+			finishingtime.set(finishingtime.HOUR_OF_DAY, starttime.HOUR_OF_DAY+t);
 		}
 	}
 	
@@ -102,7 +104,7 @@ public class Appointment {
 	}
 	
 	public void changeStatus(Participant par, boolean ans){
-		par.ans = ans;
+		//par.ans = ans;
 	}
 	@Override
 	public String toString(){
