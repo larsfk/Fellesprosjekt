@@ -6,14 +6,14 @@ import java.sql.SQLException;
 public class Person {
 	private String name;
 	private String office;
-	private int tlf;
+	private String tlf;
 	private String SSN; 
 	private String email; 
 	private String password;
 	private final PUCalendar calendar;
 	Database db = new Database();
 	
-	public Person(String name, String office, String SSN, String password, int tlf, String email){
+	public Person(String name, String office, String SSN, String password, String tlf, String email){
 		this.name = name;
 		this.office = office;
 		this.SSN = SSN;
@@ -74,11 +74,11 @@ public class Person {
 		this.password = password;
 	}
 
-	public int getTlf() {
+	public String getTlf() {
 		return tlf;
 	}
 
-	public void setTlf(int tlf) {
+	public void setTlf(String tlf) {
 		this.tlf = tlf;
 	}
 	
