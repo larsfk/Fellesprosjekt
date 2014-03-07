@@ -4,18 +4,12 @@ import java.util.Date;
 import java.util.ArrayList;
 
 public class PUCalendar {
+	
 	private ArrayList<Appointment> appointments = new ArrayList<Appointment>();
 	private ArrayList<Boolean> isHidden = new ArrayList<Boolean>();
 	private ArrayList<Boolean> isParticipating = new ArrayList<Boolean>();
-	private final String userEmail;
-	boolean hidden = false;
-
-
-	public void setHidden(Appointment appoint){
-		if (appointments.contains(appoint)){
-			isHidden.add(appointments.indexOf(appoint), true);
-		}
-	}
+	//private final String userEmail;
+	private final Person user;
 	
 	public void setNotGoing(Appointment appoint){
 		if (appointments.contains(appoint)){
@@ -23,8 +17,8 @@ public class PUCalendar {
 		}
 	}
 	
-	public PUCalendar(String userEmail){
-		this.userEmail = userEmail;
+	public PUCalendar(Person user){
+		this.user = user;
 		for (int i = 0;i<isParticipating.size();i++){
 			isParticipating.set(i, false);
 		}
@@ -33,7 +27,7 @@ public class PUCalendar {
 		}
 	}
 	public String getUserEmail(){
-		return userEmail;
+		return user.getEmail();
 	}
 	
 	public ArrayList<Appointment> getAppointments(){
@@ -41,7 +35,7 @@ public class PUCalendar {
 	}
 	public void hideAppointment(Appointment appoint){
 		if (appointments.contains(appoint)){
-			appoint.setHidden(true);			
+			isHidden.add(appointments.indexOf(appoint), true);			
 		}
 	}
 	
