@@ -3,6 +3,7 @@ package Classes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Calendar;
+import java.util.Date;
 
 public class CalendarClient {
 
@@ -24,6 +25,33 @@ public class CalendarClient {
 
 	public void addCalendar(PUCalendar calendar){
 		calendarList.add(calendar);
+	}
+
+	public static void main(String[] args){
+CalendarClient cc = new CalendarClient();
+		
+		PUCalendar cal1 = new PUCalendar("rebcox@gmail.com");
+		PUCalendar cal2 = new PUCalendar("tonygj@gmail.com");
+		PUCalendar cal3 = new PUCalendar("ida@sagdahl.com");
+		Calendar date1 = Calendar.getInstance();
+		Calendar date2 = Calendar.getInstance();
+		Calendar date3 = Calendar.getInstance();
+		Date thisDate = new Date();
+		
+		Appointment appoint1; 
+		
+		date1.set(thisDate.getYear(), thisDate.getMonth(), thisDate.getDate(), 14, 00);
+		date2.set(thisDate.getYear(), thisDate.getMonth(), thisDate.getDate(), 16, 00);
+		appoint1 = new Appointment(1,date1,date2,"Hos Cox","Progging",date3);
+		
+		cal1.addAppointment(appoint1);
+		
+		
+		cc.addCalendar(cal1);
+		cc.addCalendar(cal2);
+		cc.addCalendar(cal3);
+		
+		System.out.println(cal1.getAppointments());
 	}
 
 	public String showMyWeekCalendar(){ //Slått sammen denne med showMyCalendar
