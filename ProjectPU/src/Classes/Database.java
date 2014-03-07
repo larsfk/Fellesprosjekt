@@ -18,12 +18,17 @@ public class Database {
 	}
 
 
-	public void addToDatabase(String statement, Connection conn) throws SQLException{
+	public void addPersonToDatabase(String statement, Connection conn) throws SQLException{
 		//Create a query
 		Statement stmt = (Statement) conn.createStatement();
 		//Execute query
 		stmt.executeUpdate(statement);
 
+	}
+	
+	public void removePersonFromDatabase(String statement, Connection conn) throws SQLException{
+		
+		
 	}
 
 	public static void readDatabase(String res, Connection conn) throws SQLException{
