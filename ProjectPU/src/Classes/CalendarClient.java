@@ -60,14 +60,14 @@ public class CalendarClient {
 	//	}
 
 	public String showMyWeekCalendar(){ //Slått sammen denne med showMyCalendar
-				myCalendar.get(0).set(0, "Dag/tid");
-				myCalendar.get(1).set(0, "Man");
-				myCalendar.get(2).set(0, "Tirs");
-				myCalendar.get(3).set(0, "Ons");
-				myCalendar.get(4).set(0, "Tors");
-				myCalendar.get(5).set(0, "Fre");
-				myCalendar.get(6).set(0, "Lør");
-				myCalendar.get(7).set(0, "Søn");
+//				myCalendar.get(0).set(0, "Dag/tid");
+//				myCalendar.get(1).set(0, "Man");
+//				myCalendar.get(2).set(0, "Tirs");
+//				myCalendar.get(3).set(0, "Ons");
+//				myCalendar.get(4).set(0, "Tors");
+//				myCalendar.get(5).set(0, "Fre");
+//				myCalendar.get(6).set(0, "Lør");
+//				myCalendar.get(7).set(0, "Søn");
 
 		//		if(person.getPUCalendar() == null)
 		//			return "Du er ingen person!";
@@ -156,7 +156,7 @@ public class CalendarClient {
 			}
 		}
 		}
-		return myCalendar.toString();
+		return "  Mon   Tues   Wed   Thu   Fri   Sat   Sun   " + myCalendar.toString();
 	}
 
 	public String showGroupCalendar(){
