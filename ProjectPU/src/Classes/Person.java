@@ -13,6 +13,15 @@ public class Person {
 	private final PUCalendar calendar;
 	Database db = new Database();
 	
+	public Person(String name, String office, String tlf, String SSN, String password){
+		this.name = name;
+		this.office = office;
+		this.SSN = SSN;
+		this.calendar = new PUCalendar(this);
+		this.password = password;
+		this.tlf = tlf;
+	}
+	
 	public Person(String name, String office, String tlf, String email, String SSN, String password){
 		this.name = name;
 		this.office = office;

@@ -21,9 +21,10 @@ public class Database {
 	public void addPersonToDatabase(String statement, Connection conn) throws SQLException{
 		//Create a query
 		Statement stmt = (Statement) conn.createStatement();
+		System.out.println("Statement created");
 		//Execute query
 		stmt.executeUpdate(statement);
-
+		System.out.println("Update exectuted");
 	}
 
 //	public void removePersonFromDatabase(String statement, Connection conn) throws SQLException{
@@ -44,14 +45,15 @@ public class Database {
 			stmt.executeQuery("SELECT * FROM larsfkl_felles.person where email = '" + mail + "';");
 			ResultSet rs = stmt.getResultSet();
 
-
+			rs.next();
 			String name = rs.getString(1);
 			String office = rs.getString(2);
 			String tlf = rs.getString(3);
 			String email = rs.getString(4);
 			String SSN = rs.getString(5);
 			String password = rs.getString(6);
-			lars = new Person(name, office, tlf, email, SSN, password);
+			lars = new Person(name, office, tlf, SSN, password);
+			lars.setEmail(mail);
 			rs.close ();
 
 			return lars;
