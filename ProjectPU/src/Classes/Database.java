@@ -5,9 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Database {
 	static Connection connection = null;
+	static String input = "insert into larsfkl_felles.person(name,office,tlf,email,password) values ('Test','NTNU',94234135,'test@test.no','mojjo')";
 	
 	public static void main(String[] args) throws Exception{
 		
@@ -34,20 +36,20 @@ public class Database {
 		if(connection == null){
 			System.out.println("Failed to connect...");
 		}
-
+		addToDatabase(input);
 	}
 	
 	public static void addToDatabase(String statement) throws SQLException{
 			//Create a query
-			PreparedStatement query = connection.prepareStatement(statement);
+			Statement stmt = (Statement) connection.createStatement();
 			//Execute query
-			ResultSet result = query.executeQuery();
+			stmt.executeUpdate(statement);
 
 	}
 	
-	public void readDatabase(String statement) throws SQLException{
+	public static void readDatabase(String res) throws SQLException{
 		//Create a query
-		PreparedStatement query = connection.prepareStatement(statement);
+		PreparedStatement query = connection.prepareStatement(res);
 		//Creating a variable to execute query
 		ResultSet result = query.executeQuery();
 			
