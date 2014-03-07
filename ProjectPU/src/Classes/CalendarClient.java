@@ -59,8 +59,8 @@ public class CalendarClient {
 
 		case 1: {
 			for(int i = 0; i < appointments.size(); i++){
-					if(appointments.get(i).getDate() == "" + (calendar.DAY_OF_MONTH + dayOfWeek) + "." + calendar.MONTH + "." + calendar.YEAR){
-						myCalendar.get(firstDayOfWeek + dayOfWeek).set(i, appointments.get(i));		
+				if(appointments.get(i).getDate() == "" + (calendar.DAY_OF_MONTH + dayOfWeek) + "." + calendar.MONTH + "." + calendar.YEAR){
+					myCalendar.get(firstDayOfWeek + dayOfWeek).set(i, appointments.get(i));		
 				}
 			}
 		}
@@ -69,47 +69,38 @@ public class CalendarClient {
 			for(int i = 0; i < appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + (calendar.DAY_OF_MONTH + dayOfWeek) + "." + calendar.MONTH + "." + calendar.YEAR){
 					myCalendar.get(firstDayOfWeek + dayOfWeek).set(i, appointments.get(i));		
+				}
 			}
-		}
 
 		case 3:
 			for(int i = 0; i < appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + (calendar.DAY_OF_MONTH + dayOfWeek) + "." + calendar.MONTH + "." + calendar.YEAR){
 					myCalendar.get(firstDayOfWeek + dayOfWeek).set(i, appointments.get(i));		
+				}
 			}
-		}
 
 		case 4:
 			for(int i = 0; i < appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + (calendar.DAY_OF_MONTH + dayOfWeek) + "." + calendar.MONTH + "." + calendar.YEAR){
 					myCalendar.get(firstDayOfWeek + dayOfWeek).set(i, appointments.get(i));		
+				}
 			}
-		}
 
 		case 5:
 			for(int i = 0; i < appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + (calendar.DAY_OF_MONTH + dayOfWeek) + "." + calendar.MONTH + "." + calendar.YEAR){
 					myCalendar.get(firstDayOfWeek + dayOfWeek).set(i, appointments.get(i));		
+				}
 			}
-		}
 
 		case 6:
 			for(int i = 0; i < appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + (calendar.DAY_OF_MONTH + dayOfWeek) + "." + calendar.MONTH + "." + calendar.YEAR){
 					myCalendar.get(firstDayOfWeek + dayOfWeek).set(i, appointments.get(i));		
+				}
 			}
 		}
-			
-			return myCalendar.toString();
-		}
-
-
-		//		myCalendar.get(i).set(j)
-		//		for(int i=1; i < appointments.size(); i++){
-		//			if(appointments.get(i).getDate() > 0 && appointments.get(i).getDate() < 7){
-		//				
-		//			}
-		//		}
+		return myCalendar.toString();
 	}
 
 	public String showGroupCalendar(){
