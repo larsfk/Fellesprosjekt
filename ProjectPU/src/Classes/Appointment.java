@@ -37,7 +37,6 @@ public class Appointment {
 			 * 
 			 */
 	}
-	
 	public void removeParticipant(Person par){
 		if (participants.contains(par)){
 			participants.remove(par);
@@ -48,6 +47,14 @@ public class Appointment {
 		 * 
 		 * 
 		 */
+		System.out.println("hei");
+	}
+	
+	public void setDuration(long duration) {
+		this.duration = duration;
+	}
+	public ArrayList<Person> getParticipants(){
+		return participants;
 	}
 	
 	public int getAppointmentID(){
