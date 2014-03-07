@@ -23,7 +23,7 @@ public class Person {
 		this.tlf = tlf;
 		try {
 			Connection conn = db.getConnection();
-			db.addToDatabase("insert into larsfkl_felles.person(name,office,tlf,email,password) values ('" + name + "','" + office + "','" + tlf + "','" + email + "','" + password + "');", conn);
+			db.addPersonToDatabase("insert into larsfkl_felles.person(name,office,tlf,email,password) values ('" + name + "','" + office + "','" + tlf + "','" + email + "','" + password + "');", conn);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
