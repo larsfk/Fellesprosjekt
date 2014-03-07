@@ -11,10 +11,10 @@ public class Database {
 
 	public Connection getConnection() throws SQLException {
 
-	    Connection conn = null;
-	    conn = DriverManager.getConnection("jdbc:mysql://mysql.stud.ntnu.no:3306/larsfkl_felles","larsfkl_felles","bademadrass");
-	    System.out.println("Connected to database");
-	    return conn;
+		Connection conn = null;
+		conn = DriverManager.getConnection("jdbc:mysql://mysql.stud.ntnu.no:3306/larsfkl_felles","larsfkl_felles","bademadrass");
+		System.out.println("Connected to database");
+		return conn;
 	}
 
 
@@ -25,10 +25,41 @@ public class Database {
 		stmt.executeUpdate(statement);
 
 	}
-	
-	public void removePersonFromDatabase(String statement, Connection conn) throws SQLException{
-		
-		
+
+//	public void removePersonFromDatabase(String statement, Connection conn) throws SQLException{
+//		//Create a query
+//		Statement stmt = (Statement) conn.createStatement();
+//		//Execute query
+//		stmt.executeUpdate(statement);
+//		DELETE FROM table_name WHERE some_column = some_value
+//
+//	}
+
+	public Person getPersonFromDatabase(String mail, Connection conn){
+
+		try{
+			Person lars;
+			//Create a query
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery("SELECT * FROM larsfkl_felles.person where email = '" + mail + "';");
+			ResultSet rs = stmt.getResultSet();
+
+
+			String name = rs.getString(1);
+			String office = rs.getString(2);
+			String tlf = rs.getString(3);
+			String email = rs.getString(4);
+			String SSN = rs.getString(5);
+			String password = rs.getString(6);
+			lars = new Person(name, office, tlf, email, SSN, password);
+			rs.close ();
+
+			return lars;
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public static void readDatabase(String res, Connection conn) throws SQLException{
