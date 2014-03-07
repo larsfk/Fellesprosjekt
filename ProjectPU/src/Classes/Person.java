@@ -51,6 +51,13 @@ public class Person {
 	}
 
 	public void setOffice(String office) {
+		try {
+			Connection conn = db.getConnection();
+			db.addPersonToDatabase("update larsfkl_felles.person SET office = '"+ office + "' WHERE email = '" + this.email + "';", conn);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.office = office;
 	}
 
@@ -63,7 +70,14 @@ public class Person {
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		try {
+			Connection conn = db.getConnection();
+			db.addPersonToDatabase("update larsfkl_felles.person SET office = '"+ email + "' WHERE email = '" + this.email + "';", conn);
+			this.email = email;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public String getPassword() {
