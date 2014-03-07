@@ -21,7 +21,7 @@ public class Person {
 		this.password = password;
 		this.tlf = tlf;
 		try {
-			db.addToDatabase("insert into larsfkl_felles.person(" + name + "," + office + "," + tlf + "," + email + "," + password + ") values ('Test','NTNU',94234135,'test@test.no','mojjo'));");
+			db.addToDatabase("insert into larsfkl_felles.person(name,office,tlf,email,password) values (" + name + "," + office + "," + tlf + "," + email + "," + password + "));");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
