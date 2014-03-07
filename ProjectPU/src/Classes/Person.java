@@ -7,13 +7,13 @@ public class Person {
 	private String adress;
 	private int SSN; 
 	private String email; 
-	private final Calendar calendar;
+	private final PUCalendar calendar;
 	
 	public Person(String name, String adress, int SSN, String email){
 		this.name = name;
 		this.adress = adress;
 		this.SSN = SSN;
-		this.calendar = new Calendar(email);
+		this.calendar = new PUCalendar(email);
 		this.email = email;
 	}
 	
@@ -33,7 +33,7 @@ public class Person {
 		return adress;
 	}
 	
-	public Calendar getCalendar(){
+	public PUCalendar getPUCalendar(){
 		return calendar;
 	}
 

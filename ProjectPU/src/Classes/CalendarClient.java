@@ -8,7 +8,7 @@ public class CalendarClient {
 
 //	Calendar calendar = new Calendar();
 	Person person;
-	private ArrayList<Calendar> calendarList = new ArrayList<Calendar>();
+	private ArrayList<PUCalendar> calendarList = new ArrayList<PUCalendar>();
 	private ArrayList<ArrayList<String>> myCalendar = new ArrayList<ArrayList<String>>();
 	public Calendar calendar = Calendar.getInstance();
 
@@ -22,11 +22,11 @@ public class CalendarClient {
 		this.person = person;
 	}
 
-	public ArrayList<Calendar> getcalendarList(){
+	public ArrayList<PUCalendar> getcalendarList(){
 		return calendarList;
 	}
 
-	public void addCalendar(Calendar calendar){
+	public void addCalendar(PUCalendar calendar){
 		calendarList.add(calendar);
 	}
 
@@ -43,7 +43,7 @@ public class CalendarClient {
 		if(person == null)
 			return "You havn't choosen a person!";
 		
-		ArrayList<Appointment> appointments = person.getCalendar().getAppointments();
+		ArrayList<Appointment> appointments = person.getPUCalendar().getAppointments();
 
 		Collections.sort(appointments, new dateComparator());
 		
