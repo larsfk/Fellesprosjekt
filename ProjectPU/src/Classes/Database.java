@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Database {
+	static Connection connection = null;
 	
 	public static void main(String[] args) throws Exception{
 		
@@ -19,8 +20,6 @@ public class Database {
 			return;
 		}
 		
-		Connection connection = null;
-		
 		try{
 			//Creating a variable for the connection called "con"
 			connection = DriverManager.getConnection("jdbc:mysql://mysql.stud.ntnu.no:3306/larsfkl_felles","larsfkl_felles","bademadrass");
@@ -32,20 +31,29 @@ public class Database {
 			return;
 		}
 		
-		if(connection != null){
-			System.out.println("We made connection!");
-		} else{
+		if(connection == null){
 			System.out.println("Failed to connect...");
 		}
-		
+
+	}
+	
+	public static void addToDatabase(String statement) throws SQLException{
+			//Create a query
+			PreparedStatement query = connection.prepareStatement(statement);
+			//Execute query
+			ResultSet result = query.executeQuery();
+
+	}
+	
+	public static void readDatabase(String statement) throws SQLException{
 		//Create a query
-		PreparedStatement query = connection.prepareStatement("select * from person");
-		
+		PreparedStatement query = connection.prepareStatement(statement);
 		//Creating a variable to execute query
-		ResultSet result = query.executeQuery ();
-		
+		ResultSet result = query.executeQuery();
+			
 		while(result.next()){
 			System.out.println("Name: " + result.getString(1));
+
 		}
 	}
 }

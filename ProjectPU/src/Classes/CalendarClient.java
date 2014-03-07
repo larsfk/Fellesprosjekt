@@ -44,42 +44,61 @@ public class CalendarClient {
 
 
 		int date = calendar.DATE;
-		int day = calendar.DAY_OF_WEEK;
-		int monday = calendar.getFirstDayOfWeek();
+		int dayOfWeek = calendar.DAY_OF_WEEK;
+		int firstDayOfWeek = calendar.getFirstDayOfWeek() + 1;
 
-		switch(day){
+		switch(dayOfWeek) {
 
 		case 0: {
 			for(int i = 0; i< appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + calendar.DAY_OF_MONTH + "." + calendar.MONTH + "." + calendar.YEAR){
-					myCalendar.get(monday + day).set(i, appointments.get(i));		
+					myCalendar.get(firstDayOfWeek + dayOfWeek).set(i, appointments.get(i));		
 				}
 			}
 		}
 
 		case 1: {
 			for(int i = 0; i < appointments.size(); i++){
-
+					if(appointments.get(i).getDate() == "" + (calendar.DAY_OF_MONTH + dayOfWeek) + "." + calendar.MONTH + "." + calendar.YEAR){
+						myCalendar.get(firstDayOfWeek + dayOfWeek).set(i, appointments.get(i));		
+				}
 			}
 		}
 
 		case 2:
-			
+			for(int i = 0; i < appointments.size(); i++){
+				if(appointments.get(i).getDate() == "" + (calendar.DAY_OF_MONTH + dayOfWeek) + "." + calendar.MONTH + "." + calendar.YEAR){
+					myCalendar.get(firstDayOfWeek + dayOfWeek).set(i, appointments.get(i));		
+			}
+		}
 
 		case 3:
-			
+			for(int i = 0; i < appointments.size(); i++){
+				if(appointments.get(i).getDate() == "" + (calendar.DAY_OF_MONTH + dayOfWeek) + "." + calendar.MONTH + "." + calendar.YEAR){
+					myCalendar.get(firstDayOfWeek + dayOfWeek).set(i, appointments.get(i));		
+			}
+		}
 
 		case 4:
-			
+			for(int i = 0; i < appointments.size(); i++){
+				if(appointments.get(i).getDate() == "" + (calendar.DAY_OF_MONTH + dayOfWeek) + "." + calendar.MONTH + "." + calendar.YEAR){
+					myCalendar.get(firstDayOfWeek + dayOfWeek).set(i, appointments.get(i));		
+			}
+		}
 
 		case 5:
-			
+			for(int i = 0; i < appointments.size(); i++){
+				if(appointments.get(i).getDate() == "" + (calendar.DAY_OF_MONTH + dayOfWeek) + "." + calendar.MONTH + "." + calendar.YEAR){
+					myCalendar.get(firstDayOfWeek + dayOfWeek).set(i, appointments.get(i));		
+			}
+		}
 
 		case 6:
-			
-
-		case 7:
-			
+			for(int i = 0; i < appointments.size(); i++){
+				if(appointments.get(i).getDate() == "" + (calendar.DAY_OF_MONTH + dayOfWeek) + "." + calendar.MONTH + "." + calendar.YEAR){
+					myCalendar.get(firstDayOfWeek + dayOfWeek).set(i, appointments.get(i));		
+			}
+		}
 			
 			return myCalendar.toString();
 		}

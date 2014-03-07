@@ -28,7 +28,11 @@ public class TestTony {
 		int i = 1;
 //		calendar = setCalendar();
 //		System.out.println(calendar);
-		System.out.println(i + "    " + (calendar2.getFirstDayOfWeek()+1));
+//		System.out.println(i);
+//		System.out.println(i + "      " + (calendar2.getFirstDayOfWeek()));
+		System.out.println(calendar2.getFirstDayOfWeek() + 1);
+		System.out.println(calendar2.DATE);
+		System.out.println(calendar2.DAY_OF_MONTH);
 	}
 
 }
