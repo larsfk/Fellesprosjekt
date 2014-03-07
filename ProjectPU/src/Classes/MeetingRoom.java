@@ -1,7 +1,7 @@
 package Classes;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 
 public class MeetingRoom {
 
@@ -29,7 +29,7 @@ public class MeetingRoom {
 						AppointmentList.add(i, Q);
 					}
 				}		
-				Capasity++;
+				Capasity++; //Hva gjør denne? Tror capasity skal inneholde størrelsen på rommet
 			}
 		}
 		catch (NullPointerException e){
@@ -47,7 +47,7 @@ public class MeetingRoom {
 		Capasity--;
 	}
 
-	public boolean isFree(Date start, Date end){
+	public boolean isFree(Calendar start, Calendar end){
 		for (int i = 0; i < AppointmentList.size(); i++){
 			if ((AppointmentList.get(i).getStarttime().compareTo(start) < 0 && AppointmentList.get(i).getFinishingtime().compareTo(end) > 0)
 					|| (AppointmentList.get(i).getStarttime().compareTo(start) > 0 && AppointmentList.get(i).getStarttime().compareTo(end) < 0)
@@ -63,6 +63,10 @@ public class MeetingRoom {
 
 	public int getCapasity(){
 		return Capasity;
+	}
+	
+	public int getID(){
+		return ID;
 	}
 
 }

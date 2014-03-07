@@ -1,29 +1,27 @@
 package Classes;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.sql.Time;
 import java.util.ArrayList;
 
 public class Appointment {
 	private int appointmentID = 0;
-	private Date starttime;
-	private Date finishingtime;
+	private Calendar starttime;
+	private Calendar finishingtime;
 	private long duration = 0;
 	private String meetingplace = null;
 	private String description = null;
-	private Date alarm;
-	private ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+	private Calendar alarm;
 	private ArrayList<Person> participants = new ArrayList<Person>();
-	boolean hidden = false;
 
-	public Appointment(int appID, Date stime, Date ftime, String meetpl, String descr, Date alarm){
+	public Appointment(int appID, Calendar stime, Calendar ftime, String meetpl, String descr, Calendar alarm){
 		this.appointmentID=appID;
 		setStarttime(stime);
 		setFinishingtime(ftime);
 		setMeetingplace(meetpl);
 		setDescription(descr);
 	}
-	public Appointment(int appID, Date stime, int dur, String meetpl, String descr, Date alarm){
+	public Appointment(int appID, Calendar stime, int dur, String meetpl, String descr, Calendar alarm){
 		this.appointmentID=appID;
 		setStarttime(stime);
 		setDuration(dur);
@@ -41,23 +39,19 @@ public class Appointment {
 		//blabla
 	}
 	
-	public void setHidden(boolean hide){
-		hidden = hide;
-	}
-	
 	public int getAppointmentID(){
 		return appointmentID;
 	}
 	
 	public String getDate(){
-		return starttime.getDate()+"."+ (starttime.getMonth()+1)+"."+ (starttime.getYear()+1900);
+		return starttime.DAY_OF_MONTH+"."+ (starttime.MONTH)+"."+ (starttime.YEAR); // getYear()+1900);
 	}
 	
-	public Date getStarttime(){
+	public Calendar getStarttime(){
 		return starttime;
 	}
 	
-	public Date getFinishingtime(){
+	public Calendar getFinishingtime(){
 		return finishingtime;
 	}
 	
@@ -69,7 +63,7 @@ public class Appointment {
 		return meetingplace;
 	}
 	
-	public Date getAlarm(){
+	public Calendar getAlarm(){
 		return alarm;
 	}
 	
@@ -77,11 +71,11 @@ public class Appointment {
 		return description;
 	}
 	
-	public void setStarttime(Date stime){
+	public void setStarttime(Calendar stime){
 		starttime = stime; 
 	}
 	
-	public void setFinishingtime(Date ftime){
+	public void setFinishingtime(Calendar ftime){
 		finishingtime = ftime;
 		duration = (finishingtime.getTime()-starttime.getTime())/60000; //i minutt
 	}
@@ -91,7 +85,7 @@ public class Appointment {
 			duration = dur;
 			final long ONE_MINUTE_IN_MILLIS=60000;//millisecs
 			long t=starttime.getTime();
-			finishingtime=new Date(t + (dur * ONE_MINUTE_IN_MILLIS));	
+			finishingtime=new Calendar(t + (dur * ONE_MINUTE_IN_MILLIS));	
 		}
 	}
 	
@@ -99,7 +93,7 @@ public class Appointment {
 		meetingplace = meetpl;
 	}
 	
-	public void setAlarm(Date al){
+	public void setAlarm(Calendar al){
 		alarm = al;
 	}
 	
@@ -112,7 +106,7 @@ public class Appointment {
 	}
 	@Override
 	public String toString(){
-		return "AppointmentID: " + appointmentID + ", Date: " + getDate();
+		return "AppointmentID: " + appointmentID + ", Calendar: " + getDate();
 	}
 	
 }

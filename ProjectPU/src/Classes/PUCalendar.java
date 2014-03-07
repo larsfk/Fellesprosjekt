@@ -3,7 +3,7 @@ package Classes;
 import java.util.Date;
 import java.util.ArrayList;
 
-public class Calendar {
+public class PUCalendar {
 	private ArrayList<Appointment> appointments = new ArrayList<Appointment>();
 	private ArrayList<Boolean> isHidden = new ArrayList<Boolean>();
 	private ArrayList<Boolean> isParticipating = new ArrayList<Boolean>();
@@ -23,7 +23,7 @@ public class Calendar {
 		}
 	}
 	
-	public Calendar(String userEmail){
+	public PUCalendar(String userEmail){
 		this.userEmail = userEmail;
 		for (int i = 0;i<isParticipating.size();i++){
 			isParticipating.set(i, false);
