@@ -44,7 +44,7 @@ public class Person {
 		return office;
 	}
 	
-	public PUCalendar getCalendar(){
+	public PUCalendar getPUCalendar(){
 		return calendar;
 	}
 
