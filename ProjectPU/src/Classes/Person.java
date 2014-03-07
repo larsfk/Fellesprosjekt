@@ -38,27 +38,12 @@ public class Person {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getOffice() {
 		return office;
 	}
 	
 	public PUCalendar getPUCalendar(){
 		return calendar;
-	}
-
-	public void setOffice(String office) {
-		try {
-			Connection conn = db.getConnection();
-			db.addPersonToDatabase("update larsfkl_felles.person SET office = '"+ office + "' WHERE email = '" + this.email + "';", conn);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		this.office = office;
 	}
 
 	public String getSSN() {
@@ -69,6 +54,36 @@ public class Person {
 		return email;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public String getTlf() {
+		return tlf;
+	}
+	
+	public void setName(String name) {
+		try {
+			Connection conn = db.getConnection();
+			db.addPersonToDatabase("update larsfkl_felles.person SET office = '"+ name + "' WHERE email = '" + this.email + "';", conn);
+			this.name = name;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void setOffice(String office) {
+		try {
+			Connection conn = db.getConnection();
+			db.addPersonToDatabase("update larsfkl_felles.person SET office = '"+ office + "' WHERE email = '" + this.email + "';", conn);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.office = office;
+	}
+	
 	public void setEmail(String email) {
 		try {
 			Connection conn = db.getConnection();
@@ -79,21 +94,27 @@ public class Person {
 			e.printStackTrace();
 		}
 	}
-
-	public String getPassword() {
-		return password;
-	}
-
+	
 	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getTlf() {
-		return tlf;
+		try {
+			Connection conn = db.getConnection();
+			db.addPersonToDatabase("update larsfkl_felles.person SET office = '"+ password + "' WHERE email = '" + this.email + "';", conn);
+			this.password = password;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void setTlf(String tlf) {
-		this.tlf = tlf;
+		try {
+			Connection conn = db.getConnection();
+			db.addPersonToDatabase("update larsfkl_felles.person SET office = '"+ tlf + "' WHERE email = '" + this.email + "';", conn);
+			this.tlf = tlf;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
