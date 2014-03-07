@@ -156,7 +156,7 @@ public class CalendarClient {
 			}
 		}
 		}
-		return "  Mon   Tues   Wed   Thu   Fri   Sat   Sun   " + myCalendar.toString();
+		return "  Mon   Tues   Wed   Thu   Fri   Sat   Sun \n" + myCalendar.toString();
 	}
 
 	public String showGroupCalendar(){
