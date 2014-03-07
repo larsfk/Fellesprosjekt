@@ -60,14 +60,14 @@ public class CalendarClient {
 	//	}
 
 	public String showMyWeekCalendar(){ //Slått sammen denne med showMyCalendar
-		//		myCalendar.get(0).set(0, "Dag/tid");
-		//		myCalendar.get(1).set(0, "Man");
-		//		myCalendar.get(2).set(0, "Tirs");
-		//		myCalendar.get(3).set(0, "Ons");
-		//		myCalendar.get(4).set(0, "Tors");
-		//		myCalendar.get(5).set(0, "Fre");
-		//		myCalendar.get(6).set(0, "Lør");
-		//		myCalendar.get(7).set(0, "Søn");
+				myCalendar.get(0).set(0, "Dag/tid");
+				myCalendar.get(1).set(0, "Man");
+				myCalendar.get(2).set(0, "Tirs");
+				myCalendar.get(3).set(0, "Ons");
+				myCalendar.get(4).set(0, "Tors");
+				myCalendar.get(5).set(0, "Fre");
+				myCalendar.get(6).set(0, "Lør");
+				myCalendar.get(7).set(0, "Søn");
 
 		//		if(person.getPUCalendar() == null)
 		//			return "Du er ingen person!";
@@ -90,7 +90,7 @@ public class CalendarClient {
 			int count = 0;
 			for(int i = 0; i< appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + calendar.get(Calendar.DAY_OF_MONTH) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR)){
-					myCalendar.get(firstDayOfWeek + dayOfWeek).set(count, appointments.get(i));		
+					myCalendar.get(firstDayOfWeek + dayOfWeek + 1).set(count, appointments.get(i));		
 					count++;
 				}
 			}
@@ -100,7 +100,7 @@ public class CalendarClient {
 			int count = 0;
 			for(int i = 0; i< appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + (calendar.get(Calendar.DAY_OF_MONTH) + dayOfWeek) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR)){
-					myCalendar.get(firstDayOfWeek + dayOfWeek).set(count, appointments.get(i));		
+					myCalendar.get(firstDayOfWeek + dayOfWeek + 1).set(count, appointments.get(i));		
 					count++;
 				}
 			}
@@ -110,7 +110,7 @@ public class CalendarClient {
 			int count = 0;
 			for(int i = 0; i< appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + (calendar.get(Calendar.DAY_OF_MONTH) + dayOfWeek) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR)){
-					myCalendar.get(firstDayOfWeek + dayOfWeek).set(count, appointments.get(i));		
+					myCalendar.get(firstDayOfWeek + dayOfWeek + 1).set(count, appointments.get(i));		
 					count++;
 				}
 			}
@@ -120,7 +120,7 @@ public class CalendarClient {
 			int count = 0;
 			for(int i = 0; i< appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + (calendar.get(Calendar.DAY_OF_MONTH) + dayOfWeek) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR)){
-					myCalendar.get(firstDayOfWeek + dayOfWeek).set(count, appointments.get(i));		
+					myCalendar.get(firstDayOfWeek + dayOfWeek + 1).set(count, appointments.get(i));		
 					count++;
 				}
 			}
@@ -130,7 +130,7 @@ public class CalendarClient {
 			int count = 0;
 			for(int i = 0; i< appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + (calendar.get(Calendar.DAY_OF_MONTH) + dayOfWeek) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR)){
-					myCalendar.get(firstDayOfWeek + dayOfWeek).set(count, appointments.get(i));		
+					myCalendar.get(firstDayOfWeek + dayOfWeek + 1).set(count, appointments.get(i));		
 					count++;
 				}
 			}
@@ -140,7 +140,7 @@ public class CalendarClient {
 			int count = 0;
 			for(int i = 0; i< appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + (calendar.get(Calendar.DAY_OF_MONTH) + dayOfWeek) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR)){
-					myCalendar.get(firstDayOfWeek + dayOfWeek).set(count, appointments.get(i));		
+					myCalendar.get(firstDayOfWeek + dayOfWeek + 1).set(count, appointments.get(i));		
 					count++;
 				}
 			}
@@ -150,7 +150,7 @@ public class CalendarClient {
 			int count = 0;
 			for(int i = 0; i< appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + (calendar.get(Calendar.DAY_OF_MONTH) + dayOfWeek) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR)){
-					myCalendar.get(firstDayOfWeek + dayOfWeek).set(count, appointments.get(i));		
+					myCalendar.get(firstDayOfWeek + dayOfWeek + 1).set(count, appointments.get(i));		
 					count++;
 				}
 			}
