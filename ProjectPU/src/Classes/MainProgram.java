@@ -11,8 +11,8 @@ public class MainProgram {
 	//Burde CalendarClient inneholde alle kalendere? I så fall skal denne listen fylles med disse:
 	
 	// CalendarClient cc; //= new CalendarClient();
-	ArrayList<ourCalendar> calendars; // = cc.getAr();
-	private ourCalendar activeCalendar; //Blir dette nå en kopi eller jobber jeg i rett kalender når jeg setter verdier til den?
+	ArrayList<PUCalendar> calendars; // = cc.getAr();
+	private PUCalendar activeCalendar; //Blir dette nå en kopi eller jobber jeg i rett kalender når jeg setter verdier til den?
 
 	private  void run() {
 		CalendarClient cc = new CalendarClient();

@@ -52,7 +52,7 @@ public class PUCalendar {
 					appointments.add(i,appoint);
 				}
 			}
-		appoint.addParticipant(par)
+		//appoint.addParticipant(par);
 		}
 		
 	}
