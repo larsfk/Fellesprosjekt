@@ -49,38 +49,39 @@ public class CalendarClient {
 
 		switch(day){
 
-		case day + 0:
+		case 0: {
 			for(int i = 0; i< appointments.size(); i++){
-				if(appointments.get(i).getDate() == "" + calendar.get(monday + i) + "." + calendar.MONTH + "." + calendar.YEAR){
-					myCalendar.get(monday + i).set(i, appointments.get(i));		
-					return myCalendar.toString();
+				if(appointments.get(i).getDate() == "" + calendar.DAY_OF_MONTH + "." + calendar.MONTH + "." + calendar.YEAR){
+					myCalendar.get(monday + day).set(i, appointments.get(i));		
 				}
 			}
+		}
 
-		case day + 1:{
+		case 1: {
 			for(int i = 0; i < appointments.size(); i++){
 
 			}
-			return;
 		}
 
 		case 2:
-			return;
+			
 
 		case 3:
-			return;
+			
 
 		case 4:
-			return;
+			
 
 		case 5:
-			return;
+			
 
 		case 6:
-			return;
+			
 
 		case 7:
-			return;
+			
+			
+			return myCalendar.toString();
 		}
 
 
