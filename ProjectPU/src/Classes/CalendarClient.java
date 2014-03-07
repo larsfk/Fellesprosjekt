@@ -2,7 +2,7 @@ package Classes;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
+import java.util.Calendar;
 
 public class CalendarClient {
 
@@ -10,10 +10,7 @@ public class CalendarClient {
 	Person person;
 	private ArrayList<Calendar> calendarList = new ArrayList<Calendar>();
 	private ArrayList<ArrayList<String>> myCalendar = new ArrayList<ArrayList<String>>();
-	public Date date = new Date();
-	public int today = date.getDate();
-	public int day = date.getDay();
-	public int month = date.getMonth();
+	public Calendar calendar = Calendar.getInstance();
 
 	//Lage database med hvilken kalender som tilh¿rer hvem!
 
