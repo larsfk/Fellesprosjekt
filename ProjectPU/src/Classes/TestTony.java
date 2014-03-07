@@ -7,7 +7,7 @@ public class TestTony {
 
 //	private static ArrayList<ArrayList<String>> myCalendar = new ArrayList<ArrayList<String>>();
 //	public static ArrayList<ArrayList<String>> calendar;
-	public static Calendar calendar2 = Calendar.getInstance();
+	
 	
 //	public static ArrayList<ArrayList<String>> setCalendar(){
 //		
@@ -24,9 +24,11 @@ public class TestTony {
 //	}
 	
 	public static void main(String[] args) {
+		Calendar calendar2 = Calendar.getInstance();
+		int i = 1;
 //		calendar = setCalendar();
 //		System.out.println(calendar);
-		System.out.println("" + calendar2);
+		System.out.println(i + "    " + (calendar2.getFirstDayOfWeek()+1));
 	}
 
 }
