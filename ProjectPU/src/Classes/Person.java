@@ -16,12 +16,12 @@ public class Person {
 		this.name = name;
 		this.office = office;
 		this.SSN = SSN;
-		this.calendar = new PUCalendar(email);
+		this.calendar = new PUCalendar(this);
 		this.email = email;
 		this.password = password;
 		this.tlf = tlf;
 		try {
-			db.addToDatabase("insert into larsfkl_felles.person(name,office,tlf,email,password) values (" + name + "," + office + "," + tlf + "," + email + "," + password + "));");
+			db.addToDatabase("insert into larsfkl_felles.person(name,office,tlf,email,password) values ('" + name + "','" + office + "','" + tlf + "','" + email + "','" + password + "');");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
