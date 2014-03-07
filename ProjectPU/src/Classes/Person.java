@@ -1,7 +1,6 @@
 package Classes;
 
 import java.sql.SQLException;
-import java.util.Date;
 
 public class Person {
 	private String name;
@@ -10,18 +9,19 @@ public class Person {
 	private int SSN; 
 	private String email; 
 	private String password;
-	private final Calendar calendar;
+	private final PUCalendar calendar;
+	Database db = new Database();
 	
 	public Person(String name, String office, int SSN, String password, int tlf, String email){
 		this.name = name;
 		this.office = office;
 		this.SSN = SSN;
-		this.calendar = new Calendar(email);
+		this.calendar = new PUCalendar(email);
 		this.email = email;
 		this.password = password;
 		this.tlf = tlf;
 		try {
-			Database.addToDatabase("INSERT INTO `larsfkl_felles`.`person` (`name`, `office`, `tlf`, `email`, `password`) VALUES (" + name + ", " + office + "," + tlf + "," + email + "," + password + ");");
+			db.addToDatabase("INSERT INTO `larsfkl_felles`.`person` (`name`, `office`, `tlf`, `email`, `password`) VALUES (" + name + ", " + office + "," + tlf + "," + email + "," + password + ");");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,7 +44,7 @@ public class Person {
 		return office;
 	}
 	
-	public Calendar getCalendar(){
+	public PUCalendar getCalendar(){
 		return calendar;
 	}
 

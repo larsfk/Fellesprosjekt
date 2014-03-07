@@ -45,7 +45,7 @@ public class Database {
 
 	}
 	
-	public static void readDatabase(String statement) throws SQLException{
+	public void readDatabase(String statement) throws SQLException{
 		//Create a query
 		PreparedStatement query = connection.prepareStatement(statement);
 		//Creating a variable to execute query
