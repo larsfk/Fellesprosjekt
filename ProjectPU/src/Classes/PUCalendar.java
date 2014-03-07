@@ -1,5 +1,6 @@
 package Classes;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
 
@@ -57,11 +58,11 @@ public class PUCalendar {
 		}
 	}
 	
-	public void editStarttime(Appointment appoint, Date starttime){
+	public void editStarttime(Appointment appoint, Calendar starttime){
 		appoint.setStarttime(starttime);
 	}
 	
-	public void editFinishtime(Appointment appoint, Date finishtime){
+	public void editFinishtime(Appointment appoint, Calendar finishtime){
 		appoint.setFinishingtime(finishtime);
 	}
 	
@@ -77,8 +78,8 @@ public class PUCalendar {
 		appoint.setDescription(descr);
 	}
 	
-	public void editAlarm(Appointment appoint, Date alarm){
-		appoint.alarm = alarm;
+	public void editAlarm(Appointment appoint, Calendar alarm){
+		appoint.setAlarm(alarm);
 	}
 
 }
