@@ -3,11 +3,13 @@ package Classes;
 import java.util.Calendar;
 import java.util.ArrayList;
 
+import javax.xml.datatype.Duration;
+
 public class Appointment {
 	private int appointmentID = 0;
 	private Calendar starttime;
 	private Calendar finishingtime;
-	private long duration = 0;
+	private static long duration = 0;
 	private String meetingplace = null;
 	private String description = null;
 	private Calendar alarm;
@@ -19,13 +21,16 @@ public class Appointment {
 		setFinishingtime(ftime);
 		setMeetingplace(meetpl);
 		setDescription(descr);
+		setDuration(ftime, stime);
+		setAlarm(alarm);
 	}
-	public Appointment(int appID, Calendar stime, int dur, String meetpl, String descr, Calendar alarm){
+	public Appointment(int appID, Calendar stime, long dur, String meetpl, String descr, Calendar alarm){
 		this.appointmentID=appID;
 		setStarttime(stime);
 		setDuration(dur);
 		setMeetingplace(meetpl);
 		setDescription(descr);
+		setAlarm(alarm);
 	}
 	
 	public void addParticipant(Person par){
@@ -50,9 +55,18 @@ public class Appointment {
 		System.out.println("hei");
 	}
 	
-	public void setDuration(long duration) {
-		this.duration = duration;
+//	public void setDuration(long duration) {
+//		this.duration = duration;
+//	}
+	
+	public void editAppointment(Calendar stime, Calendar ftime, String meetpl, String descr){
+		setStarttime(stime);
+		setFinishingtime(ftime);
+		setMeetingplace(meetpl);
+		setDescription(descr);
+		Update.updateAppointment();
 	}
+	
 	public ArrayList<Person> getParticipants(){
 		return participants;
 	}
@@ -95,19 +109,49 @@ public class Appointment {
 	
 	public void setFinishingtime(Calendar ftime){
 		finishingtime = ftime;
-		duration = (finishingtime.getTimeInMillis()-starttime.getTimeInMillis())/60000; //i minutt
+		setDuration(starttime, ftime);
+//		setDuration((finishingtime.getTimeInMillis()-starttime.getTimeInMillis())/60000); //i minutt
+//		setDuration((int)(finishingtime.getTime()-starttime.getTime())/(1000 * 60 * 60 * 24));
+//		setDuration(Duration dur = new Duration(stime, ftime);
 	}
 	
-	public void setDuration(int dur){
-		if (dur > 0){
-			duration = dur;
-			// final long ONE_MINUTE_IN_MILLIS=60000;//millisecs
-			//feiling if-setning pga casting
-			int t = (int) starttime.getTimeInMillis()/60000;
-			finishingtime = Calendar.getInstance();
-			finishingtime.set(finishingtime.HOUR_OF_DAY, starttime.HOUR_OF_DAY+t);
-		}
+	//hvis vi har duration og vil sette finishingtime:
+	
+	public void setFinishingtime(long duration){
+		finishingtime = starttime.add(Calendar.MINUTE, (int) duration);
 	}
+	
+	public static void setDuration(Calendar stime, Calendar ftime) { 
+		//stime.getInstance();
+		//ftime.getInstance();
+	    long milsecs1= stime.getTimeInMillis();
+	    long milsecs2 = ftime.getTimeInMillis();
+	    duration = (milsecs2-milsecs1)/(60 * 1000);
+//		Calendar date = (Calendar) stime.clone();  
+//		long duration = 0;  
+//		while (date.before(ftime)) {  
+//			date.add(Calendar.DAY_OF_MONTH, 1);  
+//		    duration++;  
+//		}  
+//		return duration;  
+		}
+	
+	public void setDuration(long dur) {  
+			if (dur > 0){
+				duration = dur;
+			}
+		}  
+	
+	
+//	public void setDuration(long dur){
+//		if (dur > 0){
+//			duration = dur;
+//			//feiling if-setning pga casting
+//			finishingtime = Calendar.getInstance();
+//			finishingtime.set(finishingtime.HOUR_OF_DAY, starttime.HOUR_OF_DAY);
+//			//Hva gjor denne?? 
+//		}
+//	}
 	
 	public void setMeetingplace(String meetpl){
 		meetingplace = meetpl;
