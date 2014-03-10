@@ -167,6 +167,8 @@ public class CalendarClient {
 		//		for(int i = 0; i < appointments.size(); i++){
 		//			appointments.get(i).getParticipants();
 		//		}
+		
+		
 		return null;
 	}
 }
