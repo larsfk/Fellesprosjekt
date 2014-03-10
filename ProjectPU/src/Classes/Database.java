@@ -52,8 +52,7 @@ public class Database {
 			String email = rs.getString(4);
 			String SSN = rs.getString(5);
 			String password = rs.getString(6);
-			lars = new Person(name, office, tlf, SSN, password);
-			lars.setEmail(mail);
+			lars = new Person(name, office, tlf, email, SSN, password);
 			rs.close ();
 
 			return lars;

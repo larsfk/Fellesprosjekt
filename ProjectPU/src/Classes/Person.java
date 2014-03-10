@@ -13,15 +13,6 @@ public class Person {
 	private final PUCalendar calendar;
 	Database db = new Database();
 	
-	public Person(String name, String office, String tlf, String SSN, String password){
-		this.name = name;
-		this.office = office;
-		this.SSN = SSN;
-		this.calendar = new PUCalendar(this);
-		this.password = password;
-		this.tlf = tlf;
-	}
-	
 	public Person(String name, String office, String tlf, String email, String SSN, String password){
 		this.name = name;
 		this.office = office;
@@ -30,10 +21,20 @@ public class Person {
 		this.email = email;
 		this.password = password;
 		this.tlf = tlf;
+	}
+	
+	public Person(String name, String office, String tlf, String email, String SSN, String password, Connection conn){
+		this.name = name;
+		this.office = office;
+		this.SSN = SSN;
+		this.calendar = new PUCalendar(this);
+		this.email = email;
+		this.password = password;
+		this.tlf = tlf;
 		try {
-			Connection conn = db.getConnection();
 			db.addPersonToDatabase("insert into larsfkl_felles.person(name,office,tlf,email,SSN,password) values ('" + name + "','" + office + "','" + tlf + "','" + email + "','" + SSN + "','" + password + "');", conn);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -81,6 +82,8 @@ public class Person {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	public void setOffice(String office) {
 		try {
