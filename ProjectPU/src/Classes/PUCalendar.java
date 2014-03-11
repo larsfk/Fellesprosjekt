@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
 
-public class PUCalendar {
+public class AppointmentToPerson {
 	
 	private ArrayList<Appointment> appointments = new ArrayList<Appointment>();
 	private ArrayList<Boolean> isHidden = new ArrayList<Boolean>();
