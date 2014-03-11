@@ -29,7 +29,6 @@ public class MeetingRoom {
 						AppointmentList.add(i, Q);
 					}
 				}		
-				Capasity++; //Hva gjør denne? Tror capasity skal inneholde størrelsen på rommet
 			}
 		}
 		catch (NullPointerException e){
@@ -44,7 +43,6 @@ public class MeetingRoom {
 				AppointmentList.remove(i);
 			}
 		}
-		Capasity--;
 	}
 
 	public boolean isFree(Calendar start, Calendar end){
