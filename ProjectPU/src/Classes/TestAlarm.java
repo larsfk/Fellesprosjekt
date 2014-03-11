@@ -19,6 +19,7 @@ public class TestAlarm {
 	}
 	
 	public TestAlarm(){
+		start1 = 
 		app1 = new Appointment(1, start1, finish1, "kontor 20", "mote", alarm1);
 		alarm1 = new Alarm(284, 3, 11, 14, 30, "Ha en god dag");
 		System.out.println(alarm1);
@@ -46,3 +47,4 @@ public class TestAlarm {
 	}
 
 }
+
