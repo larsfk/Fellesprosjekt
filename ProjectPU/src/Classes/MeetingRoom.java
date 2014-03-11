@@ -8,11 +8,13 @@ public class MeetingRoom {
 	private int ID;
 	private int Capasity;
 	private ArrayList<Appointment> AppointmentList = new ArrayList<Appointment>();
+	private int length;
 
 	public MeetingRoom(int ID, int Capasity){
 		this.ID = ID;
 		this.Capasity = Capasity;
-		this.AppointmentList.equals(null);
+		this.AppointmentList.add(0, null);
+		length = 0;
 	}
 
 	public void addAppointment(Appointment Q){
@@ -20,15 +22,12 @@ public class MeetingRoom {
 			if (Q.getStarttime().get(Calendar.YEAR) == -1){
 				throw new NullPointerException();
 			}
-			if (AppointmentList.size() == 0){
-				AppointmentList.add(Q);
+			if (length == 0){
+				AppointmentList.set(0, Q);
+				length = 1;
 			}
 			else{
-				for(int i = 0; i < AppointmentList.size(); i++){
-					if (Q.getStarttime().compareTo(AppointmentList.get(i).getStarttime()) < 0){
-						AppointmentList.add(i, Q);
-					}
-				}		
+						AppointmentList.add(Q);	
 			}
 		}
 
@@ -70,8 +69,9 @@ public class MeetingRoom {
 	}
 
 	public ArrayList<Appointment> getAppointmentList() {
-		System.out.println("Appointmentlist hentes");
 		return AppointmentList;
 	}
+	
+	
 
 }
