@@ -7,17 +7,36 @@ public class AppointmentToPerson {
 	private final Appointment appoint;
 	private boolean isGoing = false;
 	private boolean isHidden = false;
-
+	private boolean isOwner = false;
 
 	public AppointmentToPerson(Person user, Appointment appoint){
 		this.user = user;
 		this.appoint = appoint;
+		user.addatp(this);
 	}
-	public void setNotGoing(){
-		isGoing = true;
+	public void setOwner(boolean isOwner){
+		this.isOwner = isOwner;
+	}
+	public boolean getOwner(){
+		return isOwner;
+	}
+	public void setIsGoing(boolean isGoing){
+		this.isGoing = isGoing;
 	}
 
-	public void hideAppointment(){
-		isHidden = true;
+	public void setHidden(boolean isHidden){
+		this.isHidden = isHidden;
+	}
+	public Person getUser() {
+		return user;
+	}
+	public Appointment getAppointment() {
+		return appoint;
+	}
+	public boolean getIsGoing(){
+		return isGoing;
+	}
+	public boolean getIsHidden(){
+		return isHidden;
 	}
 }
