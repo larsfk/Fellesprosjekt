@@ -17,19 +17,19 @@ public class MeetingRoom {
 
 	public void addAppointment(Appointment Q){
 		try{
-			if (Q.getStarttime() == null){
+			if (Q.getStarttime().get(Calendar.YEAR) == -1){
 				throw new NullPointerException();
 			}
-			if (AppointmentList.size() == 0){
+			//if (AppointmentList.size() == 0){
 				AppointmentList.add(Q);
-			}
-			else{
-				for(int i = 0; i < AppointmentList.size(); i++){
-					if (Q.getStarttime().compareTo(AppointmentList.get(i).getStarttime()) < 0){
-						AppointmentList.add(i, Q);
-					}
-				}		
-			}
+			//}
+//			else{
+//			//	for(int i = 0; i < AppointmentList.size(); i++){
+//					if (Q.getStarttime().compareTo(AppointmentList.get(i).getStarttime()) < 0){
+//						AppointmentList.add(i, Q);
+//					}
+//				}		
+//			}
 		}
 		catch (NullPointerException e){
 			System.out.println("The appointment has no startdate.");
