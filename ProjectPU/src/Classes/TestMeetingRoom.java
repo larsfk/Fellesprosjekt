@@ -103,7 +103,6 @@ public class TestMeetingRoom {
 	@Test
 	public void testIsFree(){
 		System.out.println(AppointmentList);
-//		assertEquals(false, meetingRooom.isFree(start1, finish1));
 		assertTrue(!(meetingRooom.isFree(start1, finish1)));
 		assertEquals(true, meetingRooom.isFree(start3, finish3));
 	}
