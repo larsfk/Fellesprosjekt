@@ -220,22 +220,25 @@ public class Person {
 	public void makeAppointment(int appID, Calendar stime, Calendar ftime, String meetpl, String descr, Calendar alarm){
 		new Appointment(appID, stime, ftime, meetpl, descr, alarm, this);
 	}
-	public void changeAppointment(Appointment appoint){
+	public boolean canChangeAppointment(Appointment appoint){
 		if (appoint.getOwner() == this){
-			//DO SOMETHING
+			return true;
 		}
+		return false;
 	}
 	public void hideAppointment(Appointment appoint){ //Ta inn appointment
 		for (int i = 0;i<appointmentList.size();i++){
-			if (appointmentList.get(i).getAppointment() != appoint){
+			if (appointmentList.get(i).getAppointment() == appoint){
 				appointmentList.get(i).setHidden(true);
+				break;
 			}			
 		}
 	}
 	public void unHideAppointment(Appointment appoint){
 		for (int i = 0;i<appointmentList.size();i++){
-			if (appointmentList.get(i).getAppointment() != appoint){
+			if (appointmentList.get(i).getAppointment() == appoint){
 				appointmentList.get(i).setHidden(false);
+				break;
 			}			
 		}
 	}
