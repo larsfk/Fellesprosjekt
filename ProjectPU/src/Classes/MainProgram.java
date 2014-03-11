@@ -11,32 +11,22 @@ public class MainProgram {
 	//Burde CalendarClient inneholde alle kalendere? I så fall skal denne listen fylles med disse:
 	
 	// CalendarClient cc; //= new CalendarClient();
-	ArrayList<PUCalendar> calendars; // = cc.getAr();
-	private PUCalendar activeCalendar; //Blir dette nå en kopi eller jobber jeg i rett kalender når jeg setter verdier til den?
-
+	
 	private  void run() {
-		CalendarClient cc = new CalendarClient();
-		Person rebecca = new Person("Rebecca", "Home", "3423422", "rebcox@gmail.com","080674555","heisann");
-		//(String name, String office, String tlf, String email, String SSN, String password){
-		PUCalendar rebsCal = rebecca.getPUCalendar();
+		CalendarClient cc = new CalendarClient();		
 
 		Calendar date1 = Calendar.getInstance();
 		Calendar date2 = Calendar.getInstance();
 		Calendar date3 = Calendar.getInstance();
 		Date thisDate = new Date();
 		
-		Appointment appoint1; 
-		
 		date1.set(thisDate.getYear(), thisDate.getMonth(), thisDate.getDate(), 14, 00);
 		date2.set(thisDate.getYear(), thisDate.getMonth(), thisDate.getDate(), 16, 00);
-		appoint1 = new Appointment(1,date1,date2,"Hos Cox","Progging",date3);
 		
-		rebsCal.addAppointment(appoint1);
+		Person rebecca = new Person("Rebecca", "Home", "3423422", "rebcox@gmail.com","080674555","heisann");
 		
-		
-		cc.addCalendar(rebsCal);
-
-		calendars = cc.getcalendarList();
+		Appointment appoint1; 
+		appoint1 = new Appointment(1,date1,date2,"Hos Cox","Progging",date3,rebecca);		
 		
 		
 		System.out.println(welcome);
@@ -44,16 +34,16 @@ public class MainProgram {
 		//String input = sc.nextLine();
 		//while (input.compareTo("x")!=0){ //denne gjelder kun den ytteste løkka. problem om vi skal ha det med
 		
-		int personID = -1; 
-		while (personID < 0 || personID > calendars.size()){
-			System.out.println("Who are you? Type number");
-			for (int i = 0;i<calendars.size();i++){
-				System.out.println("(" + i + ") " + calendars.get(i).getUserEmail()); //email is the identificator
-			}
-			personID = sc.nextInt();
-		}
+//		int personID = -1; 
+//		while (personID < 0 || personID > calendars.size()){
+//			System.out.println("Who are you? Type number");
+//			for (int i = 0;i<calendars.size();i++){
+//				System.out.println("(" + i + ") " + calendars.get(i).getUserEmail()); //email is the identificator
+//			}
+//			personID = sc.nextInt();
+//		}
 		//Sammenligne passord med database
-		activeCalendar = calendars.get(personID);
+		//activeCalendar = calendars.get(personID);
 		//cc.setPerson()
 
 		System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3. Show this calendar\n4. Show several calendars");
