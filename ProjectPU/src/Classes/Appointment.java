@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.ArrayList;
 
 public class Appointment {
-	private int appointmentID = 0;
+	private int appointmentID = -1;
 	private Calendar starttime;
 	private Calendar finishingtime;
 	private long duration = 0;
@@ -14,6 +14,9 @@ public class Appointment {
 	private ArrayList<Person> participants = new ArrayList<Person>();
 
 	public Appointment(int appID, Calendar stime, Calendar ftime, String meetpl, String descr, Calendar alarm){
+		if (stime.after(ftime)){
+			throw new IllegalArgumentException("Starttime cannot be after finishtime");
+		}
 		this.appointmentID=appID;
 		setStarttime(stime);
 		setFinishingtime(ftime);
@@ -104,7 +107,7 @@ public class Appointment {
 			// final long ONE_MINUTE_IN_MILLIS=60000;//millisecs
 			//feiling if-setning pga casting
 			int t = (int) starttime.getTimeInMillis()/60000;
-			finishingtime = Calendar.getInstance();
+			
 			finishingtime.set(finishingtime.HOUR_OF_DAY, starttime.HOUR_OF_DAY+t);
 		}
 	}

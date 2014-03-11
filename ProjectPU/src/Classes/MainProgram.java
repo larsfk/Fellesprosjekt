@@ -16,10 +16,10 @@ public class MainProgram {
 
 	private  void run() {
 		CalendarClient cc = new CalendarClient();
-		
-		PUCalendar cal1 = new PUCalendar("rebcox@gmail.com");
-		PUCalendar cal2 = new PUCalendar("tonygj@gmail.com");
-		PUCalendar cal3 = new PUCalendar("ida@sagdahl.com");
+		Person rebecca = new Person("Rebecca", "Home", "3423422", "rebcox@gmail.com","080674555","heisann");
+		//(String name, String office, String tlf, String email, String SSN, String password){
+		PUCalendar rebsCal = rebecca.getPUCalendar();
+
 		Calendar date1 = Calendar.getInstance();
 		Calendar date2 = Calendar.getInstance();
 		Calendar date3 = Calendar.getInstance();
@@ -31,12 +31,10 @@ public class MainProgram {
 		date2.set(thisDate.getYear(), thisDate.getMonth(), thisDate.getDate(), 16, 00);
 		appoint1 = new Appointment(1,date1,date2,"Hos Cox","Progging",date3);
 		
-		cal1.addAppointment(appoint1);
+		rebsCal.addAppointment(appoint1);
 		
 		
-		cc.addCalendar(cal1);
-		cc.addCalendar(cal2);
-		cc.addCalendar(cal3);
+		cc.addCalendar(rebsCal);
 
 		calendars = cc.getcalendarList();
 		
