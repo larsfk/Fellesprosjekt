@@ -9,14 +9,23 @@ public class CalendarClient {
 
 	//	Calendar calendar = new Calendar();
 	Person person;
-	private ArrayList<PUCalendar> calendarList = new ArrayList<PUCalendar>();
-	private ArrayList<ArrayList<Appointment>> myCalendar = new ArrayList<ArrayList<Appointment>>();
 	public Calendar calendar = Calendar.getInstance();
 	ArrayList<Appointment> appointments = new ArrayList<Appointment>();
 
 
 	//Lage database med hvilken kalender som tilh¿rer hvem!
-
+	public CalendarClient(Person person){
+		
+	}
+	
+	public void deleteAppointment(Appointment appoint){
+		/*
+		 * 
+		 * Slette fra databasen
+		 * slette appointmentToPerson-relasjonen
+		 * 
+		 */
+	}
 	public void setPerson(Person person){
 		this.person = person;
 
