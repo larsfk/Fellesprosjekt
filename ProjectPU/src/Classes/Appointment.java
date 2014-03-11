@@ -1,5 +1,7 @@
 package Classes;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.ArrayList;
 
@@ -10,12 +12,13 @@ public class Appointment {
 	private long duration = 0;
 	private String meetingplace = null;
 	private String description = null;
-	private Calendar alarm;
+	private Alarm alarm;
 	private Person owner;
 	private ArrayList<Person> participants = new ArrayList<Person>();
 	private ArrayList<AppointmentToPerson> participantConnect = new ArrayList<AppointmentToPerson>();
+	Database db = new Database();
 
-	public Appointment(int appID, Calendar stime, Calendar ftime, String meetpl, String descr, Calendar alarm, Person owner){
+	public Appointment(Calendar stime, Calendar ftime, String meetpl, String descr, Alarm alarm, Person owner){
 		if (stime.after(ftime)){
 			throw new IllegalArgumentException("Starttime cannot be after finishtime");
 		}
@@ -24,7 +27,6 @@ public class Appointment {
 		 * DATABASE: IF appID finnes throw new IllegalArgumentException
 		 * 
 		 */
-		this.appointmentID=appID;
 		this.owner = owner;
 		AppointmentToPerson atp = new AppointmentToPerson(owner,this);
 		atp.setOwner(true);
@@ -32,14 +34,62 @@ public class Appointment {
 		setFinishingtime(ftime);
 		setMeetingplace(meetpl);
 		setDescription(descr);
+		setDuration(stime, ftime);
+		setAlarm(alarm);
 	}
-	public Appointment(int appID, Calendar stime, int dur, String meetpl, String descr, Calendar alarm){
-		this.appointmentID=appID;
+	public Appointment(Calendar stime, int dur, String meetpl, String descr, Alarm alarm, Person owner){
 		setStarttime(stime);
 		setDuration(dur);
 		setMeetingplace(meetpl);
 		setDescription(descr);
+		setAlarm(alarm);
+		this.owner = owner;
+		AppointmentToPerson atp = new AppointmentToPerson(owner,this);
+		atp.setOwner(true);
 	}
+	
+	
+	public Appointment(Calendar stime, Calendar ftime, String meetpl, String descr, Alarm alarm, Person owner, Connection conn){
+		if (stime.after(ftime)){
+			throw new IllegalArgumentException("Starttime cannot be after finishtime");
+		}
+		this.owner = owner;
+		AppointmentToPerson atp = new AppointmentToPerson(owner,this);
+		atp.setOwner(true);
+		setStarttime(stime);
+		setFinishingtime(ftime);
+		setMeetingplace(meetpl);
+		setDescription(descr);
+		setDuration(stime, ftime);
+		setAlarm(alarm);
+		try {
+			db.addToDatabase("insert into larsfkl_felles.appointment(start,end,description,location,duration,owner) values ('" + stime + "','" + ftime + "','" + descr + "','" + meetpl +  "','" + getDuration() +"','" + getOwner() + "');", conn);
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	public Appointment(Calendar stime, int dur, String meetpl, String descr, Alarm alarm, Person owner, Connection conn){
+		setStarttime(stime);
+		setDuration(dur);
+		setMeetingplace(meetpl);
+		setDescription(descr);
+		setAlarm(alarm);
+		this.owner = owner;
+		AppointmentToPerson atp = new AppointmentToPerson(owner,this);
+		atp.setOwner(true);
+		try {
+			db.addToDatabase("insert into larsfkl_felles.appointment(start,end,description,location,duration,owner) values ('" + stime + "','" + getFinishingtime() + "','" + descr + "','" + meetpl +  "','" + dur +"','" + getOwner() + "');", conn);
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public void addParticipant(Person par){
 			participants.add(par); //overflødig?
@@ -66,9 +116,6 @@ public class Appointment {
 		System.out.println("hei");
 	}
 	
-	public void setDuration(long duration) {
-		this.duration = duration;
-	}
 	public ArrayList<Person> getParticipants(){
 		return participants;
 	}
@@ -97,7 +144,7 @@ public class Appointment {
 		return meetingplace;
 	}
 	
-	public Calendar getAlarm(){
+	public Alarm getAlarm(){
 		return alarm;
 	}
 	
@@ -118,6 +165,10 @@ public class Appointment {
 		duration = (finishingtime.getTimeInMillis()-starttime.getTimeInMillis())/60000; //i minutt
 	}
 	
+	public void setDuration(long duration) {
+		this.duration = duration;
+	}
+	
 	public void setDuration(int dur){
 		if (dur > 0){
 			duration = dur;
@@ -129,11 +180,21 @@ public class Appointment {
 		}
 	}
 	
+	public void setDuration(Calendar stime, Calendar ftime) { 
+		//stime.getInstance();
+		//ftime.getInstance();
+		long milsecs1= stime.getTimeInMillis();
+		long milsecs2 = ftime.getTimeInMillis();
+		long duration = (milsecs2-milsecs1)/(60 * 1000);
+		duration = (finishingtime.getTimeInMillis()-starttime.getTimeInMillis())/60000; //i minutt
+	}
+
+	
 	public void setMeetingplace(String meetpl){
 		meetingplace = meetpl;
 	}
 	
-	public void setAlarm(Calendar al){
+	public void setAlarm(Alarm al){
 		alarm = al;
 	}
 	
