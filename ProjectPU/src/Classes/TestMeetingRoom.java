@@ -15,6 +15,7 @@ public class TestMeetingRoom {
 	Calendar start2 = Calendar.getInstance();
 	Calendar finish2 = Calendar.getInstance();
 	Calendar alarm2 = Calendar.getInstance();
+	Calendar epic;
 	ArrayList<Appointment> AppointmentList;
 	MeetingRoom meetingRooom = new MeetingRoom(1, 10);
 	Appointment app1;
@@ -22,7 +23,6 @@ public class TestMeetingRoom {
 
 
 	public TestMeetingRoom(){
-
 
 		start1.set(start1.HOUR_OF_DAY,14);
 		start1.set(start1.MINUTE,30);
@@ -48,7 +48,9 @@ public class TestMeetingRoom {
 		app1 = new Appointment(1, start1, finish1, "kontor 20", "mote", alarm1);
 		app2 = new Appointment(2, start2, finish2, "kontor 20", "mote", alarm2);
 		
-		System.out.println(app1.getStarttime().MONTH);
+		System.out.println(app1.getStarttime().get(Calendar.MONTH));
+		System.out.println(app1.getFinishingtime().get(Calendar.HOUR_OF_DAY) + ":" + app1.getFinishingtime().get(Calendar.MINUTE));
+		System.out.println(finish1.get(Calendar.HOUR_OF_DAY));
 
 //		meetingRooom.addAppointment(app1);
 //		meetingRooom.addAppointment(app2);
