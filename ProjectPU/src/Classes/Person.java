@@ -1,7 +1,9 @@
 package Classes;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Person {
 	private String name;
@@ -45,11 +47,43 @@ public class Person {
 	}
 
 	public String getName() {
-		return name;
+		try {
+			Connection conn = db.getConnection();
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery("SELECT name FROM larsfkl_felles.person where email = '" + email + "';");
+			ResultSet rs = stmt.getResultSet();
+			
+			rs.next();
+			String name = rs.getString(1);
+			rs.close();
+			
+			return name;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public String getOffice() {
-		return office;
+		try {
+			Connection conn = db.getConnection();
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery("SELECT office FROM larsfkl_felles.person where email = '" + email + "';");
+			ResultSet rs = stmt.getResultSet();
+			
+			rs.next();
+			String office = rs.getString(1);
+			rs.close();
+			
+			return office;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public PUCalendar getPUCalendar(){
@@ -57,25 +91,89 @@ public class Person {
 	}
 
 	public String getSSN() {
-		return SSN;
+		try {
+			Connection conn = db.getConnection();
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery("SELECT SSN FROM larsfkl_felles.person where email = '" + email + "';");
+			ResultSet rs = stmt.getResultSet();
+			
+			rs.next();
+			String SSN = rs.getString(1);
+			rs.close();
+			
+			return SSN;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public String getEmail() {
-		return email;
+		try {
+			Connection conn = db.getConnection();
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery("SELECT email FROM larsfkl_felles.person where email = '" + email + "';");
+			ResultSet rs = stmt.getResultSet();
+			
+			rs.next();
+			String email = rs.getString(1);
+			rs.close();
+			
+			return email;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public String getPassword() {
-		return password;
+		try {
+			Connection conn = db.getConnection();
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery("SELECT password FROM larsfkl_felles.person where email = '" + email + "';");
+			ResultSet rs = stmt.getResultSet();
+			
+			rs.next();
+			String password = rs.getString(1);
+			rs.close();
+			
+			return password;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public String getTlf() {
-		return tlf;
+		try {
+			Connection conn = db.getConnection();
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery("SELECT tlf FROM larsfkl_felles.person where email = '" + email + "';");
+			ResultSet rs = stmt.getResultSet();
+			
+			rs.next();
+			String tlf = rs.getString(1);
+			rs.close();
+			
+			return tlf;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public void setName(String name) {
 		try {
 			Connection conn = db.getConnection();
-			db.addPersonToDatabase("update larsfkl_felles.person SET office = '"+ name + "' WHERE email = '" + this.email + "';", conn);
+			db.addPersonToDatabase("update larsfkl_felles.person SET name = '"+ name + "' WHERE email = '" + this.email + "';", conn);
 			this.name = name;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -99,7 +197,7 @@ public class Person {
 	public void setEmail(String email) {
 		try {
 			Connection conn = db.getConnection();
-			db.addPersonToDatabase("update larsfkl_felles.person SET office = '"+ email + "' WHERE email = '" + this.email + "';", conn);
+			db.addPersonToDatabase("update larsfkl_felles.person SET email = '"+ email + "' WHERE email = '" + this.email + "';", conn);
 			this.email = email;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -110,7 +208,7 @@ public class Person {
 	public void setPassword(String password) {
 		try {
 			Connection conn = db.getConnection();
-			db.addPersonToDatabase("update larsfkl_felles.person SET office = '"+ password + "' WHERE email = '" + this.email + "';", conn);
+			db.addPersonToDatabase("update larsfkl_felles.person SET password = '"+ password + "' WHERE email = '" + this.email + "';", conn);
 			this.password = password;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -121,7 +219,7 @@ public class Person {
 	public void setTlf(String tlf) {
 		try {
 			Connection conn = db.getConnection();
-			db.addPersonToDatabase("update larsfkl_felles.person SET office = '"+ tlf + "' WHERE email = '" + this.email + "';", conn);
+			db.addPersonToDatabase("update larsfkl_felles.person SET tlf = '"+ tlf + "' WHERE email = '" + this.email + "';", conn);
 			this.tlf = tlf;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
