@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
+import junit.framework.TestResult;
 
 public class TestAppointment extends TestCase {
 
@@ -15,27 +16,40 @@ public class TestAppointment extends TestCase {
 	Calendar start2 = Calendar.getInstance();
 	Calendar finish2 = Calendar.getInstance();
 	Calendar alarm2 = Calendar.getInstance();
-	public TestAppointment(){
+	Appointment app1;
+	Appointment app2;
+	public static void main(String[] args) {
+		TestAppointment ta = new TestAppointment();
 		
+	}
+
+	public TestAppointment(){
 		start1.set(start1.HOUR_OF_DAY,14);
 		start1.set(start1.MINUTE,30);
+		
 		finish1.set(finish1.HOUR_OF_DAY, 15);
 		finish1.set(finish1.MINUTE, 30);
+		System.out.println(finish1.after(start1));
+		
 		alarm1.set(alarm1.HOUR_OF_DAY, 13);
 		alarm1.set(alarm1.MINUTE, 45);
-		System.out.println("duration: " + app1.getDuration());
 		
 		start2.set(start2.HOUR_OF_DAY,15);
 		start2.set(start2.MINUTE,15);
-		
-		//System.out.println("start 1: " + start1);
-		//System.out.println("start 2: " + start2);
-		long milsecs1= start1.getTimeInMillis();
-	    long milsecs2 = finish1.getTimeInMillis();
-	    long duration = (milsecs2-milsecs1)/(60 * 1000);
-	    //DETTE FUNKER MEN IKKE I FUNKSJONEN!!!
-		System.out.println(duration);
+		app1 = new Appointment(1, start1, finish1, "kontor 20", "mote", alarm1);
+		app2 = new Appointment(2, start2, finish2, "kontor 20", "mote", alarm2);
+
 	}
+	
+//	public void testAppointment(){	
+//		//System.out.println("start 1: " + start1);
+//		//System.out.println("start 2: " + start2);
+//		long milsecs1= start1.getTimeInMillis();
+//	    long milsecs2 = finish1.getTimeInMillis();
+//	    long duration = (milsecs2-milsecs1)/(60 * 1000);
+//	    //DETTE FUNKER MEN IKKE I FUNKSJONEN!!!
+//		System.out.println(duration);
+//	}
 	
 	@Test
 	public void testMakeAnAppointment(){
@@ -80,21 +94,9 @@ public class TestAppointment extends TestCase {
 		app1.setAlarm(alarm1);
 		Assert.assertEquals("13.45", ""+alarm1.get(alarm1.HOUR_OF_DAY)+"."+alarm1.get(alarm1.MINUTE));
 	}
-	
-	
-//	public static void main(String[] args) {
-//		TestAppointment test = new TestAppointment();
-//		test.makeAnAppointmentTest();
-//	}
-//	
-	Appointment app1 = new Appointment(1, start1, finish1, "kontor 20", "mote", alarm1);
-	Appointment app2 = new Appointment(2, start2, finish2, "kontor 20", "mote", alarm2);
-	
-//    Assert.assertEquals(m12CHF, m12CHF);
-//    Assert.assertEquals(m12CHF, new Money(12, "CHF")); // (1)
-//    Assert.assertTrue(!m12CHF.equals(m14CHF));
-//}
+
 	
 }
+
 
 
