@@ -14,6 +14,7 @@ public class Appointment {
 	private String description = null;
 	private Calendar alarm;
 	private ArrayList<Person> participants = new ArrayList<Person>();
+	private Update update;
 
 	public Appointment(int appID, Calendar stime, Calendar ftime, String meetpl, String descr, Calendar alarm){
 		this.appointmentID=appID;
@@ -59,12 +60,12 @@ public class Appointment {
 //		this.duration = duration;
 //	}
 	
-	public void editAppointment(Calendar stime, Calendar ftime, String meetpl, String descr){
+	public void editAppointment(Appointment app, Calendar stime, Calendar ftime, String meetpl, String descr){
 		setStarttime(stime);
 		setFinishingtime(ftime);
 		setMeetingplace(meetpl);
 		setDescription(descr);
-		Update.updateAppointment();
+		update.updateAppointment(app);
 	}
 	
 	public ArrayList<Person> getParticipants(){
