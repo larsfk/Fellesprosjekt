@@ -14,10 +14,12 @@ public class CalendarClient {
 	public Calendar calendar = Calendar.getInstance();
 	ArrayList<Appointment> appointments = new ArrayList<Appointment>();
 
+
 	//Lage database med hvilken kalender som tilhører hvem!
 
 	public void setPerson(Person person){
 		this.person = person;
+
 	}
 
 	public ArrayList<PUCalendar> getcalendarList(){
@@ -60,27 +62,11 @@ public class CalendarClient {
 	//	}
 
 	public String showMyWeekCalendar(){ //Slått sammen denne med showMyCalendar
-//				myCalendar.get(0).set(0, "Dag/tid");
-//				myCalendar.get(1).set(0, "Man");
-//				myCalendar.get(2).set(0, "Tirs");
-//				myCalendar.get(3).set(0, "Ons");
-//				myCalendar.get(4).set(0, "Tors");
-//				myCalendar.get(5).set(0, "Fre");
-//				myCalendar.get(6).set(0, "Lør");
-//				myCalendar.get(7).set(0, "Søn");
-
-		//		if(person.getPUCalendar() == null)
-		//			return "Du er ingen person!";
-
-		//		ArrayList<Appointment> appointments = person.getPUCalendar().getAppointments();
-
 
 		for(int i = 0; i < calendarList.size(); i++){
 			appointments.addAll(calendarList.get(i).getAppointments());			
 		}
 
-
-		int date = calendar.DATE;
 		int dayOfWeek = calendar.DAY_OF_WEEK;
 		int firstDayOfWeek = calendar.getFirstDayOfWeek() + 1;
 
@@ -155,7 +141,7 @@ public class CalendarClient {
 				}
 			}
 		}
-		}
+		}// switch
 		return "  Mon   Tues   Wed   Thu   Fri   Sat   Sun \n" + myCalendar.toString();
 	}
 
@@ -167,8 +153,8 @@ public class CalendarClient {
 		//		for(int i = 0; i < appointments.size(); i++){
 		//			appointments.get(i).getParticipants();
 		//		}
-		
-		
+
+
 		return null;
 	}
 }
