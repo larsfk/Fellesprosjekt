@@ -11,10 +11,10 @@ public class TestMeetingRoom {
 
 	Calendar start1 = Calendar.getInstance();
 	Calendar finish1 = Calendar.getInstance();
-	Calendar alarm1 = Calendar.getInstance();
+	Alarm alarm1;
 	Calendar start2 = Calendar.getInstance();
 	Calendar finish2 = Calendar.getInstance();
-	Calendar alarm2 = Calendar.getInstance();
+	Alarm alarm2;
 	Calendar start3 = Calendar.getInstance();
 	Calendar finish3 = Calendar.getInstance();
 	Calendar epic;
@@ -22,6 +22,7 @@ public class TestMeetingRoom {
 	MeetingRoom meetingRooom = new MeetingRoom(1, 10);
 	Appointment app1;
 	Appointment app2;	
+	Person person;
 
 
 	public TestMeetingRoom(){
@@ -53,13 +54,12 @@ public class TestMeetingRoom {
 		finish3.set(finish3.DATE, 26);
 		finish3.set(finish3.MONTH, 4);
 		
-		alarm1.set(alarm1.HOUR_OF_DAY, 13);
-		alarm1.set(alarm1.MINUTE, 45);
-		alarm2.set(alarm1.HOUR_OF_DAY, 13);
-		alarm2.set(alarm1.MINUTE, 45);
+		app1 = new Appointment(start1, finish1, "kontor 20", "mote", alarm1, person);
+		app2 = new Appointment(start2, finish2, "kontor 20", "mote", alarm2, person);
 		
-		app1 = new Appointment(start1, finish1, "kontor 20", "mote", alarm1);
-		app2 = new Appointment(start2, finish2, "kontor 20", "mote", alarm2);
+		alarm1 = new Alarm(app1, 30, "Alarm til app1");
+		alarm2 = new Alarm(app2, 30, "Alarm til app2");
+		
 		
 //		System.out.println(app1.getStarttime().get(Calendar.MONTH));
 //		System.out.println(app1.getFinishingtime().get(Calendar.HOUR_OF_DAY) + ":" + app1.getFinishingtime().get(Calendar.MINUTE));

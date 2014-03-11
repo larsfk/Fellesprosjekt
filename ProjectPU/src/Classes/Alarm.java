@@ -16,6 +16,7 @@ public class Alarm {
 	
 	public Alarm(Appointment app, int start, String description){
 		this.start = Calendar.getInstance();
+		System.out.println("HEI");
 		this.start.add(app.getStarttime().MINUTE, -start);
 		this.description = description;
 	}
