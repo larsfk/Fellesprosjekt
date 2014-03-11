@@ -17,7 +17,7 @@ public class Database {
 		return conn;
 	}
 
-
+	//Legger til eller endrer person (Brukes i Konstrukt¿r og setters)
 	public void addPersonToDatabase(String statement, Connection conn) throws SQLException{
 		//Create a query
 		Statement stmt = (Statement) conn.createStatement();
@@ -60,6 +60,17 @@ public class Database {
 		catch (SQLException e){
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	public void removePerson(String mail, Connection conn){
+		try{
+			//Create a query
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeUpdate("DELETE FROM larsfkl_felles.person WHERE email = '" + mail + "';");
+		}
+		catch (SQLException e){
+			e.printStackTrace();
 		}
 	}
 
