@@ -63,7 +63,7 @@ public class Appointment {
 		setDuration(stime, ftime);
 		setAlarm(alarm);
 		try {
-			db.addToDatabase("insert into larsfkl_felles.appointment(start,end,description,location,duration,owner) values ('" + stime + "','" + ftime + "','" + descr + "','" + meetpl +  "','" + getDuration() +"','" + getOwner() + "');", conn);
+			db.addToDatabase("insert into larsfkl_felles.appointment(start,end,description,location,duration,room_id,group_id,owner) values ('" + stime + "','" + ftime + "','" + descr + "','" + meetpl +  "','" + getDuration() +"','"  + "'1'" + "','" + "'2'" + "','" + getOwner() + "');", conn);
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
