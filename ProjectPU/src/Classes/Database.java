@@ -74,6 +74,21 @@ public class Database {
 		}
 	}
 
+//	public Appointment getAppointment(int ID, Connection conn){
+//		
+//		Appointment lars;
+//	
+//		Statement stmt = (Statement) conn.createStatement();
+//		stmt.executeQuery("");
+//		ResultSet rs = stmt.getResultSet();
+//		
+//		return null;
+//	}
+	
+	public void removeAppointment(int ID, Connection conn){
+		
+	}
+
 	public static void readDatabase(String res, Connection conn) throws SQLException{
 		//Create a query
 		PreparedStatement query = conn.prepareStatement(res);

@@ -63,7 +63,23 @@ public class Appointment {
 		setDuration(stime, ftime);
 		setAlarm(alarm);
 		try {
-			db.addToDatabase("insert into larsfkl_felles.appointment(start,end,description,location,duration,room_id,group_id,owner) values ('" + stime + "','" + ftime + "','" + descr + "','" + meetpl +  "','" + getDuration() +"','"  + "'1'" + "','" + "'2'" + "','" + getOwner() + "');", conn);
+			Integer Syear = stime.YEAR;
+			Integer Smonth = stime.MONTH;
+			Integer Sday = stime.DATE;
+			Integer Shour = stime.HOUR_OF_DAY;
+			Integer Sminute = stime.MINUTE;
+			
+			Integer Fyear = ftime.YEAR;
+			Integer Fmonth = ftime.MONTH;
+			Integer Fday = ftime.DATE;
+			Integer Fhour = ftime.HOUR_OF_DAY;
+			Integer Fminute = ftime.MINUTE;
+			
+			System.out.println("Saar" + Syear + " Sh " + Shour);
+			System.out.println("Faar" + Fyear + " Fh " + Fhour);
+			
+			db.addToDatabase("insert into larsfkl_felles.appointment(appointment_id,start,end,date,description,location,duration,room_id,group_id,owner) " +
+			"values ('" + "19" + "','" + Shour + ":" + Sminute + "','" + Fhour + ":" + Fminute + "','" + Syear + "-" + Smonth + "-" + Sday + "','" + descr + "','" + meetpl +  "','" + getDuration() +"','"  + "1" + "','" + "51" + "','" + getOwner().getEmail() + "');", conn);
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -82,7 +98,7 @@ public class Appointment {
 		AppointmentToPerson atp = new AppointmentToPerson(owner,this);
 		atp.setOwner(true);
 		try {
-			db.addToDatabase("insert into larsfkl_felles.appointment(start,end,description,location,duration,owner) values ('" + stime + "','" + getFinishingtime() + "','" + descr + "','" + meetpl +  "','" + dur +"','" + getOwner() + "');", conn);
+			db.addToDatabase("insert into larsfkl_felles.appointment(appointment_id,start,end,date,description,location,duration,room_id,group_id,owner) values ('" + stime + "','" + getFinishingtime() + "','" + descr + "','" + meetpl +  "','" + dur +"','" + getOwner() + "');", conn);
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -157,11 +173,23 @@ public class Appointment {
 	}
 	
 	public void setStarttime(Calendar stime){
-		starttime = stime; 
+		this.starttime = Calendar.getInstance();
+		this.starttime.set(this.starttime.HOUR_OF_DAY, stime.HOUR_OF_DAY);
+		System.out.println(" " + starttime.HOUR_OF_DAY);
+		this.starttime.set(this.starttime.MINUTE, stime.MINUTE);
+		this.starttime.set(this.starttime.DATE, stime.DATE);
+		this.starttime.set(this.starttime.MONTH, stime.MONTH);
+		this.starttime.set(this.starttime.YEAR, stime.YEAR);
 	}
 	
 	public void setFinishingtime(Calendar ftime){
-		finishingtime = ftime;
+		this.finishingtime = Calendar.getInstance();
+		this.finishingtime.set(this.finishingtime.HOUR_OF_DAY, ftime.HOUR_OF_DAY);
+		this.finishingtime.set(this.finishingtime.MINUTE, ftime.MINUTE);
+		this.finishingtime.set(this.finishingtime.DATE, ftime.DATE);
+		this.finishingtime.set(this.finishingtime.MONTH, ftime.MONTH);
+		this.finishingtime.set(this.finishingtime.YEAR, ftime.YEAR);
+
 		duration = (finishingtime.getTimeInMillis()-starttime.getTimeInMillis())/60000; //i minutt
 	}
 	
