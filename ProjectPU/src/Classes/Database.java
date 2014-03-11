@@ -18,7 +18,7 @@ public class Database {
 	}
 
 	//Legger til eller endrer person (Brukes i Konstrukt¿r og setters)
-	public void addPersonToDatabase(String statement, Connection conn) throws SQLException{
+	public void addToDatabase(String statement, Connection conn) throws SQLException{
 		//Create a query
 		Statement stmt = (Statement) conn.createStatement();
 		System.out.println("Statement created");
