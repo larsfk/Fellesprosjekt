@@ -13,6 +13,7 @@ public class Appointment {
 	private Calendar alarm;
 	private Person owner;
 	private ArrayList<Person> participants = new ArrayList<Person>();
+	private ArrayList<AppointmentToPerson> participantConnect = new ArrayList<AppointmentToPerson>();
 
 	public Appointment(int appID, Calendar stime, Calendar ftime, String meetpl, String descr, Calendar alarm, Person owner){
 		if (stime.after(ftime)){
@@ -25,6 +26,8 @@ public class Appointment {
 		 */
 		this.appointmentID=appID;
 		this.owner = owner;
+		AppointmentToPerson atp = new AppointmentToPerson(owner,this);
+		atp.setOwner(true);
 		setStarttime(stime);
 		setFinishingtime(ftime);
 		setMeetingplace(meetpl);
@@ -41,6 +44,7 @@ public class Appointment {
 	public void addParticipant(Person par){
 			participants.add(par); //overflødig?
 			AppointmentToPerson atp = new AppointmentToPerson(par,this);
+			participantConnect.add(atp);
 			
 			/*
 			 * 
@@ -137,8 +141,8 @@ public class Appointment {
 		description = descr; 
 	}
 	
-	public void changeStatus(Participant par, boolean ans){
-		//par.ans = ans;
+	public void setIsGoing(AppointmentToPerson atp, boolean isGoing){ //?
+		atp.setIsGoing(isGoing);
 	}
 	@Override
 	public String toString(){
