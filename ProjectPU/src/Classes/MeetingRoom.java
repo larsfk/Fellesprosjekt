@@ -69,4 +69,8 @@ public class MeetingRoom {
 		return ID;
 	}
 
+	public ArrayList<Appointment> getAppointmentList() {
+		return AppointmentList;
+	}
+
 }
