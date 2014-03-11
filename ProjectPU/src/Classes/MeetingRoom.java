@@ -17,7 +17,7 @@ public class MeetingRoom {
 
 	public void addAppointment(Appointment Q){
 		try{
-			if (Q. == null){
+			if (Q.getStarttime() == null){
 				System.out.println("WTF");
 				throw new NullPointerException();
 			}
