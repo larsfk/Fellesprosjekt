@@ -11,13 +11,20 @@ public class Appointment {
 	private String meetingplace = null;
 	private String description = null;
 	private Calendar alarm;
+	private Person owner;
 	private ArrayList<Person> participants = new ArrayList<Person>();
 
-	public Appointment(int appID, Calendar stime, Calendar ftime, String meetpl, String descr, Calendar alarm){
+	public Appointment(int appID, Calendar stime, Calendar ftime, String meetpl, String descr, Calendar alarm, Person owner){
 		if (stime.after(ftime)){
 			throw new IllegalArgumentException("Starttime cannot be after finishtime");
 		}
+		/*
+		 * 
+		 * DATABASE: IF appID finnes throw new IllegalArgumentException
+		 * 
+		 */
 		this.appointmentID=appID;
+		this.owner = owner;
 		setStarttime(stime);
 		setFinishingtime(ftime);
 		setMeetingplace(meetpl);
@@ -32,7 +39,9 @@ public class Appointment {
 	}
 	
 	public void addParticipant(Person par){
-			participants.add(par);
+			participants.add(par); //overflødig?
+			AppointmentToPerson atp = new AppointmentToPerson(par,this);
+			
 			/*
 			 * 
 			 * DATABASE
@@ -90,6 +99,10 @@ public class Appointment {
 	
 	public String getDescription(){
 		return description;
+	}
+	
+	public Person getOwner(){
+		return owner;
 	}
 	
 	public void setStarttime(Calendar stime){
