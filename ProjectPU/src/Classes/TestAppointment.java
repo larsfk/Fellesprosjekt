@@ -2,7 +2,7 @@ package Classes;
 
 import java.util.Calendar;
 
-import org.junit.Test;
+import junit.framework.TestCase;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -51,7 +51,7 @@ public class TestAppointment extends TestCase {
 //		System.out.println(duration);
 //	}
 	
-	@Test
+	//@Test
 	public void testMakeAnAppointment(){
 		Assert.assertTrue(!app1.equals(null));		
 	}
