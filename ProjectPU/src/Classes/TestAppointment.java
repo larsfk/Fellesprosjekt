@@ -81,9 +81,6 @@ public class TestAppointment extends TestCase {
 		Assert.assertEquals("13.45", ""+alarm1.get(alarm1.HOUR_OF_DAY)+"."+alarm1.get(alarm1.MINUTE));
 	}
 	
-	public void testAddAppointment(){
-		
-	}
 	
 //	public static void main(String[] args) {
 //		TestAppointment test = new TestAppointment();
