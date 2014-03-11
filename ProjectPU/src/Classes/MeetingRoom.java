@@ -18,7 +18,6 @@ public class MeetingRoom {
 	public void addAppointment(Appointment Q){
 		try{
 			if (Q.getStarttime() == null){
-				System.out.println("WTF");
 				throw new NullPointerException();
 			}
 			if (AppointmentList.size() == 0){
