@@ -12,7 +12,7 @@ public class MeetingRoom {
 	public MeetingRoom(int ID, int Capasity){
 		this.ID = ID;
 		this.Capasity = Capasity;
-		this.AppointmentList = null;
+		this.AppointmentList.equals(null);
 	}
 
 	public void addAppointment(Appointment Q){
@@ -20,19 +20,21 @@ public class MeetingRoom {
 			if (Q.getStarttime().get(Calendar.YEAR) == -1){
 				throw new NullPointerException();
 			}
-			//if (AppointmentList.size() == 0){
+			if (AppointmentList.size() == 0){
 				AppointmentList.add(Q);
-			//}
-//			else{
-//			//	for(int i = 0; i < AppointmentList.size(); i++){
-//					if (Q.getStarttime().compareTo(AppointmentList.get(i).getStarttime()) < 0){
-//						AppointmentList.add(i, Q);
-//					}
-//				}		
-//			}
+			}
+			else{
+				for(int i = 0; i < AppointmentList.size(); i++){
+					if (Q.getStarttime().compareTo(AppointmentList.get(i).getStarttime()) < 0){
+						AppointmentList.add(i, Q);
+					}
+				}		
+			}
 		}
+
 		catch (NullPointerException e){
-			System.out.println("The appointment has no startdate.");
+			System.out.println("AppointmentList har ingen startdato");
+			e.printStackTrace();
 		}
 	}
 
@@ -55,19 +57,20 @@ public class MeetingRoom {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
 	public int getCapasity(){
 		return Capasity;
 	}
-	
+
 	public int getID(){
 		return ID;
 	}
 
 	public ArrayList<Appointment> getAppointmentList() {
+		System.out.println("Appointmentlist hentes");
 		return AppointmentList;
 	}
 

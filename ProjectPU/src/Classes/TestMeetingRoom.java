@@ -48,9 +48,9 @@ public class TestMeetingRoom {
 		app1 = new Appointment(1, start1, finish1, "kontor 20", "mote", alarm1);
 		app2 = new Appointment(2, start2, finish2, "kontor 20", "mote", alarm2);
 		
-//		System.out.println(app1.getStarttime().get(Calendar.MONTH));
-//		System.out.println(app1.getFinishingtime().get(Calendar.HOUR_OF_DAY) + ":" + app1.getFinishingtime().get(Calendar.MINUTE));
-//		System.out.println(finish1.get(Calendar.HOUR_OF_DAY));
+		System.out.println(app1.getStarttime().get(Calendar.MONTH));
+		System.out.println(app1.getFinishingtime().get(Calendar.HOUR_OF_DAY) + ":" + app1.getFinishingtime().get(Calendar.MINUTE));
+		System.out.println(finish1.get(Calendar.HOUR_OF_DAY));
 		System.out.println(app1.getStarttime().get(Calendar.HOUR_OF_DAY));
 
 		meetingRooom.addAppointment(app1);
