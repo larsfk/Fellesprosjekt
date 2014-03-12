@@ -247,4 +247,8 @@ public class Person {
 	public void addatp(AppointmentToPerson atp){
 		appointmentList.add(atp);
 	}
+	
+	public ArrayList<Appointment> getPersonAppointments(String email){
+		return null;
+	}
 }
