@@ -224,13 +224,21 @@ public class Appointment {
 			int t = (int) (starttime.getTimeInMillis()/(60000*60));
 			Integer ftime = starttime.get(Calendar.HOUR_OF_DAY);
 			Integer fminute = starttime.get(Calendar.MINUTE);
-			Integer totaltid = (ftime * 60) + fminute + (fsecond/60) + dur;
-			Integer ftime2 = totaltid/60;
-			;
-			Integer fminute2 = (ftime2 - ftime2) * 60;
+			Integer totaltid = (ftime * 60) + fminute + dur;
+			
+			Double start = totaltid.doubleValue();
+			Double i = start % 1440;
+			System.out.println(i);
+			Double j = i/60;
+			Double floorTime = Math.floor(j);
+			Double floorMinute = Math.floor((j - floorTime) * 60);
+			
+			Integer Time = floorTime.intValue();
+			Integer Minute = floorMinute.intValue();
 					
 			finishingtime = Calendar.getInstance();
-			finishingtime.set(finishingtime.HOUR_OF_DAY, ftime2);
+			finishingtime.set(finishingtime.HOUR_OF_DAY, Time);
+			finishingtime.set(finishingtime.MINUTE, Minute);
 		}
 	}
 	
