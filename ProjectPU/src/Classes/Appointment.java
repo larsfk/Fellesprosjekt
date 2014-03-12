@@ -116,7 +116,7 @@ public class Appointment {
 			System.out.println("Faar " + Fyear + " Fh " + Fhour);
 			
 			db.addToDatabase("insert into larsfkl_felles.appointment(appointment_id,start,end,date,description,location,duration,room_id,group_id,owner) " +
-			"values ('" + "42" + "','" + Shour + ":" + Sminute + "','" + Fhour + ":" + Fminute + "','" + Syear + "-" + Smonth + "-" + Sday + "','" + descr + "','" + meetpl +  "','" + getDuration() +"','"  + "1" + "','" + "51" + "','" + getOwner().getEmail() + "');", conn);
+			"values ('" + "52" + "','" + Shour + ":" + Sminute + "','" + Fhour + ":" + Fminute + "','" + Syear + "-" + Smonth + "-" + Sday + "','" + descr + "','" + meetpl +  "','" + getDuration() +"','"  + "1" + "','" + "51" + "','" + getOwner().getEmail() + "');", conn);
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -221,9 +221,16 @@ public class Appointment {
 			duration = dur;
 			// final long ONE_MINUTE_IN_MILLIS=60000;//millisecs
 			//feiling if-setning pga casting
-			int t = (int) starttime.getTimeInMillis()/60000;
-			
-			finishingtime.set(finishingtime.HOUR_OF_DAY, starttime.HOUR_OF_DAY+t);
+			int t = (int) (starttime.getTimeInMillis()/(60000*60));
+			Integer ftime = starttime.get(Calendar.HOUR_OF_DAY);
+			Integer fminute = starttime.get(Calendar.MINUTE);
+			Integer totaltid = (ftime * 60) + fminute + (fsecond/60) + dur;
+			Integer ftime2 = totaltid/60;
+			;
+			Integer fminute2 = (ftime2 - ftime2) * 60;
+					
+			finishingtime = Calendar.getInstance();
+			finishingtime.set(finishingtime.HOUR_OF_DAY, ftime2);
 		}
 	}
 	
@@ -258,6 +265,10 @@ public class Appointment {
 		if (StarttimeOrFinishingtime) {aar = this.starttime.get(Calendar.YEAR);}
 		else {aar = this.finishingtime.get(Calendar.YEAR);} 
 		return aar + 1900;
+	}
+	
+	public static Integer subtract1900fromSQLYear(Integer YEAR){
+		return YEAR - 1900;
 	}
 	
 	@Override
