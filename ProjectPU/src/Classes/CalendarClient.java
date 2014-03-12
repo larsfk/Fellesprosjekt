@@ -11,11 +11,17 @@ public class CalendarClient {
 	Person person;
 	public Calendar calendar = Calendar.getInstance();
 	ArrayList<Appointment> appointments = new ArrayList<Appointment>();
-
-
-	//Lage database med hvilken kalender som tilhører hvem!
+	ArrayList<Appointment> joinedAppointments = new ArrayList<Appointment>();
+	
 	public CalendarClient(Person person){
-		
+		/*
+		 * 
+		 * 
+		 * Hente alle relasjoner (AppointmentToPerson-databasen) og
+		 * legge avtaler tilhoerende person til i appointments
+		 * 
+		 * 
+		 */
 	}
 	
 	public void deleteAppointment(Appointment appoint){
@@ -31,12 +37,19 @@ public class CalendarClient {
 
 	}
 
-	public ArrayList<PUCalendar> getcalendarList(){
-		return calendarList;
+	public ArrayList<Appointment> getAppointmentList(){
+		return appointments;
 	}
 
-	public void addCalendar(PUCalendar calendar){
-		calendarList.add(calendar);
+	public void addPersonToCC(Person per){
+		/*
+		 * 
+		 * DATABASE: Hent alle avtaler (paa samme maate som i konstruktoeren) til denne personen
+		 * og legge de til slik:
+		 *  for each...
+		 *      joinedAppointments.add();
+		 * 
+		 */
 	}
 
 	//	public static void main(String[] args){
@@ -72,9 +85,9 @@ public class CalendarClient {
 
 	public String showMyWeekCalendar(){ //Slått sammen denne med showMyCalendar
 
-		for(int i = 0; i < calendarList.size(); i++){
-			appointments.addAll(calendarList.get(i).getAppointments());			
-		}
+//		for(int i = 0; i < calendarList.size(); i++){
+//			appointments.add(calendarList.get(i).getAppointments());
+//		}
 
 		int dayOfWeek = calendar.DAY_OF_WEEK;
 		int firstDayOfWeek = calendar.getFirstDayOfWeek() + 1;
