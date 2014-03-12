@@ -12,7 +12,7 @@ public class CalendarClient {
 	public Calendar calendar = Calendar.getInstance();
 	ArrayList<Appointment> appointments = new ArrayList<Appointment>();
 	ArrayList<Appointment> joinedAppointments = new ArrayList<Appointment>();
-	
+
 	public CalendarClient(Person person){
 		/*
 		 * 
@@ -23,7 +23,7 @@ public class CalendarClient {
 		 * 
 		 */
 	}
-	
+
 	public void deleteAppointment(Appointment appoint){
 		/*
 		 * 
@@ -52,42 +52,12 @@ public class CalendarClient {
 		 */
 	}
 
-	//	public static void main(String[] args){
-	//		CalendarClient cc = new CalendarClient();
-	//		CalendarClient cc1 = new CalendarClient();
-	//		
-	//		PUCalendar cal1 = new PUCalendar("rebcox@gmail.com");
-	//		PUCalendar cal2 = new PUCalendar("tonygj@gmail.com");
-	//		PUCalendar cal3 = new PUCalendar("ida@sagdahl.com");
-	//		Calendar date1 = Calendar.getInstance();
-	//		Calendar date2 = Calendar.getInstance();
-	//		Calendar date3 = Calendar.getInstance();
-	//		Date thisDate = new Date();
-	//		
-	//		Appointment appoint1; 
-	//		Appointment appoint2; 
-	//		
-	//		date1.set(thisDate.getYear(), thisDate.getMonth(), thisDate.getDate(), 14, 00);
-	//		date2.set(thisDate.getYear(), thisDate.getMonth(), thisDate.getDate(), 16, 00);
-	//		appoint1 = new Appointment(1,date1,date2,"Hos Cox","Progging",date3);
-	//		appoint2 = new Appointment(2,date1, date2, "Hos Tony", "progging ofc", date3);
-	//		
-	//		cal1.addAppointment(appoint1);
-	//		cal1.addAppointment(appoint2);
-	//		
-	//		
-	//		cc1.addCalendar(cal1);
-	//		cc.addCalendar(cal2);
-	//		cc.addCalendar(cal3);
-	//		
-	//		System.out.println(cc.showMyWeekCalendar());
-	//	}
 
 	public String showMyWeekCalendar(){ //Slått sammen denne med showMyCalendar
 
-//		for(int i = 0; i < calendarList.size(); i++){
-//			appointments.add(calendarList.get(i).getAppointments());
-//		}
+		//		for(int i = 0; i < calendarList.size(); i++){
+		//			appointments.add(calendarList.get(i).getAppointments());
+		//		}
 
 		int dayOfWeek = calendar.DAY_OF_WEEK;
 		int firstDayOfWeek = calendar.getFirstDayOfWeek() + 1;
@@ -98,7 +68,8 @@ public class CalendarClient {
 			int count = 0;
 			for(int i = 0; i< appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + calendar.get(Calendar.DAY_OF_MONTH) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR)){
-					myCalendar.get(firstDayOfWeek + dayOfWeek + 1).set(count, appointments.get(i));		
+					myCalendar.get(firstDayOfWeek + dayOfWeek + 1).set(count, appointments.get(i));
+					person.get
 					count++;
 				}
 			}
