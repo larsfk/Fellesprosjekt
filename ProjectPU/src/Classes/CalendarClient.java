@@ -11,6 +11,7 @@ public class CalendarClient {
 	Person person;
 	public Calendar calendar = Calendar.getInstance();
 	ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+	ArrayList<ArrayList<Appointment>> myCalendar = new ArrayList<ArrayList<Appointment>>();
 	ArrayList<Appointment> joinedAppointments = new ArrayList<Appointment>();
 
 	public CalendarClient(Person person){
@@ -61,6 +62,7 @@ public class CalendarClient {
 
 		int dayOfWeek = calendar.DAY_OF_WEEK;
 		int firstDayOfWeek = calendar.getFirstDayOfWeek() + 1;
+		appointments = person.getPersonAppointments(person.getEmail());
 
 		switch(dayOfWeek) {
 
@@ -69,7 +71,6 @@ public class CalendarClient {
 			for(int i = 0; i< appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + calendar.get(Calendar.DAY_OF_MONTH) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR)){
 					myCalendar.get(firstDayOfWeek + dayOfWeek + 1).set(count, appointments.get(i));
-					person.get
 					count++;
 				}
 			}
