@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class Database {
 
@@ -99,5 +100,9 @@ public class Database {
 			System.out.println("Name: " + result.getString(1));
 
 		}
+	}
+	
+	public ArrayList<Appointment> getPersonAppointments(String email){
+		return null;
 	}
 }
