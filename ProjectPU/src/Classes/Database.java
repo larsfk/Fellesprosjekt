@@ -72,7 +72,7 @@ public class Database {
 		try{
 
 			Statement stmt = (Statement) conn.createStatement();
-			stmt.executeQuery("SELECT * FROM larsfkl_felles.person where AppointmentID = '" + ID + "';");
+			stmt.executeQuery("SELECT * FROM larsfkl_felles.appointment where appointment_id = " + ID + ";");
 			ResultSet rs = stmt.getResultSet();
 
 			Calendar startTime = Calendar.getInstance();
