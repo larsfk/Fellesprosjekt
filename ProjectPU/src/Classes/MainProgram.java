@@ -81,7 +81,7 @@ public class MainProgram {
 			//OSV
 
 			//Appointment ap = new Appointment(startTime, ); //etc
-
+			break;
 		case 2:
 			int numApp = cc.getAppointmentList().size(); //Number of appointments in the active calendar
 			int appID = -1;
@@ -93,16 +93,21 @@ public class MainProgram {
 				appID = sc.nextInt();
 			}
 			cc.deleteAppointment(cc.getAppointmentList().get(appID));
+			break;
 		case 3:
 			//Edit appointment
+			break;
 		case 4:
 			//Skrive ut kalender, TONY
 			//System.out.println(cc.showMyWeekCalendar());
+			break;
 		case 5:
 			//Skrive ut flere kalendere, TONY
 			//System.out.println(cc.showGroupCalendar());
+			break;
 		default:
 			System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3.Edit appointment\n4. Show this calendar\n5. Show several calendars");
+			break;
 		}
 	}
 
