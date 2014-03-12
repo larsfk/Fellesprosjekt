@@ -14,6 +14,7 @@ public class Appointment {
 	private long duration = 0;
 	private String meetingplace = null;
 	private String description = null;
+	
 	private Alarm alarm;
 	private Person owner;
 	private ArrayList<Person> participants = new ArrayList<Person>();
@@ -65,13 +66,13 @@ public class Appointment {
 		setDuration(stime, ftime);
 		setAlarm(alarm);
 		try {
-			Integer Syear = this.add1900toCalendarYear(true);
+			Integer Syear = this.add1900toCalendarYear(this.starttime.get(Calendar.YEAR));
 			Integer Smonth = this.starttime.get(Calendar.MONTH);
 			Integer Sday = this.starttime.get(Calendar.DATE);
 			Integer Shour = this.starttime.get(Calendar.HOUR_OF_DAY);
 			Integer Sminute = this.starttime.get(Calendar.MINUTE);
 			
-			Integer Fyear = this.add1900toCalendarYear(false);
+			Integer Fyear = this.add1900toCalendarYear(this.finishingtime.get(Calendar.YEAR));
 			Integer Fmonth = this.finishingtime.get(Calendar.MONTH);
 			Integer Fday = this.finishingtime.get(Calendar.DATE);
 			Integer Fhour = this.finishingtime.get(Calendar.HOUR_OF_DAY);
@@ -100,13 +101,13 @@ public class Appointment {
 		AppointmentToPerson atp = new AppointmentToPerson(owner,this);
 		atp.setOwner(true);
 		try {
-			Integer Syear = this.add1900toCalendarYear(true);
+			Integer Syear = this.add1900toCalendarYear(this.starttime.get(Calendar.YEAR));
 			Integer Smonth = this.starttime.get(Calendar.MONTH);
 			Integer Sday = this.starttime.get(Calendar.DATE);
 			Integer Shour = this.starttime.get(Calendar.HOUR_OF_DAY);
 			Integer Sminute = this.starttime.get(Calendar.MINUTE);
 			
-			Integer Fyear = this.add1900toCalendarYear(false);
+			Integer Fyear = this.add1900toCalendarYear(this.finishingtime.get(Calendar.YEAR));
 			Integer Fmonth = this.finishingtime.get(Calendar.MONTH);
 			Integer Fday = this.finishingtime.get(Calendar.DATE);
 			Integer Fhour = this.finishingtime.get(Calendar.HOUR_OF_DAY);
@@ -116,7 +117,7 @@ public class Appointment {
 			System.out.println("Faar " + Fyear + " Fh " + Fhour);
 			
 			db.addToDatabase("insert into larsfkl_felles.appointment(appointment_id,start,end,date,description,location,duration,room_id,group_id,owner) " +
-			"values ('" + "52" + "','" + Shour + ":" + Sminute + "','" + Fhour + ":" + Fminute + "','" + Syear + "-" + Smonth + "-" + Sday + "','" + descr + "','" + meetpl +  "','" + getDuration() +"','"  + "1" + "','" + "51" + "','" + getOwner().getEmail() + "');", conn);
+			"values ('" + "62" + "','" + Shour + ":" + Sminute + "','" + Fhour + ":" + Fminute + "','" + Syear + "-" + Smonth + "-" + Sday + "','" + descr + "','" + meetpl +  "','" + getDuration() +"','"  + "1" + "','" + "51" + "','" + getOwner().getEmail() + "');", conn);
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -268,11 +269,8 @@ public class Appointment {
 		atp.setIsGoing(isGoing);
 	}
 	
-	public int add1900toCalendarYear(boolean StarttimeOrFinishingtime){
-		Integer aar;
-		if (StarttimeOrFinishingtime) {aar = this.starttime.get(Calendar.YEAR);}
-		else {aar = this.finishingtime.get(Calendar.YEAR);} 
-		return aar + 1900;
+	public static int add1900toCalendarYear(Integer year){
+		return year + 1900;
 	}
 	
 	public static Integer subtract1900fromSQLYear(Integer YEAR){

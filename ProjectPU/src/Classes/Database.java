@@ -163,7 +163,14 @@ public class Database {
 
 
 	public void removeAppointment(int ID, Connection conn){
-
+		try{
+			//Create a query
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeUpdate("DELETE FROM larsfkl_felles.appointment WHERE appointment_id = " + ID + ";");
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
 	}
 
 	public static void readDatabase(String res, Connection conn) throws SQLException{
