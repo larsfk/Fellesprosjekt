@@ -101,8 +101,4 @@ public class Database {
 
 		}
 	}
-	
-	public ArrayList<Appointment> getPersonAppointments(String email){
-		return null;
-	}
 }

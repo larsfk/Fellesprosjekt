@@ -217,9 +217,11 @@ public class Person {
 			e.printStackTrace();
 		}
 	}
-	public void makeAppointment(int appID, Calendar stime, Calendar ftime, String meetpl, String descr, Calendar alarm){
-		new Appointment(appID, stime, ftime, meetpl, descr, alarm, this);
+	
+	public void makeAppointment(Calendar stime, Calendar ftime, String meetpl, String descr, Alarm alarm){
+		new Appointment(stime, ftime, meetpl, descr, alarm, this);
 	}
+	
 	public boolean canChangeAppointment(Appointment appoint){
 		if (appoint.getOwner() == this){
 			return true;
