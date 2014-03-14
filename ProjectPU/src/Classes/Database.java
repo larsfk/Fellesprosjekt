@@ -22,7 +22,7 @@ public class Database {
 		return conn;
 	}
 
-	//Legger til eller endrer person (Brukes i Konstrukt¿r og setters)
+	//Legger til eller endrer person/appointment (Brukes i Konstrukt¿r og setters)
 	public void addToDatabase(String statement, Connection conn) throws SQLException{
 		//Create a query
 		Statement stmt = (Statement) conn.createStatement();
@@ -74,7 +74,8 @@ public class Database {
 
 		try{
 			Statement stmt = (Statement) conn.createStatement();
-			stmt.executeQuery("SELECT * FROM larsfkl_felles.appointment where appointment_id = " + ID + ";");
+			stmt.executeQuery(  "SELECT * FROM larsfkl_felles.appointment " +
+								"WHERE appointment_id = " + ID + ";");
 			ResultSet rs = stmt.getResultSet();
 
 			Calendar startTime = Calendar.getInstance();
@@ -125,7 +126,9 @@ public class Database {
 	public ArrayList<Appointment> getAppointmentList(String email, Connection conn){
 		try{
 			Statement stmt = (Statement) conn.createStatement();
-			stmt.executeQuery("SELECT appointment_id FROM larsfkl_felles.appointment where owner = '" + email + "';");
+			stmt.executeQuery(  "SELECT appointment_id " +
+								"FROM larsfkl_felles.appointment " +
+								"WHERE owner = '" + email + "';");
 			ResultSet rs = stmt.getResultSet();
 			ArrayList<Appointment> appList = new ArrayList<Appointment>();
 			ArrayList<Integer> IDList = new ArrayList<Integer>();
@@ -183,7 +186,8 @@ public class Database {
 		try{
 			//Create a query
 			Statement stmt = (Statement) conn.createStatement();
-			stmt.executeUpdate("DELETE FROM larsfkl_felles.person WHERE email = '" + mail + "';");
+			stmt.executeUpdate( "DELETE FROM larsfkl_felles.person " +
+								"WHERE email = '" + mail + "';");
 		}
 		catch (SQLException e){
 			e.printStackTrace();
@@ -194,23 +198,55 @@ public class Database {
 		try{
 			//Create a query
 			Statement stmt = (Statement) conn.createStatement();
-			stmt.executeUpdate("DELETE FROM larsfkl_felles.appointment WHERE appointment_id = " + ID + ";");
+			stmt.executeUpdate( "DELETE FROM larsfkl_felles.appointment " +
+								"WHERE appointment_id = " + ID + ";");
 		}
 		catch (SQLException e){
 			e.printStackTrace();
 		}
 	}
 	
-	public void createGroup(Integer ID, Connection){
-		
+	public void joinAppointment(Person pers, Appointment app, Connection conn){
+		try{
+			//Create a query
+			Statement stmt = (Statement) conn.createStatement();
+			System.out.println("Statement created");
+			//Execute query
+			stmt.executeUpdate( "INSERT into larsfkl_felles.personToGroup (email, groupID) " +
+								"SELECT email, group_id " +
+								"FROM larsfkl_felles.person full join larsfkl_felles.group " +
+								"WHERE email = '" + pers.getEmail() + "' and group_id = "  + ";");
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void createGroup(Integer ID, Connection conn){
+		try{
+		Statement stmt = (Statement) conn.createStatement();
+		stmt.executeUpdate("INSERT INTO larsfkl_felles.group (group_id) VALUES ('" + ID + "');");
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
 	}
 
-	public void joinGroup(Person pers){
+	public void joinGroup(Person pers, Integer groupID, Connection conn){
+		try{
 		//Create a query
 		Statement stmt = (Statement) conn.createStatement();
 		System.out.println("Statement created");
 		//Execute query
-		stmt.executeUpdate(statement);
+		stmt.executeUpdate( "INSERT into larsfkl_felles.personToGroup (email, groupID) " +
+							"SELECT email, group_id " +
+							"FROM larsfkl_felles.person full join larsfkl_felles.group " +
+							"WHERE email = '" + pers.getEmail() + "' and group_id = " + groupID + ";");
+		}
+		
+		catch (SQLException e){
+			e.printStackTrace();
+		}
 	}
 
 
