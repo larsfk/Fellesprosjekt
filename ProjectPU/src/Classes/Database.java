@@ -252,7 +252,7 @@ public class Database {
 		Statement stmt = (Statement) conn.createStatement();
 		System.out.println("Statement created");
 		//Execute query
-		stmt.executeUpdate( "INSERT into larsfkl_felles.personToGroup (email, groupID) " +
+		stmt.executeUpdate( "INSERT INTO larsfkl_felles.appointmentToPerson(appointment_id, email_id, status_1, hidden, alarm_id) " +
 							"SELECT email, group_id " +
 							"FROM larsfkl_felles.person full join larsfkl_felles.group " +
 							"WHERE email = '" + pers.getEmail() + "' and group_id = " + groupID + ";");
