@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.ArrayList;
 
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
 
 public class Appointment {
 	private int appointmentID = -1;
