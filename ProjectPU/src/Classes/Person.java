@@ -17,6 +17,7 @@ public class Person {
 	private ArrayList<AppointmentToPerson> appointmentList = new ArrayList<AppointmentToPerson>();
 	Database db = new Database();
 	
+	
 	public Person(String name, String office, String tlf, String email, String SSN, String password){
 		this.name = name;
 		this.office = office;
@@ -219,7 +220,15 @@ public class Person {
 	}
 	
 	public void makeAppointment(Calendar stime, Calendar ftime, String meetpl, String descr, Alarm alarm){
-		new Appointment(stime, ftime, meetpl, descr, alarm, this);
+		Connection conn;
+		try {
+			conn = db.getConnection();
+			new Appointment(stime, ftime, meetpl, descr, alarm, this, conn);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public boolean canChangeAppointment(Appointment appoint){
@@ -228,14 +237,24 @@ public class Person {
 		}
 		return false;
 	}
+	
 	public void hideAppointment(Appointment appoint){ //Ta inn appointment
 		for (int i = 0;i<appointmentList.size();i++){
-			if (appointmentList.get(i).getAppointment() == appoint){
+			if (appointmentList.get(i).getAppointment().equals(appoint)){
 				appointmentList.get(i).setHidden(true);
+				Connection conn;
+				try {
+					conn = db.getConnection();
+					db.addToDatabase("update larsfkl_felles.appointmentToPerson SET hidden = '"+ 1 + "' WHERE email = '" + this.email + "' AND '" + "' appointment_id = '" + appoint.getAppointmentID() + "';", conn);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			}			
 		}
 	}
+	
 	public void unHideAppointment(Appointment appoint){
 		for (int i = 0;i<appointmentList.size();i++){
 			if (appointmentList.get(i).getAppointment() == appoint){
