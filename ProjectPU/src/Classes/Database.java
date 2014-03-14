@@ -1,5 +1,6 @@
 package Classes;
 
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import org.omg.PortableServer.IdAssignmentPolicy;
 
 public class Database {
 
@@ -70,7 +73,6 @@ public class Database {
 		Appointment appointment;
 
 		try{
-
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery("SELECT * FROM larsfkl_felles.appointment where appointment_id = " + ID + ";");
 			ResultSet rs = stmt.getResultSet();
@@ -112,10 +114,37 @@ public class Database {
 			appointment = new Appointment(startTime, finishTime, meetplace, descr, alarm, owner);
 			rs.close ();
 
-
 			return appointment;
 		}
 		catch(SQLException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public ArrayList<Appointment> getAppointmentList(String email, Connection conn){
+		try{
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery("SELECT appointment_id FROM larsfkl_felles.appointment where owner = '" + email + "';");
+			ResultSet rs = stmt.getResultSet();
+			ArrayList<Appointment> appList = new ArrayList<Appointment>();
+			ArrayList<Integer> IDList = new ArrayList<Integer>();
+
+			int i = 0;
+			while (rs.next()){
+				//				System.out.println(rs.getString(1));
+				IDList.add(i, Integer.parseInt(rs.getString(1)));
+				i++;
+			}
+
+			for (int j = 0; j < IDList.size(); j++){
+				//				System.out.println(getAppointment(IDList.get(j), conn).getMeetingplace());
+				appList.add(getAppointment(IDList.get(j), conn));
+			}
+
+			return appList;
+		}
+		catch (SQLException e){
 			e.printStackTrace();
 			return null;
 		}
@@ -161,7 +190,6 @@ public class Database {
 		}
 	}
 
-
 	public void removeAppointment(int ID, Connection conn){
 		try{
 			//Create a query
@@ -172,6 +200,20 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
+	public void createGroup(Integer ID, Connection){
+		
+	}
+
+	public void joinGroup(Person pers){
+		//Create a query
+		Statement stmt = (Statement) conn.createStatement();
+		System.out.println("Statement created");
+		//Execute query
+		stmt.executeUpdate(statement);
+	}
+
+
 
 	public static void readDatabase(String res, Connection conn) throws SQLException{
 		//Create a query

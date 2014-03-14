@@ -78,8 +78,8 @@ public class Appointment {
 			Integer Fhour = this.finishingtime.get(Calendar.HOUR_OF_DAY);
 			Integer Fminute = this.finishingtime.get(Calendar.MINUTE);
 			
-			System.out.println("Saar " + Syear + " Sh " + Shour);
-			System.out.println("Faar " + Fyear + " Fh " + Fhour);
+//			System.out.println("Saar " + Syear + " Sh " + Shour);
+//			System.out.println("Faar " + Fyear + " Fh " + Fhour);
 			
 			db.addToDatabase("insert into larsfkl_felles.appointment(appointment_id,start,end,date,description,location,duration,room_id,group_id,owner) " +
 			"values ('" + "42" + "','" + Shour + ":" + Sminute + "','" + Fhour + ":" + Fminute + "','" + Syear + "-" + Smonth + "-" + Sday + "','" + descr + "','" + meetpl +  "','" + getDuration() +"','"  + "1" + "','" + "51" + "','" + getOwner().getEmail() + "');", conn);
@@ -113,11 +113,11 @@ public class Appointment {
 			Integer Fhour = this.finishingtime.get(Calendar.HOUR_OF_DAY);
 			Integer Fminute = this.finishingtime.get(Calendar.MINUTE);
 			
-			System.out.println("Saar " + Syear + " Sh " + Shour);
-			System.out.println("Faar " + Fyear + " Fh " + Fhour);
+//			System.out.println("Saar " + Syear + " Sh " + Shour);
+//			System.out.println("Faar " + Fyear + " Fh " + Fhour);
 			
 			db.addToDatabase("insert into larsfkl_felles.appointment(appointment_id,start,end,date,description,location,duration,room_id,group_id,owner) " +
-			"values ('" + "62" + "','" + Shour + ":" + Sminute + "','" + Fhour + ":" + Fminute + "','" + Syear + "-" + Smonth + "-" + Sday + "','" + descr + "','" + meetpl +  "','" + getDuration() +"','"  + "1" + "','" + "51" + "','" + getOwner().getEmail() + "');", conn);
+			"values ('" + "100" + "','" + Shour + ":" + Sminute + "','" + Fhour + ":" + Fminute + "','" + Syear + "-" + Smonth + "-" + Sday + "','" + descr + "','" + meetpl +  "','" + getDuration() +"','"  + "1" + "','" + "51" + "','" + getOwner().getEmail() + "');", conn);
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -194,12 +194,12 @@ public class Appointment {
 	public void setStarttime(Calendar stime){
 		this.starttime = Calendar.getInstance();
 		this.starttime.set(this.starttime.HOUR_OF_DAY, stime.get(Calendar.HOUR_OF_DAY));
-		System.out.println("Starttime = " + starttime.get(Calendar.HOUR_OF_DAY) + " stime (parameter) = " + stime.get(Calendar.HOUR_OF_DAY));
+//		System.out.println("Starttime = " + starttime.get(Calendar.HOUR_OF_DAY) + " stime (parameter) = " + stime.get(Calendar.HOUR_OF_DAY));
 		this.starttime.set(this.starttime.MINUTE, stime.get(Calendar.MINUTE));
 		this.starttime.set(this.starttime.DATE, stime.get(Calendar.DATE));
 		this.starttime.set(this.starttime.MONTH, stime.get(Calendar.MONTH));
 		this.starttime.set(this.starttime.YEAR, stime.get(Calendar.YEAR));
-		System.out.println("startime.year = " + starttime.get(Calendar.YEAR));
+//		System.out.println("startime.year = " + starttime.get(Calendar.YEAR));
 	}
 	
 	public void setFinishingtime(Calendar ftime){
@@ -229,7 +229,7 @@ public class Appointment {
 			
 			Double start = totaltid.doubleValue();
 			Double i = start % 1440;
-			System.out.println(i);
+//			System.out.println(i);
 			Double j = i/60;
 			Double floorTime = Math.floor(j);
 			Double floorMinute = Math.floor((j - floorTime) * 60);
