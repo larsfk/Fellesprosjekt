@@ -81,7 +81,7 @@ public class Appointment {
 //			System.out.println("Faar " + Fyear + " Fh " + Fhour);
 			
 			db.addToDatabase("insert into larsfkl_felles.appointment(appointment_id,start,end,date,description,location,duration,room_id,group_id,owner) " +
-			"values ('" + "42" + "','" + Shour + ":" + Sminute + "','" + Fhour + ":" + Fminute + "','" + Syear + "-" + Smonth + "-" + Sday + "','" + descr + "','" + meetpl +  "','" + getDuration() +"','"  + "1" + "','" + "51" + "','" + getOwner().getEmail() + "');", conn);
+			"values (MAX(appointment_id)+1,'" + Shour + ":" + Sminute + "','" + Fhour + ":" + Fminute + "','" + Syear + "-" + Smonth + "-" + Sday + "','" + descr + "','" + meetpl +  "','" + getDuration() +"','"  + "1" + "','" + "51" + "','" + getOwner().getEmail() + "');", conn);
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -116,7 +116,7 @@ public class Appointment {
 //			System.out.println("Faar " + Fyear + " Fh " + Fhour);
 			
 			db.addToDatabase("insert into larsfkl_felles.appointment(appointment_id,start,end,date,description,location,duration,room_id,group_id,owner) " +
-			"values ('" + "100" + "','" + Shour + ":" + Sminute + "','" + Fhour + ":" + Fminute + "','" + Syear + "-" + Smonth + "-" + Sday + "','" + descr + "','" + meetpl +  "','" + getDuration() +"','"  + "1" + "','" + "51" + "','" + getOwner().getEmail() + "');", conn);
+			"values (MAX(appointment_id)+1,'" + Shour + ":" + Sminute + "','" + Fhour + ":" + Fminute + "','" + Syear + "-" + Smonth + "-" + Sday + "','" + descr + "','" + meetpl +  "','" + getDuration() +"','"  + "1" + "','" + "51" + "','" + getOwner().getEmail() + "');", conn);
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
