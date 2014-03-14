@@ -215,7 +215,7 @@ public class Database {
 			stmt.executeUpdate( "INSERT into larsfkl_felles.personToGroup (email, groupID) " +
 								"SELECT email, group_id " +
 								"FROM larsfkl_felles.person full join larsfkl_felles.group " +
-								"WHERE email = '" + pers.getEmail() + "' and group_id = "  + ";");
+								"WHERE email = '" + pers.getEmail() + "' and group_id = "  + " " + ";");
 		}
 		catch (SQLException e){
 			e.printStackTrace();
