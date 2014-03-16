@@ -18,11 +18,11 @@ public class Alarm {
 		
 	}
 	
-	public Alarm(Appointment app, int start, String description){
-		this.start = Calendar.getInstance();
-		this.start.add(app.getStarttime().MINUTE, -start);
-		this.description = description;
-	}
+//	public Alarm(Appointment app, int start, String description){
+//		this.start = Calendar.getInstance();
+//		this.start.add(app.getStarttime().MINUTE, -start);
+//		this.description = description;
+//	}
 
 	public Alarm(int year, int month, int date, int hourOfDay, int minute, String description, Connection conn){
 		this.start = Calendar.getInstance();
@@ -52,30 +52,30 @@ public class Alarm {
 		}
 		
 	}
-	
-	public Alarm(Appointment app, int start, String description, Connection conn){
-		this.start = Calendar.getInstance();
-		this.start.add(app.getStarttime().MINUTE, -start);
-		this.description = description;
-		
-		try {
-			Integer Syear = this.add1900toCalendarYear(this.start.get(Calendar.YEAR));
-			Integer Smonth = this.start.get(Calendar.MONTH);
-			Integer Sday = this.start.get(Calendar.DATE);
-			Integer Shour = this.start.get(Calendar.HOUR_OF_DAY);
-			Integer Sminute = this.start.get(Calendar.MINUTE);
-
-			db.addToDatabase(   "insert into larsfkl_felles.alarm(alarm_id,time,date,type) " +
-					"values (" + db.generateAlarmID(conn) + ", '" 
-					+ Shour + ":" + Sminute + "','" 
-					+ Syear + "-" + Smonth + "-" + Sday + "','" 
-					+ getDescription() + "');", conn);
-		}
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	
+//	public Alarm(Appointment app, int start, String description, Connection conn){
+//		this.start = Calendar.getInstance();
+//		this.start.add(app.getStarttime().MINUTE, -start);
+//		this.description = description;
+//		
+//		try {
+//			Integer Syear = this.add1900toCalendarYear(this.start.get(Calendar.YEAR));
+//			Integer Smonth = this.start.get(Calendar.MONTH);
+//			Integer Sday = this.start.get(Calendar.DATE);
+//			Integer Shour = this.start.get(Calendar.HOUR_OF_DAY);
+//			Integer Sminute = this.start.get(Calendar.MINUTE);
+//
+//			db.addToDatabase(   "insert into larsfkl_felles.alarm(alarm_id,time,date,type) " +
+//					"values (" + db.generateAlarmID(conn) + ", '" 
+//					+ Shour + ":" + Sminute + "','" 
+//					+ Syear + "-" + Smonth + "-" + Sday + "','" 
+//					+ getDescription() + "');", conn);
+//		}
+//		catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public String getDescription() {
 		return description;
