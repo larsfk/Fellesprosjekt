@@ -89,7 +89,7 @@ public class Appointment {
 								+ Syear + "-" + Smonth + "-" + Sday + "','" 
 								+ descr + "','" 
 								+ meetpl +  "','" 
-								+ getDuration() +"','"  + "1" + "','" + "51" + "','" 
+								+ getDuration() +"','"  + "1" + "','" + "0" + "','" 
 								+ getOwner().getEmail() + "');", conn);
 		}
 		catch (SQLException e) {
