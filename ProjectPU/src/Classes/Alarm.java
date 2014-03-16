@@ -1,9 +1,9 @@
 package Classes;
 
 import java.sql.SQLException;
+import java.sql.Connection;
 import java.util.Calendar;
 
-import com.mysql.jdbc.Connection;
 
 public class Alarm {
 	
