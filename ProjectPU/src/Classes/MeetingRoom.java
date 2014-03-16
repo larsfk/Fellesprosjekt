@@ -62,7 +62,7 @@ public class MeetingRoom {
 			}
 		}
 	}
-
+	
 	public boolean isFree(Calendar start, Calendar end){
 		for (int i = 0; i < AppointmentList.size(); i++){
 			if ((AppointmentList.get(i).getStarttime().compareTo(start) < 0 && AppointmentList.get(i).getFinishingtime().compareTo(end) > 0)

@@ -268,6 +268,10 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
+	public void getGroup(Connection conn){
+		
+	}
 
 	public void joinGroup(Person pers, Integer groupID, Connection conn){
 		try{
@@ -322,6 +326,18 @@ public class Database {
 		return rom;
 		
 		
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public ArrayList<Appointment> getListOfAppointmentsInMeetingroom(MeetingRoom rom, Connection conn){
+		try{
+			
+			
+			
 		}
 		catch (SQLException e){
 			e.printStackTrace();
