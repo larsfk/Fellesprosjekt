@@ -298,6 +298,18 @@ public class Database {
 		}
 	}
 	
+	public void removeGroup(int ID, Connection conn){
+		try{
+			//Create a query
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeUpdate( "DELETE FROM larsfkl_felles.group " +
+								"WHERE group_id = " + ID + ";");
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
 	public MeetingRoom getMeetingRoom(int ID, Connection conn){
 		try{
 		Statement stmt = (Statement) conn.createStatement();
