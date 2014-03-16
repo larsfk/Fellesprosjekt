@@ -259,10 +259,10 @@ public class Database {
 		}
 	}
 	
-	public void createGroup(Integer ID, Connection conn){
+	public void createGroup(Connection conn){
 		try{
 		Statement stmt = (Statement) conn.createStatement();
-		stmt.executeUpdate("INSERT INTO larsfkl_felles.group (group_id) VALUES ('" + ID + "');");
+		stmt.executeUpdate("INSERT INTO larsfkl_felles.group (group_id) VALUES ('" + generateGroupID(conn) + "');");
 		}
 		catch (SQLException e){
 			e.printStackTrace();
