@@ -20,7 +20,7 @@ public class Appointment {
 	private ArrayList<AppointmentToPerson> participantConnect = new ArrayList<AppointmentToPerson>();
 	Database db = new Database();
 
-	public Appointment(Calendar stime, Calendar ftime, String meetpl, String descr, Alarm alarm, Person owner){
+	public Appointment(int AppID, Calendar stime, Calendar ftime, String meetpl, String descr, Alarm alarm, Person owner){
 		if (stime.after(ftime)){
 			throw new IllegalArgumentException("Starttime cannot be after finishtime");
 		}
@@ -29,6 +29,7 @@ public class Appointment {
 		 * DATABASE: IF appID finnes throw new IllegalArgumentException
 		 * 
 		 */
+		this.appointmentID = AppID;
 		this.owner = owner;
 		AppointmentToPerson atp = new AppointmentToPerson(owner,this);
 		atp.setOwner(true);
@@ -39,7 +40,8 @@ public class Appointment {
 		setDuration(stime, ftime);
 		setAlarm(alarm);
 	}
-	public Appointment(Calendar stime, int dur, String meetpl, String descr, Alarm alarm, Person owner){
+	public Appointment(int AppID, Calendar stime, int dur, String meetpl, String descr, Alarm alarm, Person owner){
+		this.appointmentID = AppID;
 		setStarttime(stime);
 		setDuration(dur);
 		setMeetingplace(meetpl);
@@ -118,19 +120,21 @@ public class Appointment {
 			Integer Fday = this.finishingtime.get(Calendar.DATE);
 			Integer Fhour = this.finishingtime.get(Calendar.HOUR_OF_DAY);
 			Integer Fminute = this.finishingtime.get(Calendar.MINUTE);
-			
+			Integer key = db.generateAppointmentID(conn);
 //			System.out.println("Saar " + Syear + " Sh " + Shour);
 //			System.out.println("Faar " + Fyear + " Fh " + Fhour);
 			
-			db.addToDatabase(   "insert into larsfkl_felles.appointment(appointment_id,start,end,date,description,location,duration,room_id,group_id,owner) " +
-					"values (" + db.generateAppointmentID(conn) + ", '" 
-					+ Shour + ":" + Sminute + "','" 
-					+ Fhour + ":" + Fminute + "','" 
-					+ Syear + "-" + Smonth + "-" + Sday + "','" 
-					+ descr + "','" 
-					+ meetpl +  "','" 
-					+ getDuration() +"','"  + "1" + "','" + "51" + "','" 
-					+ getOwner().getEmail() + "');", conn);
+			db.addToDatabase(   "Insert into larsfkl_felles.appointment(appointment_id,start,end,date,description,location,duration,room_id,group_id,owner) " +
+								"values (" + key + ", '" 
+								+ Shour + ":" + Sminute + "','" 
+								+ Fhour + ":" + Fminute + "','" 
+								+ Syear + "-" + Smonth + "-" + Sday + "','" 
+								+ descr + "','" 
+								+ meetpl +  "','" 
+								+ getDuration() +"','"  + "1" + "','" + "51" + "','" 
+								+ getOwner().getEmail() + "');", conn);
+			db.addToDatabase(   "Insert into appointmentToPerson (appointment_id, email_id, status_1, hidden, alarm_id)" + 
+								"values (" + key + ", '" + getOwner().getEmail() + "', 1, 0, null);", conn);
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block

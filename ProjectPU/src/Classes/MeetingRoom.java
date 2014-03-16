@@ -1,5 +1,7 @@
 package Classes;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -9,6 +11,7 @@ public class MeetingRoom {
 	private int Capasity;
 	private ArrayList<Appointment> AppointmentList = new ArrayList<Appointment>();
 	private int length;
+	Database db = new Database();
 
 	public MeetingRoom(int ID, int Capasity){
 		this.ID = ID;
@@ -17,7 +20,21 @@ public class MeetingRoom {
 		length = 0;
 	}
 
-	public void addAppointment(Appointment Q){
+	public MeetingRoom(int ID, int Capasity, Connection conn){
+		this.ID = ID;
+		this.Capasity = Capasity;
+		this.AppointmentList.add(0, null);
+		length = 0;
+		try{
+			conn = db.getConnection();
+			db.addToDatabase("INSERT INTO larsfkl_felles.meeting_room (room_id, capasity) VALUES (" + ID + " , " + Capasity + ");", conn);
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+
+	public void reserveRoom(Appointment Q){
 		try{
 			if (Q.getStarttime().get(Calendar.YEAR) == -1){
 				throw new NullPointerException();
@@ -27,7 +44,7 @@ public class MeetingRoom {
 				length = 1;
 			}
 			else{
-						AppointmentList.add(Q);	
+				AppointmentList.add(Q);	
 			}
 		}
 
@@ -71,7 +88,7 @@ public class MeetingRoom {
 	public ArrayList<Appointment> getAppointmentList() {
 		return AppointmentList;
 	}
-	
-	
+
+
 
 }

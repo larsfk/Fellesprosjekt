@@ -239,23 +239,35 @@ public class Person {
 	}
 	
 	public void hideAppointment(Appointment appoint){ //Ta inn appointment
+		try {
+			Connection conn = db.getConnection();
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeUpdate("update larsfkl_felles.appointmentToPerson SET hidden = 1 WHERE email_id = '" + this.email + "' AND appointment_id = " + appoint.getAppointmentID() + ";");
+			System.out.println(appoint.getAppointmentID() + " " + this.getEmail() + " hidden");
+//			db.addToDatabase("update larsfkl_felles.appointmentToPerson SET hidden = 1 WHERE email_id = '" + this.email + "' AND appointment_id = " + appoint.getAppointmentID() + ";", conn);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for (int i = 0;i<appointmentList.size();i++){
 			if (appointmentList.get(i).getAppointment().equals(appoint)){
 				appointmentList.get(i).setHidden(true);
-				Connection conn;
-				try {
-					conn = db.getConnection();
-					db.addToDatabase("update larsfkl_felles.appointmentToPerson SET hidden = '"+ 1 + "' WHERE email = '" + this.email + "' AND '" + "' appointment_id = '" + appoint.getAppointmentID() + "';", conn);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				break;
 			}			
 		}
 	}
 	
 	public void unHideAppointment(Appointment appoint){
+		try {
+			Connection conn = db.getConnection();
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeUpdate("update larsfkl_felles.appointmentToPerson SET hidden = 0 WHERE email_id = '" + this.email + "' AND appointment_id = " + appoint.getAppointmentID() + ";");
+			System.out.println(appoint.getAppointmentID() + " " + this.getEmail() + " unhidden");
+//			db.addToDatabase("update larsfkl_felles.appointmentToPerson SET hidden = 1 WHERE email_id = '" + this.email + "' AND appointment_id = " + appoint.getAppointmentID() + ";", conn);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for (int i = 0;i<appointmentList.size();i++){
 			if (appointmentList.get(i).getAppointment() == appoint){
 				appointmentList.get(i).setHidden(false);

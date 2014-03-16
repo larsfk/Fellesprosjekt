@@ -93,6 +93,20 @@ public class Database {
 			return null;
 		}
 	}
+	
+	public Integer generateGroupID(Connection conn){
+		try{
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery( "SELECT max(group_id) + 1 from larsfkl_felles.group;");
+			ResultSet rs = stmt.getResultSet();
+			rs.next();
+			return Integer.parseInt(rs.getString(1));
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public Appointment getAppointment(int ID, Connection conn){
 
@@ -138,7 +152,7 @@ public class Database {
 			Person owner = getPersonFromDatabase(email, conn);
 
 			Alarm alarm = null;
-			appointment = new Appointment(startTime, finishTime, meetplace, descr, alarm, owner);
+			appointment = new Appointment(ID, startTime, finishTime, meetplace, descr, alarm, owner);
 			rs.close ();
 
 			return appointment;
@@ -267,6 +281,37 @@ public class Database {
 							"WHERE email = '" + pers.getEmail() + "' and group_id = "  + groupID + ";");
 		}
 		
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public MeetingRoom getMeetingRoom(int ID, Connection conn){
+		try{
+		Statement stmt = (Statement) conn.createStatement();
+		stmt.executeQuery(  "SELECT * FROM larsfkl_felles.meeting_room " +
+							"WHERE room_id = " + ID + ";");
+		ResultSet rs = stmt.getResultSet();
+		rs.next();
+		String Capasity = rs.getString(2);
+		MeetingRoom rom = new MeetingRoom(ID, Integer.parseInt(Capasity));
+		return rom;
+		
+		
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public void removeMeetingRoom(MeetingRoom rom, Connection conn){
+		try{
+			//Create a query
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeUpdate( "DELETE FROM larsfkl_felles.meeting_room " +
+								"WHERE room_id = " + rom.getID() + ";");
+		}
 		catch (SQLException e){
 			e.printStackTrace();
 		}
