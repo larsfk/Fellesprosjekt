@@ -79,6 +79,20 @@ public class Database {
 			return null;
 		}
 	}
+	
+	public Integer generateAlarmID(Connection conn){
+		try{
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery( "SELECT max(alarm_id) + 1 from larsfkl_felles.alarm;");
+			ResultSet rs = stmt.getResultSet();
+			rs.next();
+			return Integer.parseInt(rs.getString(1));
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public Appointment getAppointment(int ID, Connection conn){
 
