@@ -10,8 +10,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import org.omg.PortableServer.IdAssignmentPolicy;
-
 public class Database {
 
 	public Connection getConnection() throws SQLException {
@@ -226,10 +224,7 @@ public class Database {
 			Statement stmt = (Statement) conn.createStatement();
 			System.out.println("Statement created");
 			//Execute query
-			stmt.executeUpdate( "INSERT into larsfkl_felles.personToGroup (email, groupID) " +
-								"SELECT email, group_id " +
-								"FROM larsfkl_felles.person full join larsfkl_felles.group " +
-								"WHERE email = '" + pers.getEmail() + "' and group_id = "  + " " + ";");
+			stmt.executeUpdate( "");
 		}
 		catch (SQLException e){
 			e.printStackTrace();
@@ -252,10 +247,10 @@ public class Database {
 		Statement stmt = (Statement) conn.createStatement();
 		System.out.println("Statement created");
 		//Execute query
-		stmt.executeUpdate( "INSERT INTO larsfkl_felles.appointmentToPerson(appointment_id, email_id, status_1, hidden, alarm_id) " +
+		stmt.executeUpdate( "INSERT into larsfkl_felles.personToGroup (email, groupID) " +
 							"SELECT email, group_id " +
 							"FROM larsfkl_felles.person full join larsfkl_felles.group " +
-							"WHERE email = '" + pers.getEmail() + "' and group_id = " + groupID + ";");
+							"WHERE email = '" + pers.getEmail() + "' and group_id = "  + groupID + ";");
 		}
 		
 		catch (SQLException e){
