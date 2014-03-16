@@ -286,6 +286,18 @@ public class Database {
 		}
 	}
 	
+	public void abandonGroup(int ID, Person pers, Connection conn){
+		try{
+			//Create a query
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeUpdate( "DELETE FROM larsfkl_felles.personToGroup " +
+								"WHERE group_id = " + ID + " AND email = " + pers.getEmail() + ";");
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
 	public MeetingRoom getMeetingRoom(int ID, Connection conn){
 		try{
 		Statement stmt = (Statement) conn.createStatement();
