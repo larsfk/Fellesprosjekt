@@ -291,7 +291,7 @@ public class Database {
 			//Create a query
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeUpdate( "DELETE FROM larsfkl_felles.personToGroup " +
-								"WHERE group_id = " + ID + " AND email = " + pers.getEmail() + ";");
+								"WHERE group_id = " + ID + " AND email = '" + pers.getEmail() + "';");
 		}
 		catch (SQLException e){
 			e.printStackTrace();
