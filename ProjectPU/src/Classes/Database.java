@@ -262,18 +262,4 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
-
-
-
-	public static void readDatabase(String res, Connection conn) throws SQLException{
-		//Create a query
-		PreparedStatement query = conn.prepareStatement(res);
-		//Creating a variable to execute query
-		ResultSet result = query.executeQuery();
-
-		while(result.next()){
-			System.out.println("Name: " + result.getString(1));
-
-		}
-	}
 }
