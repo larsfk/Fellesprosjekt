@@ -59,8 +59,19 @@ public class Alarm {
 		this.description = description;
 		
 		try {
-			db.addToDatabase( "insert into larsfkl_felles.alarm(time,type,alarm_id) values ('" + getStart() + "','" + getDescription() + "','" + db.generateAlarmID(conn) + "');", conn);
-		} catch (SQLException e) {
+			Integer Syear = this.add1900toCalendarYear(this.start.get(Calendar.YEAR));
+			Integer Smonth = this.start.get(Calendar.MONTH);
+			Integer Sday = this.start.get(Calendar.DATE);
+			Integer Shour = this.start.get(Calendar.HOUR_OF_DAY);
+			Integer Sminute = this.start.get(Calendar.MINUTE);
+
+			db.addToDatabase(   "insert into larsfkl_felles.alarm(alarm_id,time,date,type) " +
+					"values (" + db.generateAlarmID(conn) + ", '" 
+					+ Shour + ":" + Sminute + "','" 
+					+ Syear + "-" + Smonth + "-" + Sday + "','" 
+					+ getDescription() + "');", conn);
+		}
+		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
