@@ -221,6 +221,20 @@ public class Database {
 
 		return date;
 	}
+	
+	public Calendar createCalendarFromSQLTimeAndDate(String time, String date){
+		return null;
+	}
+	
+	public String covertCalendarTimeToSQLTime(Calendar time){
+		
+		Integer t = time.get(Calendar.HOUR_OF_DAY);
+		Integer m = time.get(Calendar.MINUTE);
+		String T = t.toString();
+		String M = m.toString();
+		return (T + ":" + M);
+		
+	}
 
 	public void removePerson(String mail, Connection conn){
 		try{
@@ -355,6 +369,28 @@ public class Database {
 	
 	public ArrayList<Appointment> getListOfAppointmentsInMeetingroom(MeetingRoom rom, Connection conn){
 		try{
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery(  "SELECT * FROM larsfkl_felles.appointment" + 
+								"WHERE larsfkl_felles.appointment.room_id = rom.getID;");
+			ResultSet rs = stmt.getResultSet();
+			ArrayList<Appointment> appList = new ArrayList<Appointment>();
+
+			while (rs.next()){
+				Alarm al = null;
+				Calendar stime = convertSQLTimeToCalendarTime(rs.getString(2));
+				Calendar ftime = convertSQLDateToCalendarDate(rs.getString(3));
+				stime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(rs.getString(2)));
+				stime.set(Calendar.MINUTE, Integer.parseInt(rs.getString(3)));
+				ftime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(rs.getString(4)));
+				
+				Appointment app = new Appointment(Integer.parseInt(rs.getString(1)), stime, ftime, rs.getString(6), rs.getString(5), al, 
+						getPersonFromDatabase(rs.getString(10), conn));
+				
+//				Person person = new Person(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
+//				persons.add(person);
+			}
+			return appList;
+			
 			//SELECT * FROM larsfkl_felles.appointment
 			//WHERE larsfkl_felles.appointment.room_id = rom.getID;
 			
@@ -364,7 +400,6 @@ public class Database {
 			e.printStackTrace();
 			return null;
 		}
-		return null;
 	}
 	
 	public void removeMeetingRoom(MeetingRoom rom, Connection conn){
@@ -379,5 +414,5 @@ public class Database {
 		}
 	}
 	
-	public 
+//	public 
 }
