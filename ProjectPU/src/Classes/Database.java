@@ -225,14 +225,14 @@ public class Database {
 	public String convertCalendarDateToSQLDate(Calendar cal){
 		String date = "" + cal.get(Calendar.DATE);
 		String month = "" + cal.get(Calendar.MONTH);
-		String year = "" + cal.get(Calendar.YEAR);
+		String year = "" + (cal.get(Calendar.YEAR) + 1900);
 		return year + "-" + month + "-" + date;
 	}
 	
 	public String convertCalendarDateToCasualDate(Calendar cal){
 		String date = "" + cal.get(Calendar.DATE);
 		String month = "" + cal.get(Calendar.MONTH);
-		String year = "" + cal.get(Calendar.YEAR);
+		String year = "" + (cal.get(Calendar.YEAR) + 1900);
 		return date + "/" + month + "-" + year;
 	}
 	
