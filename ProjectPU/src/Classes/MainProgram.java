@@ -124,6 +124,9 @@ public class MainProgram {
 				}
 				break;
 				
+				// MÅ KUNNE SETTE ROM OG GRUPPE(?)
+				
+				
 			case 2:
 				int numApp = cc.getAppointmentList(person).size(); //Number of appointments in the active calendar
 				int appID = -1;
@@ -161,7 +164,8 @@ public class MainProgram {
 					System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " Location: " + appList.get(i).getMeetingplace() + " Time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()));
 				}
 				chosen = sc.nextInt();
-
+				
+				
 				break;
 			case 4:
 				//Skrive ut kalender, TONY
