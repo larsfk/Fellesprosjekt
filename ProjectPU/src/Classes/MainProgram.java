@@ -61,7 +61,7 @@ public class MainProgram {
 			}
 		}
 
-		System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3.Edit appointment\n4. Show this calendar\n5. Show several calendars");
+		System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3. Edit appointment\n4. Show this calendar\n5. Show several calendars");
 		int option = sc.nextInt();
 		
 		switch (option){
@@ -104,21 +104,33 @@ public class MainProgram {
 			Alarm alarm;
 			alarm = new Alarm(timeListInt[0], timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4],timeList[5]);
 
-
-			Appointment ap = new Appointment(199,start,finish,meetpl,description,alarm,person);//DENNE MÅ INNEHOLDE DATABASECONNECT
+			Connection conn;
+			try {
+				conn = db.getConnection();
+				Appointment ap = new Appointment(start,finish,meetpl,description,alarm,person,conn);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 			
 		case 2:
-			int numApp = cc.getAppointmentList().size(); //Number of appointments in the active calendar
+			int numApp = cc.getAppointmentList(person).size(); //Number of appointments in the active calendar
 			int appID = -1;
 			while (appID < 0){ // ||appID > numApp
 				System.out.println("Which appointment would you like to delete?");
 				for (int i = 0;i<numApp;i++){ 
-					System.out.println("(" + i + ") " + cc.getAppointmentList().get(i)); //returns element i in calendar appointments
+					System.out.println("(" + i + ") " + cc.getAppointmentList(person).get(i)); //returns element i in calendar appointments
 				}
 				appID = sc.nextInt();
 			}
-			cc.deleteAppointment(cc.getAppointmentList().get(appID));
+			try {
+				conn = db.getConnection();
+				cc.deleteAppointment(cc.getAppointmentList(person).get(appID),conn);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		case 3:
 			//Edit appointment

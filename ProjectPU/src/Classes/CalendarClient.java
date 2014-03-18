@@ -1,5 +1,6 @@
 package Classes;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Calendar;
@@ -13,6 +14,8 @@ public class CalendarClient {
 	ArrayList<Appointment> appointments = new ArrayList<Appointment>();
 	ArrayList<ArrayList<Appointment>> myCalendar = new ArrayList<ArrayList<Appointment>>();
 	ArrayList<Appointment> joinedAppointments = new ArrayList<Appointment>();
+	Database db = new Database();
+	Connection conn;
 
 	public CalendarClient(Person person){
 		/*
@@ -27,21 +30,16 @@ public class CalendarClient {
 		 */
 	}
 
-	public void deleteAppointment(Appointment appoint){
-		/*
-		 * 
-		 * Slette fra databasen
-		 * slette appointmentToPerson-relasjonen
-		 * 
-		 */
+	public void deleteAppointment(Appointment appoint, Connection conn){
+		db.removeAppointment(appoint.getAppointmentID(), conn);
 	}
 	public void setPerson(Person person){
 		this.person = person;
 
 	}
 
-	public ArrayList<Appointment> getAppointmentList(){
-		return appointments;
+	public ArrayList<Appointment> getAppointmentList(Person person){
+		db.getAppointmentList(person, db.getConnection());
 	}
 
 	public void addPersonToCC(Person per){
