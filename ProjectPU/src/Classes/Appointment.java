@@ -37,6 +37,7 @@ public class Appointment {
 		this.finishingtime = ftime;
 		this.meetingplace = meetpl;
 		this.description = descr;
+		System.out.println("Calculating duration for " + this.appointmentID + ", " + this.getOwner().getEmail() + "   " + this.description);
 		this.duration = calculateDuration(starttime, finishingtime);
 		this.alarm = alarm;
 	}
@@ -61,6 +62,7 @@ public class Appointment {
 		this.finishingtime = ftime;
 		this.meetingplace = meetpl;
 		this.description = descr;
+//		System.out.println("Calculating duration for " + this.appointmentID + ", " + this.getOwner().getEmail() + "   " + this.description);
 		this.duration = calculateDuration(starttime, finishingtime);
 		this.alarm = alarm;
 		
@@ -87,7 +89,7 @@ public class Appointment {
 								+ Syear + "-" + Smonth + "-" + Sday + "','" 
 								+ descr + "','" 
 								+ meetpl +  "','" 
-								+ getDuration() +"','"  + "1" + "','" + "0" + "','" 
+								+ this.duration +"','"  + "1" + "','" + "0" + "','" 
 								+ getOwner().getEmail() + "');", conn);
 		}
 		catch (SQLException e) {
@@ -127,7 +129,7 @@ public class Appointment {
 								+ Syear + "-" + Smonth + "-" + Sday + "','" 
 								+ descr + "','" 
 								+ meetpl +  "','" 
-								+ getDuration() +"','"  + "1" + "','" + "51" + "','" 
+								+ this.duration +"','"  + "1" + "','" + "51" + "','" 
 								+ getOwner().getEmail() + "');", conn);
 			db.addToDatabase(   "Insert into appointmentToPerson (appointment_id, email_id, status_1, hidden, alarm_id)" + 
 								"values (" + key + ", '" + getOwner().getEmail() + "', 1, 0, null);", conn);
@@ -324,7 +326,12 @@ public class Appointment {
 //		long milsecs1= stime.getTimeInMillis();
 //		long milsecs2 = ftime.getTimeInMillis();
 //		long duration = (milsecs2-milsecs1)/(60 * 1000);
+		System.out.print("stime = " + stime.get(Calendar.HOUR_OF_DAY) + ":" + stime.get(Calendar.MINUTE) + "   " + stime.get(Calendar.DATE) 
+				+ "/" + stime.get(Calendar.MONTH) + "-" + stime.get(Calendar.YEAR));
+		System.out.print(" .. ftime = " + ftime.get(Calendar.HOUR_OF_DAY) + ":" + ftime.get(Calendar.MINUTE) + "   " + ftime.get(Calendar.DATE) 
+				+ "/" + ftime.get(Calendar.MONTH) + "-" + ftime.get(Calendar.YEAR));
 		long dur = (ftime.getTimeInMillis()-stime.getTimeInMillis())/60000;
+		System.out.println(" ..  Duration: " + dur);
 		return  dur; //i minutt
 	}
 
@@ -343,6 +350,15 @@ public class Appointment {
 	
 	public void setIsGoing(AppointmentToPerson atp, boolean isGoing){ //?
 		atp.setIsGoing(isGoing);
+	}
+	
+	public void setRoom(MeetingRoom rom, Connection conn){
+		try {
+			db.addToDatabase("update larsfkl_felles.appointment SET room_id = "+ rom.getID() 
+					+ " WHERE appointment_id = " + this.appointmentID + ";", conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static int add1900toCalendarYear(Integer year){

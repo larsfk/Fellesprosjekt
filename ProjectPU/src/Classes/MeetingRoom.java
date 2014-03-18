@@ -64,7 +64,7 @@ public class MeetingRoom {
 			}
 		}
 	}
-	
+
 	public boolean isFree(Calendar start, Calendar end){
 		for (int i = 0; i < AppointmentList.size(); i++){
 			if ((AppointmentList.get(i).getStarttime().compareTo(start) < 0 && AppointmentList.get(i).getFinishingtime().compareTo(end) > 0)
@@ -85,11 +85,11 @@ public class MeetingRoom {
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery("SELECT capasity FROM larsfkl_felles.meeting_room where capasity = '" + Capasity + "';");
 			ResultSet rs = stmt.getResultSet();
-			
+
 			rs.next();
 			String name = rs.getString(1);
 			rs.close();
-			
+
 			return Capasity;
 
 		} catch (SQLException e) {
@@ -105,11 +105,11 @@ public class MeetingRoom {
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery("SELECT room_id FROM larsfkl_felles.meeting_room where room_id = '" + ID + "';");
 			ResultSet rs = stmt.getResultSet();
-			
+
 			rs.next();
 			String name = rs.getString(1);
 			rs.close();
-			
+
 			return ID;
 
 		} catch (SQLException e) {
@@ -119,8 +119,17 @@ public class MeetingRoom {
 		return -1;
 	}
 
-	public ArrayList<Appointment> getAppointmentList() {
-		return AppointmentList;
+	public ArrayList<Appointment> getAppointmentList(){
+		Connection conn;
+		try {
+			conn = this.db.getConnection();
+			ArrayList<Appointment> lol = db.getListOfAppointmentsInMeetingroom(this, conn);
+			return lol;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 

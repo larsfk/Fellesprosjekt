@@ -222,6 +222,20 @@ public class Database {
 		return date;
 	}
 	
+	public String convertCalendarDateToSQLDate(Calendar cal){
+		String date = "" + cal.get(Calendar.DATE);
+		String month = "" + cal.get(Calendar.MONTH);
+		String year = "" + cal.get(Calendar.YEAR);
+		return year + "-" + month + "-" + date;
+	}
+	
+	public String convertCalendarDateToCasualDate(Calendar cal){
+		String date = "" + cal.get(Calendar.DATE);
+		String month = "" + cal.get(Calendar.MONTH);
+		String year = "" + cal.get(Calendar.YEAR);
+		return date + "/" + month + "-" + year;
+	}
+	
 	public Calendar createCalendarFromSQLTimeAndDate(String time, String date){
 		Calendar out = Calendar.getInstance();
 		Calendar t = convertSQLTimeToCalendarTime(time);
@@ -379,8 +393,7 @@ public class Database {
 	public ArrayList<Appointment> getListOfAppointmentsInMeetingroom(MeetingRoom rom, Connection conn){
 		try{
 			Statement stmt = (Statement) conn.createStatement();
-			stmt.executeQuery(  "SELECT * FROM larsfkl_felles.appointment" + 
-								"WHERE larsfkl_felles.appointment.room_id = rom.getID;");
+			stmt.executeQuery(  "SELECT * FROM larsfkl_felles.appointment WHERE room_id = " + rom.getID() + ";");
 			ResultSet rs = stmt.getResultSet();
 			ArrayList<Appointment> appList = new ArrayList<Appointment>();
 

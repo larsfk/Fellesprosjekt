@@ -175,9 +175,8 @@ public class Person {
 	
 	
 	
-	public void setOffice(String office) {
+	public void setOffice(String office, Connection conn) {
 		try {
-			Connection conn = db.getConnection();
 			db.addToDatabase("update larsfkl_felles.person SET office = '"+ office + "' WHERE email = '" + this.email + "';", conn);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
