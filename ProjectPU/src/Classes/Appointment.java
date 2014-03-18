@@ -1,7 +1,9 @@
 package Classes;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Calendar;
 import java.util.ArrayList;
 
@@ -213,11 +215,24 @@ public class Appointment {
 		
 		try {
 			Connection conn = db.getConnection();
-			db.addToDatabase("update larsfkl_felles.appointment SET start = '"+ stime + "' WHERE appointment_id = '" + this.appointmentID + "';", conn);
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery("SELECT end FROM larsfkl_felles.appointment" + "WHERE appointment_id = '" + this.appointmentID + ";");
+			ResultSet rs = stmt.getResultSet();
+			
+			rs.next();
+			
+			String end = rs.getString(3);
+			Calendar endCal = Calendar.getInstance();
+			endCal = db.convertSQLTimeToCalendarTime(end);
+			if((endCal.get(Calendar.HOUR_OF_DAY) > stime.get(Calendar.HOUR_OF_DAY)) || ((endCal.get(Calendar.HOUR_OF_DAY) == stime.get(Calendar.HOUR_OF_DAY)) && (endCal.get(Calendar.MINUTE) > stime.get(Calendar.MINUTE)))){
+				db.addToDatabase("update larsfkl_felles.appointment SET start = '"+ stime + "' WHERE appointment_id = '" + this.appointmentID + "';", conn);				
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		this.starttime = Calendar.getInstance();
 		this.starttime.set(this.starttime.HOUR_OF_DAY, stime.get(Calendar.HOUR_OF_DAY));
 //		System.out.println("Starttime = " + starttime.get(Calendar.HOUR_OF_DAY) + " stime (parameter) = " + stime.get(Calendar.HOUR_OF_DAY));
