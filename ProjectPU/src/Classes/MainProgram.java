@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class MainProgram {
 	private String welcome = "Hello!\n";
 	private ArrayList<Person> validPersons;
+	private ArrayList<Appointment> appList;
 	Database db = new Database();
 
 	private  void run() {
@@ -145,6 +146,22 @@ public class MainProgram {
 				break;
 			case 3:
 				//Edit appointment
+				int chosen = -1;
+				appList = new ArrayList<Appointment>();
+				try {
+					conn = db.getConnection();
+					appList = db.getAppointmentList(person, conn);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				System.out.println("Choose a appointment to edit: ");
+				for (int i = 0;i<appList.size();i++){
+					System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " Location: " + appList.get(i).getMeetingplace() + " Time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()));
+				}
+				chosen = sc.nextInt();
+
 				break;
 			case 4:
 				//Skrive ut kalender, TONY
