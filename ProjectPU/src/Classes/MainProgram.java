@@ -44,7 +44,7 @@ public class MainProgram {
 		int personID = -1; 
 		Person person = null;
 		while (personID < 0 || personID > validPersons.size()){ //Til vi faar et gyldig nr
-			System.out.println("Who are you? Type number");
+			System.out.println("Choose a username: ");
 			for (int i = 0;i<validPersons.size();i++){
 				System.out.println("(" + i + ") " + validPersons.get(i).getName());
 			}
@@ -60,95 +60,108 @@ public class MainProgram {
 				System.out.println("Wrong password!");
 			}
 		}
-
-		System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3. Edit appointment\n4. Show this calendar\n5. Show several calendars");
-		int option = sc.nextInt();
 		
-		switch (option){
-		case 1:
-			System.out.println("Type starttime (yyyy.mm.dd.hh.mm)");
-			String time = sc.next();
-			//Burde sjekke om input er gyldig verdi om vi faar tid
-			String[] timeList = time.split("."); //splitter input paa punktum
-			Integer[] timeListInt = new Integer[5];
-			for (int i = 0;i<5;i++){
-				timeListInt[i] = Integer.parseInt(timeList[i]);
-			}
-			Calendar start = Calendar.getInstance();
-			start.clear();
-			start.set(timeListInt[0], timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4]);
-
-			System.out.println("Type finishime (yyyy.mm.dd.hh.mm)");
-			time = sc.next();
-			timeList = time.split("."); //splitter input paa punktum
-			for (int i = 0;i<5;i++){
-				timeListInt[i] = Integer.parseInt(timeList[i]);
-			}
-			Calendar finish = Calendar.getInstance();
-			finish.clear();
-			finish.set(timeListInt[0], timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4]);
+		while(true){
+			System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3. Edit appointment\n4. Show this calendar\n5. Show several calendars");
+			int option = sc.nextInt();
 			
-			System.out.println("Type meeting place");
-			String meetpl = sc.nextLine();
-			
-			System.out.println("Type description");
-			String description = sc.nextLine();
-
-			System.out.println("Type alarm time (yyyy.mm.dd.hh.mm.decription)");
-			time = sc.next();
-			timeList = time.split("."); //splitter input paa punktum
-			for (int i = 0;i<5;i++){
-				timeListInt[i] = Integer.parseInt(timeList[i]);
-			}
-			//public Alarm(int year, int month, int date, int hourOfDay, int minute, String description){
-			Alarm alarm;
-			alarm = new Alarm(timeListInt[0], timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4],timeList[5]);
-
-			Connection conn;
-			try {
-				conn = db.getConnection();
-				Appointment ap = new Appointment(start,finish,meetpl,description,alarm,person,conn);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			break;
-			
-		case 2:
-			int numApp = cc.getAppointmentList(person).size(); //Number of appointments in the active calendar
-			int appID = -1;
-			while (appID < 0){ // ||appID > numApp
-				System.out.println("Which appointment would you like to delete?");
-				for (int i = 0;i<numApp;i++){ 
-					System.out.println("(" + i + ") " + cc.getAppointmentList(person).get(i)); //returns element i in calendar appointments
+			switch (option){
+			case 1:
+				System.out.println("Type starttime (yyyy:mm:dd:hh:mm)");
+				String time = sc.next();
+				System.out.println(time);
+				//Burde sjekke om input er gyldig verdi om vi faar tid
+				String[] timeList = time.split(":"); //splitter input paa punktum
+				Integer[] timeListInt = new Integer[5];
+				for (int i = 0; i < 5; i++){
+					timeListInt[i] = Integer.parseInt(timeList[i]);
 				}
-				appID = sc.nextInt();
-			}
-			try {
-				conn = db.getConnection();
-				cc.deleteAppointment(cc.getAppointmentList(person).get(appID),conn);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			break;
-		case 3:
-			//Edit appointment
-			break;
-		case 4:
-			//Skrive ut kalender, TONY
-			//System.out.println(cc.showMyWeekCalendar());
-			break;
-		case 5:
-			//Skrive ut flere kalendere, TONY
-			//System.out.println(cc.showGroupCalendar());
-			break;
-		default:
-			System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3.Edit appointment\n4. Show this calendar\n5. Show several calendars");
-			break;
-		}
-	}
+				Calendar start = Calendar.getInstance();
+				start.clear();
+				start.set(timeListInt[0]-1900, timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4]);
 
+				System.out.println("Type finishime (yyyy:mm:dd:hh:mm)");
+				time = sc.next();
+				timeList = time.split(":"); //splitter input paa punktum
+				for (int i = 0;i<5;i++){
+					timeListInt[i] = Integer.parseInt(timeList[i]);
+				}
+				Calendar finish = Calendar.getInstance();
+				finish.clear();
+				finish.set(timeListInt[0]-1900, timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4]);
+				
+				sc.nextLine();
+				
+				System.out.println("Type meeting place");
+				String meetpl = sc.nextLine();
+				
+				System.out.println("Type description");
+				String description = sc.nextLine();
+
+				System.out.println("Type alarm time (yyyy:mm:dd:hh:mm:decription)");
+				time = sc.next();
+				timeList = time.split(":"); //splitter input paa punktum
+				for (int i = 0;i<5;i++){
+					timeListInt[i] = Integer.parseInt(timeList[i]);
+				}
+				
+				System.out.println("Choose available room:");
+				//getAvailableMeetingRooms();
+				int room = sc.nextInt();
+				
+				
+				Alarm alarm;
+				Connection conn;
+				try {
+					conn = db.getConnection();
+					alarm = new Alarm(timeListInt[0]-1900, timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4],timeList[5],conn);
+					Appointment ap = new Appointment(start,finish,meetpl,description,alarm,person,conn);
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+				
+			case 2:
+				int numApp = cc.getAppointmentList(person).size(); //Number of appointments in the active calendar
+				int appID = -1;
+				while (appID < 0){ // ||appID > numApp
+					System.out.println("Which appointment would you like to delete?");
+					for (int i = 0;i<numApp;i++){ 
+						System.out.println("(" + i + ") " + cc.getAppointmentList(person).get(i)); //returns element i in calendar appointments
+					}
+					appID = sc.nextInt();
+				}
+
+				try {
+					conn = db.getConnection();
+					cc.deleteAppointment(cc.getAppointmentList(person).get(appID),conn);
+					System.out.println("Appointment deleted.");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+			case 3:
+				//Edit appointment
+				break;
+			case 4:
+				//Skrive ut kalender, TONY
+				//System.out.println(cc.showMyWeekCalendar());
+				break;
+			case 5:
+				//Skrive ut flere kalendere, TONY
+				//System.out.println(cc.showGroupCalendar());
+				break;
+			default:
+				System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3.Edit appointment\n4. Show this calendar\n5. Show several calendars");
+				break;
+			}
+		}
+
+		}
+		
 	public static void main(String[] args) {
 		MainProgram MP = new MainProgram();
 		MP.run();
