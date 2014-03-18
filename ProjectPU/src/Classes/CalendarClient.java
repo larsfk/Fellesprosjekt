@@ -18,8 +18,10 @@ public class CalendarClient {
 		/*
 		 * 
 		 * 
-		 * Hente alle relasjoner (AppointmentToPerson-databasen) og
-		 * legge avtaler tilhoerende person til i appointments
+		 * Hente alle relasjoner (AppointmentToPerson-databasen):
+		 * 
+		 * - legge AppointmentToPerson tilhoerende person til i appointmentslist i person
+		 * - tilsvarende i alle appointments person er i?
 		 * 
 		 * 
 		 */
