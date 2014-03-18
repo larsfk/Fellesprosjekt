@@ -163,12 +163,12 @@ public class Database {
 		}
 	}
 
-	public ArrayList<Appointment> getAppointmentList(String email, Connection conn){
+	public ArrayList<Appointment> getAppointmentList(Person pers, Connection conn){
 		try{
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery(  "SELECT appointment_id " +
 								"FROM larsfkl_felles.appointment " +
-								"WHERE owner = '" + email + "';");
+								"WHERE owner = '" + pers.getEmail() + "';");
 			ResultSet rs = stmt.getResultSet();
 			ArrayList<Appointment> appList = new ArrayList<Appointment>();
 			ArrayList<Integer> IDList = new ArrayList<Integer>();
@@ -378,4 +378,6 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
+	public 
 }
