@@ -213,7 +213,7 @@ public class Appointment {
 		
 		try {
 			Connection conn = db.getConnection();
-			db.addToDatabase("update larsfkl_felles.person SET start = '"+ stime + "' WHERE start = '" + db.convertT + "';", conn);
+			db.addToDatabase("update larsfkl_felles.appointment SET start = '"+ stime + "' WHERE appointment_id = '" + this.appointmentID + "';", conn);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
