@@ -1,6 +1,7 @@
 package Classes;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -8,6 +9,7 @@ import java.util.Scanner;
 public class MainProgram {
 	private String welcome = "Hello!\n";
 	private ArrayList<Person> validPersons;
+	Database db = new Database();
 
 	private  void run() {
 		//Kun testing fra her til.....
@@ -28,13 +30,13 @@ public class MainProgram {
 		//....her
 
 		validPersons = new ArrayList<Person>();
-		/*
-		 * 
-		 * 
-		 * Fyll validPersons med alle tilgjengelige navn i databasen
-		 * 
-		 * 
-		 */
+		try {
+			Connection conn = db.getConnection();
+			validPersons = db.getPersonList(conn);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		System.out.println(welcome);
 		Scanner sc = new Scanner(System.in);
@@ -49,11 +51,14 @@ public class MainProgram {
 			personID = sc.nextInt();
 			person = validPersons.get(personID);
 		}
-		String password = ""; //Hente dette fra databasen
+		String password = person.getPassword(); //Hente dette fra databasen
 		String typedPassword = ""; //kanskje "null"?
 		while (password.compareTo(typedPassword) != 0){
 			System.out.println("Type password");
 			typedPassword = sc.next();
+			if(!typedPassword.equals(password)){
+				System.out.println("Wrong password!");
+			}
 		}
 
 		System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3.Edit appointment\n4. Show this calendar\n5. Show several calendars");
