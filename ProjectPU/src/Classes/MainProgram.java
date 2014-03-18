@@ -1,5 +1,6 @@
 package Classes;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -21,7 +22,9 @@ public class MainProgram {
 		date2.set(date2.HOUR_OF_DAY, 11);
 
 		Appointment appoint1; 
-		appoint1 = new Appointment(date1,date2,"Hos Cox","Progging",alarm1,rebecca);
+		appoint1 = new Appointment(100,date1,date2,"Hos Cox","Progging",alarm1,rebecca);
+		//Calendar stime, Calendar ftime, String meetpl, String descr, Alarm alarm, Person owner, Connection conn){
+		
 		//....her
 
 		validPersons = new ArrayList<Person>();
@@ -37,12 +40,14 @@ public class MainProgram {
 		Scanner sc = new Scanner(System.in);
 
 		int personID = -1; 
+		Person person = null;
 		while (personID < 0 || personID > validPersons.size()){ //Til vi faar et gyldig nr
 			System.out.println("Who are you? Type number");
 			for (int i = 0;i<validPersons.size();i++){
 				System.out.println("(" + i + ") " + validPersons.get(i).getName());
 			}
 			personID = sc.nextInt();
+			person = validPersons.get(personID);
 		}
 		String password = ""; //Hente dette fra databasen
 		String typedPassword = ""; //kanskje "null"?
@@ -77,11 +82,27 @@ public class MainProgram {
 			Calendar finish = Calendar.getInstance();
 			finish.clear();
 			finish.set(timeListInt[0], timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4]);
+			
+			System.out.println("Type meeting place");
+			String meetpl = sc.nextLine();
+			
+			System.out.println("Type description");
+			String description = sc.nextLine();
 
-			//OSV
+			System.out.println("Type alarm time (yyyy.mm.dd.hh.mm.decription)");
+			time = sc.next();
+			timeList = time.split("."); //splitter input paa punktum
+			for (int i = 0;i<5;i++){
+				timeListInt[i] = Integer.parseInt(timeList[i]);
+			}
+			//public Alarm(int year, int month, int date, int hourOfDay, int minute, String description){
+			Alarm alarm;
+			alarm = new Alarm(timeListInt[0], timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4],timeList[5]);
 
-			//Appointment ap = new Appointment(startTime, ); //etc
+
+			Appointment ap = new Appointment(199,start,finish,meetpl,description,alarm,person);//DENNE MÅ INNEHOLDE DATABASECONNECT
 			break;
+			
 		case 2:
 			int numApp = cc.getAppointmentList().size(); //Number of appointments in the active calendar
 			int appID = -1;
