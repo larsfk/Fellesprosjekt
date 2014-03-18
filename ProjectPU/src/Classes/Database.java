@@ -235,7 +235,7 @@ public class Database {
 		return out;
 	}
 	
-	public String covertCalendarTimeToSQLTime(Calendar time){
+	public String convertCalendarTimeToSQLTime(Calendar time){
 		
 		Integer t = time.get(Calendar.HOUR_OF_DAY);
 		Integer m = time.get(Calendar.MINUTE);
@@ -386,17 +386,14 @@ public class Database {
 
 			while (rs.next()){
 				Alarm al = null;
-				Calendar stime = convertSQLTimeToCalendarTime(rs.getString(2));
-				Calendar ftime = convertSQLDateToCalendarDate(rs.getString(3));
-				stime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(rs.getString(2)));
-				stime.set(Calendar.MINUTE, Integer.parseInt(rs.getString(3)));
-				ftime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(rs.getString(4)));
+				Calendar stime;
+				Calendar ftime;
+				stime = createCalendarFromSQLTimeAndDate(rs.getString(2), rs.getString(4));
+				ftime = createCalendarFromSQLTimeAndDate(rs.getString(3), rs.getString(4));
 				
 				Appointment app = new Appointment(Integer.parseInt(rs.getString(1)), stime, ftime, rs.getString(6), rs.getString(5), al, 
 						getPersonFromDatabase(rs.getString(10), conn));
-				
-//				Person person = new Person(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
-//				persons.add(person);
+				appList.add(app);
 			}
 			return appList;
 			
