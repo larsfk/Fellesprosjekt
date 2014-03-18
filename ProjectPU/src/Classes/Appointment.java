@@ -156,9 +156,16 @@ public class Appointment {
 			 */
 	}
 	public void removeParticipant(Person par){
-		if (participants.contains(par)){
+		if (participants.contains(par)){ //Overfloedig
 			participants.remove(par);
 		}
+		for (int i = 0;i<participantConnect.size();i++){
+			if (participantConnect.get(i).getUser().equals(par)){
+				participantConnect.remove(i);
+				break;
+			}
+		}
+		
 		/*
 		 * 
 		 * DATABASE
