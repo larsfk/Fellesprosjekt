@@ -225,7 +225,7 @@ public class Appointment {
 			Calendar endCal = Calendar.getInstance();
 			endCal = db.convertSQLTimeToCalendarTime(end);
 			
-			long dur = calculateDuration(stimegi, endCal);
+			long dur = calculateDuration(stime, endCal);
 			String durstring = "" + dur;
 			
 			if((endCal.get(Calendar.HOUR_OF_DAY) > stime.get(Calendar.HOUR_OF_DAY)) || ((endCal.get(Calendar.HOUR_OF_DAY) == stime.get(Calendar.HOUR_OF_DAY)) && (endCal.get(Calendar.MINUTE) > stime.get(Calendar.MINUTE)))){
