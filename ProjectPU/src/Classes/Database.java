@@ -16,7 +16,7 @@ public class Database {
 
 		Connection conn = null;
 		conn = DriverManager.getConnection("jdbc:mysql://mysql.stud.ntnu.no:3306/larsfkl_felles","larsfkl_felles","bademadrass");
-		System.out.println("Connected to database");
+//		System.out.println("Connected to database");
 		return conn;
 	}
 
@@ -24,10 +24,10 @@ public class Database {
 	public void addToDatabase(String statement, Connection conn) throws SQLException{
 		//Create a query
 		Statement stmt = (Statement) conn.createStatement();
-		System.out.println("Statement created");
+//		System.out.println("Statement created");
 		//Execute query
 		stmt.executeUpdate(statement);
-		System.out.println("Update exectuted");
+//		System.out.println("Update exectuted");
 	}
 
 	//	public void removePersonFromDatabase(String statement, Connection conn) throws SQLException{
