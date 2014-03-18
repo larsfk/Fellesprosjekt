@@ -1,7 +1,9 @@
 package Classes;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -78,11 +80,43 @@ public class MeetingRoom {
 	}
 
 	public int getCapasity(){
-		return Capasity;
+		try {
+			Connection conn = db.getConnection();
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery("SELECT capasity FROM larsfkl_felles.meeting_room where capasity = '" + Capasity + "';");
+			ResultSet rs = stmt.getResultSet();
+			
+			rs.next();
+			String name = rs.getString(1);
+			rs.close();
+			
+			return Capasity;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
 	}
 
 	public int getID(){
-		return ID;
+		try {
+			Connection conn = db.getConnection();
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery("SELECT room_id FROM larsfkl_felles.meeting_room where room_id = '" + ID + "';");
+			ResultSet rs = stmt.getResultSet();
+			
+			rs.next();
+			String name = rs.getString(1);
+			rs.close();
+			
+			return ID;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
 	}
 
 	public ArrayList<Appointment> getAppointmentList() {
