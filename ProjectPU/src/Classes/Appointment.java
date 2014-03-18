@@ -40,6 +40,7 @@ public class Appointment {
 		System.out.println("Calculating duration for " + this.appointmentID + ", " + this.getOwner().getEmail() + "   " + this.description);
 		this.duration = calculateDuration(starttime, finishingtime);
 		this.alarm = alarm;
+		System.out.println("done");
 	}
 	public Appointment(int AppID, Calendar stime, int dur, String meetpl, String descr, Alarm alarm, Person owner){
 		this.appointmentID = AppID;
@@ -263,8 +264,10 @@ public class Appointment {
 			rs.next();
 			
 			String start = rs.getString(2);
+			String end = rs.getString(3);
+			String date = rs.getString(4);
 			Calendar startCal = Calendar.getInstance();
-			startCal = db.convertSQLTimeToCalendarTime(start);
+			startCal = db.createCalendarFromSQLTimeAndDate(start, date);
 			String calendar = db.convertCalendarTimeToSQLTime(ftime);
 			
 			long dur = calculateDuration(startCal, ftime);
