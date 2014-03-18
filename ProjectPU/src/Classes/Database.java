@@ -333,6 +333,26 @@ public class Database {
 		}
 	}
 	
+	public ArrayList<Person> getPersonList(Connection conn){
+		try{
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery(  "SELECT * " +
+								"FROM larsfkl_felles.person;");
+			ResultSet rs = stmt.getResultSet();
+			ArrayList<Person> persons = new ArrayList<Person>();
+
+			while (rs.next()){
+				Person person = new Person(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
+				persons.add(person);
+			}
+			return persons;
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public ArrayList<Appointment> getListOfAppointmentsInMeetingroom(MeetingRoom rom, Connection conn){
 		try{
 			//SELECT * FROM larsfkl_felles.appointment
