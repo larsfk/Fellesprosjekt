@@ -1,9 +1,10 @@
 package Classes;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Calendar;
 
 import junit.framework.TestCase;
-
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
@@ -19,6 +20,8 @@ public class TestAppointment extends TestCase {
 	Appointment app1;
 	Appointment app2;
 	Person testPerson;
+	Database db = new Database();
+	
 	public static void main(String[] args) {
 		TestAppointment ta = new TestAppointment();
 		
@@ -37,8 +40,16 @@ public class TestAppointment extends TestCase {
 		
 		start2.set(start2.HOUR_OF_DAY,15);
 		start2.set(start2.MINUTE,15);
-		app1 = new Appointment(start1, finish1, "kontor 20", "mote", alarm1, testPerson);
-		app2 = new Appointment(start2, finish2, "kontor 20", "mote", alarm2, testPerson);
+		
+		try{
+			Connection conn = db.getConnection();
+			app1 = new Appointment(start1, finish1, "kontor 20", "mote", alarm1, testPerson, conn);
+			app2 = new Appointment(start2, finish2, "kontor 20", "mote", alarm2, testPerson, conn);			
+		}
+		
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
 
 	}
 	

@@ -216,7 +216,7 @@ public class Appointment {
 		try {
 			Connection conn = db.getConnection();
 			Statement stmt = (Statement) conn.createStatement();
-			stmt.executeQuery("SELECT end FROM larsfkl_felles.appointment" + "WHERE appointment_id = '" + this.appointmentID + ";");
+			stmt.executeQuery("SELECT * FROM larsfkl_felles.appointment WHERE appointment_id = " + this.appointmentID + ";");
 			ResultSet rs = stmt.getResultSet();
 			
 			rs.next();
@@ -224,9 +224,16 @@ public class Appointment {
 			String end = rs.getString(3);
 			Calendar endCal = Calendar.getInstance();
 			endCal = db.convertSQLTimeToCalendarTime(end);
+			
+			long dur = calculateDuration(stimegi, endCal);
+			String durstring = "" + dur;
+			
 			if((endCal.get(Calendar.HOUR_OF_DAY) > stime.get(Calendar.HOUR_OF_DAY)) || ((endCal.get(Calendar.HOUR_OF_DAY) == stime.get(Calendar.HOUR_OF_DAY)) && (endCal.get(Calendar.MINUTE) > stime.get(Calendar.MINUTE)))){
-				db.addToDatabase("update larsfkl_felles.appointment SET start = '"+ stime + "' WHERE appointment_id = '" + this.appointmentID + "';", conn);				
+				db.addToDatabase("update larsfkl_felles.appointment SET start = '" + db.convertCalendarTimeToSQLTime(stime) +"' WHERE appointment_id = " + this.appointmentID + ";", conn);	
+				db.addToDatabase("update larsfkl_felles.appointment SET duration = " + dur + " WHERE appointment_id = " + this.appointmentID + ";", conn);
 			}
+			else
+				System.out.println("Det er ikke mulig Œ sette start-tid til Œ v¾re f¿r slutt-tid.");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -244,14 +251,41 @@ public class Appointment {
 	}
 	
 	public void setFinishingtime(Calendar ftime){
+
+		try {
+			Connection conn = db.getConnection();
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery("SELECT * FROM larsfkl_felles.appointment WHERE appointment_id = " + this.appointmentID + ";");
+			ResultSet rs = stmt.getResultSet();
+			
+			rs.next();
+			
+			String start = rs.getString(2);
+			Calendar startCal = Calendar.getInstance();
+			startCal = db.convertSQLTimeToCalendarTime(start);
+			String calendar = db.convertCalendarTimeToSQLTime(ftime);
+			
+			long dur = calculateDuration(startCal, ftime);
+			String durstring = "" + dur;
+			
+			if((startCal.get(Calendar.HOUR_OF_DAY) < ftime.get(Calendar.HOUR_OF_DAY)) || ((startCal.get(Calendar.HOUR_OF_DAY) == ftime.get(Calendar.HOUR_OF_DAY)) && (startCal.get(Calendar.MINUTE) < ftime.get(Calendar.MINUTE)))){
+				db.addToDatabase("update larsfkl_felles.appointment SET end = '" + calendar +"' WHERE appointment_id = " + this.appointmentID + ";", conn);	
+				db.addToDatabase("update larsfkl_felles.appointment SET duration = " + dur + " WHERE appointment_id = " + this.appointmentID + ";", conn);
+			}
+			else
+				System.out.println("Det er ikke mulig Œ sette slutt-tid til Œ v¾re f¿r start-tid.");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.finishingtime = Calendar.getInstance();
 		this.finishingtime.set(this.finishingtime.HOUR_OF_DAY, ftime.get(Calendar.HOUR_OF_DAY));
 		this.finishingtime.set(this.finishingtime.MINUTE, ftime.get(Calendar.MINUTE));
 		this.finishingtime.set(this.finishingtime.DATE, ftime.get(Calendar.DATE));
 		this.finishingtime.set(this.finishingtime.MONTH, ftime.get(Calendar.MONTH));
 		this.finishingtime.set(this.finishingtime.YEAR, ftime.get(Calendar.YEAR));
-
-		duration = (finishingtime.getTimeInMillis()-starttime.getTimeInMillis())/60000; //i minutt
+		
 	}
 	
 	public void setDuration(long duration) {
@@ -287,10 +321,11 @@ public class Appointment {
 	public long calculateDuration(Calendar stime, Calendar ftime) { 
 		//stime.getInstance();
 		//ftime.getInstance();
-		long milsecs1= stime.getTimeInMillis();
-		long milsecs2 = ftime.getTimeInMillis();
-		long duration = (milsecs2-milsecs1)/(60 * 1000);
-		return duration = (finishingtime.getTimeInMillis()-starttime.getTimeInMillis())/60000; //i minutt
+//		long milsecs1= stime.getTimeInMillis();
+//		long milsecs2 = ftime.getTimeInMillis();
+//		long duration = (milsecs2-milsecs1)/(60 * 1000);
+		long dur = (ftime.getTimeInMillis()-stime.getTimeInMillis())/60000;
+		return  dur; //i minutt
 	}
 
 	
