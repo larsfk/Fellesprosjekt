@@ -223,7 +223,16 @@ public class Database {
 	}
 	
 	public Calendar createCalendarFromSQLTimeAndDate(String time, String date){
-		return null;
+		Calendar out = Calendar.getInstance();
+		Calendar t = convertSQLTimeToCalendarTime(time);
+		Calendar d = convertSQLDateToCalendarDate(date);
+		out.set(Calendar.HOUR_OF_DAY, t.get(Calendar.HOUR_OF_DAY));
+		out.set(Calendar.MINUTE, t.get(Calendar.MINUTE));
+		out.set(Calendar.DATE, d.get(Calendar.DATE));
+		out.set(Calendar.MONTH, d.get(Calendar.MONTH));
+		out.set(Calendar.YEAR, d.get(Calendar.YEAR));
+		
+		return out;
 	}
 	
 	public String covertCalendarTimeToSQLTime(Calendar time){
