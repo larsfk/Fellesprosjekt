@@ -31,25 +31,22 @@ public class Appointment {
 		 */
 		this.appointmentID = AppID;
 		this.owner = owner;
-		AppointmentToPerson atp = new AppointmentToPerson(owner,this);
-		atp.setOwner(true);
-		setStarttime(stime);
-		setFinishingtime(ftime);
-		setMeetingplace(meetpl);
-		setDescription(descr);
-		setDuration(stime, ftime);
-		setAlarm(alarm);
+		this.starttime = stime;
+		this.finishingtime = ftime;
+		this.meetingplace = meetpl;
+		this.description = descr;
+		this.duration = calculateDuration(starttime, finishingtime);
+		this.alarm = alarm;
 	}
 	public Appointment(int AppID, Calendar stime, int dur, String meetpl, String descr, Alarm alarm, Person owner){
 		this.appointmentID = AppID;
-		setStarttime(stime);
-		setDuration(dur);
-		setMeetingplace(meetpl);
-		setDescription(descr);
-		setAlarm(alarm);
 		this.owner = owner;
-		AppointmentToPerson atp = new AppointmentToPerson(owner,this);
-		atp.setOwner(true);
+		this.starttime = stime;
+		this.duration = dur;
+		this.meetingplace = meetpl;
+		this.description = descr;
+		this.duration = calculateDuration(starttime, finishingtime);
+		this.alarm = alarm;
 	}
 	
 	
@@ -58,14 +55,13 @@ public class Appointment {
 			throw new IllegalArgumentException("Starttime cannot be after finishtime");
 		}
 		this.owner = owner;
-		AppointmentToPerson atp = new AppointmentToPerson(owner,this);
-		atp.setOwner(true);
-		setStarttime(stime);
-		setFinishingtime(ftime);
-		setMeetingplace(meetpl);
-		setDescription(descr);
-		setDuration(stime, ftime);
-		setAlarm(alarm);
+		this.starttime = stime;
+		this.finishingtime = ftime;
+		this.meetingplace = meetpl;
+		this.description = descr;
+		this.duration = calculateDuration(starttime, finishingtime);
+		this.alarm = alarm;
+		
 		try {
 			Integer Syear = this.add1900toCalendarYear(this.starttime.get(Calendar.YEAR));
 			Integer Smonth = this.starttime.get(Calendar.MONTH);
@@ -100,14 +96,12 @@ public class Appointment {
 	}
 	
 	public Appointment(Calendar stime, int dur, String meetpl, String descr, Alarm alarm, Person owner, Connection conn){
-		setStarttime(stime);
-		setDuration(dur);
-		setMeetingplace(meetpl);
-		setDescription(descr);
-		setAlarm(alarm);
 		this.owner = owner;
-		AppointmentToPerson atp = new AppointmentToPerson(owner,this);
-		atp.setOwner(true);
+		this.starttime = stime;
+		this.duration = dur;
+		this.meetingplace = meetpl;
+		this.description = descr;
+		this.alarm = alarm;
 		try {
 			Integer Syear = this.add1900toCalendarYear(this.starttime.get(Calendar.YEAR));
 			Integer Smonth = this.starttime.get(Calendar.MONTH);
@@ -216,6 +210,14 @@ public class Appointment {
 	}
 	
 	public void setStarttime(Calendar stime){
+		
+		try {
+			Connection conn = db.getConnection();
+			db.addToDatabase("update larsfkl_felles.person SET start = '"+ stime + "' WHERE start = '" + db.convertT + "';", conn);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.starttime = Calendar.getInstance();
 		this.starttime.set(this.starttime.HOUR_OF_DAY, stime.get(Calendar.HOUR_OF_DAY));
 //		System.out.println("Starttime = " + starttime.get(Calendar.HOUR_OF_DAY) + " stime (parameter) = " + stime.get(Calendar.HOUR_OF_DAY));
@@ -241,7 +243,7 @@ public class Appointment {
 		this.duration = duration;
 	}
 	
-	public void setDuration(int dur){
+	public void setFinishingTime(int dur){
 		if (dur > 0){
 			duration = dur;
 			// final long ONE_MINUTE_IN_MILLIS=60000;//millisecs
@@ -267,13 +269,13 @@ public class Appointment {
 		}
 	}
 	
-	public void setDuration(Calendar stime, Calendar ftime) { 
+	public long calculateDuration(Calendar stime, Calendar ftime) { 
 		//stime.getInstance();
 		//ftime.getInstance();
 		long milsecs1= stime.getTimeInMillis();
 		long milsecs2 = ftime.getTimeInMillis();
 		long duration = (milsecs2-milsecs1)/(60 * 1000);
-		duration = (finishingtime.getTimeInMillis()-starttime.getTimeInMillis())/60000; //i minutt
+		return duration = (finishingtime.getTimeInMillis()-starttime.getTimeInMillis())/60000; //i minutt
 	}
 
 	
