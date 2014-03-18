@@ -335,7 +335,8 @@ public class Database {
 	
 	public ArrayList<Appointment> getListOfAppointmentsInMeetingroom(MeetingRoom rom, Connection conn){
 		try{
-			
+			//SELECT * FROM larsfkl_felles.appointment
+			//WHERE larsfkl_felles.appointment.room_id = rom.getID;
 			
 			
 		}
@@ -343,6 +344,7 @@ public class Database {
 			e.printStackTrace();
 			return null;
 		}
+		return null;
 	}
 	
 	public void removeMeetingRoom(MeetingRoom rom, Connection conn){
