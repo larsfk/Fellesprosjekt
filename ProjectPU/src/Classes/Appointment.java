@@ -361,16 +361,30 @@ public class Appointment {
 	}
 
 	
-	public void setMeetingplace(String meetpl){
-		meetingplace = meetpl;
+	public void setMeetingplace(String meetpl, Connection conn){
+		try {
+			db.addToDatabase("update larsfkl_felles.person SET location = '"+ meetpl + "' WHERE email = '" + this.appointmentID + "';", conn);
+			this.meetingplace = meetpl;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 	public void setAlarm(Alarm al){
 		alarm = al;
 	}
 	
-	public void setDescription(String descr){
-		description = descr; 
+	public void setDescription(String descr, Connection conn){
+		try {
+			db.addToDatabase("update larsfkl_felles.person SET description = '"+ descr + "' WHERE email = '" + this.appointmentID + "';", conn);
+			this.description = descr; 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 	public void setIsGoing(AppointmentToPerson atp, boolean isGoing){ //?
