@@ -61,9 +61,9 @@ public class MainProgram {
 				System.out.println("Wrong password!");
 			}
 		}
-		
-		while(true){
-			System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3. Edit appointment\n4. Show this calendar\n5. Show several calendars");
+		Boolean brk = true;
+		while(brk){
+			System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3. Edit appointment\n4. Show this calendar\n5. Show several calendars\n6. Log out");
 			int option = sc.nextInt();
 			
 			switch (option){
@@ -106,10 +106,9 @@ public class MainProgram {
 					timeListInt[i] = Integer.parseInt(timeList[i]);
 				}
 				
-				System.out.println("Choose available room:");
+				//System.out.println("Choose available room:");
 				//getAvailableMeetingRooms();
-				int room = sc.nextInt();
-				
+				//int room = sc.nextInt();
 				
 				Alarm alarm;
 				Connection conn;
@@ -117,14 +116,14 @@ public class MainProgram {
 					conn = db.getConnection();
 					alarm = new Alarm(timeListInt[0]-1900, timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4],timeList[5],conn);
 					Appointment ap = new Appointment(start,finish,meetpl,description,alarm,person,conn);
-
+					Integer groupID = db.createGroup(conn);
+					db.joinGroup(person, groupID, conn);
+					System.out.println("You created and joined group: " + groupID + "\n");
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				break;
-				
-				// MÅ KUNNE SETTE ROM OG GRUPPE(?)
 				
 				
 			case 2:
@@ -161,12 +160,76 @@ public class MainProgram {
 				
 				System.out.println("Choose a appointment to edit: ");
 				for (int i = 0;i<appList.size();i++){
-					System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " Location: " + appList.get(i).getMeetingplace() + " Time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()));
+					System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " @ " + appList.get(i).getMeetingplace() + "\n    " +" Start time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Finish time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getFinishingtime()) + "\n    " + " Start date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()) + " Finish date: " + db.convertCalendarDateToCasualDate(appList.get(i).getFinishingtime()));
 				}
+				
 				chosen = sc.nextInt();
+				Appointment app = appList.get(chosen);
 				
+				Boolean running = true;
+				while(running){
+					System.out.println("What would you like to edit?\n1. Edit start time\n2. Edit finishing time\n3. Edit description\n4. Edit location\n5. Edit alarm\n6. Join appointment\n7. Log out");
+					int option_edit = sc.nextInt();
+					switch(option_edit){
+					case 1: //Edit start time
+						System.out.println("Type starttime (yyyy:mm:dd:hh:mm)");
+						String stime = sc.next();
+						System.out.println(stime);
+						//Burde sjekke om input er gyldig verdi om vi faar tid
+						String[] startTimeList = stime.split(":"); //splitter input paa punktum
+						Integer[] startTimeListInt = new Integer[5];
+						for (int i = 0; i < 5; i++){
+							startTimeListInt[i] = Integer.parseInt(startTimeList[i]);
+						}
+						Calendar startTime = Calendar.getInstance();
+						startTime.clear();
+						startTime.set(startTimeListInt[0]-1900, startTimeListInt[1], startTimeListInt[2], startTimeListInt[3], startTimeListInt[4]);
+						app.setStarttime(startTime);
+						break;
+					
+					case 2: //Edit finishing time
+						System.out.println("Type finishingtime (yyyy:mm:dd:hh:mm)");
+						String ftime = sc.next();
+						System.out.println(ftime);
+						//Burde sjekke om input er gyldig verdi om vi faar tid
+						String[] finishTimeList = ftime.split(":"); //splitter input paa punktum
+						Integer[] finishTimeListInt = new Integer[5];
+						for (int i = 0; i < 5; i++){
+							finishTimeListInt[i] = Integer.parseInt(finishTimeList[i]);
+						}
+						Calendar finishingTime = Calendar.getInstance();
+						finishingTime.clear();
+						finishingTime.set(finishTimeListInt[0]-1900, finishTimeListInt[1], finishTimeListInt[2], finishTimeListInt[3], finishTimeListInt[4]);
+						app.setFinishingtime(finishingTime);
+						break;
+						
+					case 3: //Edit description
+						sc.nextLine();
+						System.out.println("Edit description");
+						String desc = sc.nextLine();
+						app.setDescription(desc);
+						break;
+						
+					case 4: //Edit location
+						sc.nextLine();
+						System.out.println("Edit location");
+						String loc = sc.nextLine();
+						app.setMeetingplace(loc);
+						break;
+						
+					case 5: //Edit alarm
+						System.out.println("Edit alarm");
+						
+						break;
+					
+					case 6: //Go back
+						running = false;
+					default:
+						System.out.println("What would you like to edit?\n1. Edit start time\n2. Edit finishing time\n3. Edit description\n4. Edit location\n5. Edit alarm\n6. Back\n");
+						break;
+					}
+				}
 				
-				break;
 			case 4:
 				//Skrive ut kalender, TONY
 				//System.out.println(cc.showMyWeekCalendar());
@@ -175,8 +238,32 @@ public class MainProgram {
 				//Skrive ut flere kalendere, TONY
 				//System.out.println(cc.showGroupCalendar());
 				break;
+			case 6: //Join appointment
+				appList = new ArrayList<Appointment>();
+				try {
+					conn = db.getConnection();
+					appList = db.getAllAppointments(conn);
+				
+					System.out.println("Choose a appointment: ");
+					for (int i = 0;i<appList.size();i++){
+						System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " @ " + appList.get(i).getMeetingplace() + "\n    " +" Start time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Finish time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getFinishingtime()) + "\n    " + " Start date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()) + " Finish date: " + db.convertCalendarDateToCasualDate(appList.get(i).getFinishingtime()) + "\n    " + "Owner: " + appList.get(i).getOwner());
+					}
+					int appointment = sc.nextInt();
+					db.joinAppointment(person, appList.get(appointment), conn);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//db.joinAppointment(person, app, conn);
+				break;
+				
+			case 7:
+				brk = false;
+				System.out.println("Welcome back!");
+				break;
+				
 			default:
-				System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3.Edit appointment\n4. Show this calendar\n5. Show several calendars");
+				System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3.Edit appointment\n4. Show this calendar\n5. Show several calendars\n6. Join appointment\n7. Log out");
 				break;
 			}
 		}
