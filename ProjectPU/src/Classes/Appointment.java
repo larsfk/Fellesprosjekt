@@ -37,10 +37,10 @@ public class Appointment {
 		this.finishingtime = ftime;
 		this.meetingplace = meetpl;
 		this.description = descr;
-		System.out.println("Calculating duration for " + this.appointmentID + ", " + this.getOwner().getEmail() + "   " + this.description);
+//		System.out.println("Calculating duration for " + this.appointmentID + ", " + this.getOwner().getEmail() + "   " + this.description);
 		this.duration = calculateDuration(starttime, finishingtime);
 		this.alarm = alarm;
-		System.out.println("done");
+//		System.out.println("done");
 	}
 	public Appointment(int AppID, Calendar stime, int dur, String meetpl, String descr, Alarm alarm, Person owner){
 		this.appointmentID = AppID;
