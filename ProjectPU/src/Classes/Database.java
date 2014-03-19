@@ -162,6 +162,31 @@ public class Database {
 			return null;
 		}
 	}
+	
+	public ArrayList<Appointment> getAllAppointments(Connection conn){
+		try{
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery("SELECT * FROM larsfkl_felles.appointment;");
+			ResultSet rs = stmt.getResultSet();
+			ArrayList<Appointment> out = new ArrayList<Appointment>();
+			Appointment app;
+			int i = 0;
+			Alarm al = null;
+			while (rs.next()){
+				app = new Appointment(Integer.parseInt(rs.getString(1)), 
+						convertSQLTimeToCalendarTime(rs.getString(2)), 
+						convertSQLTimeToCalendarTime(rs.getString(3)), 
+						rs.getString(6), rs.getString(5), al, 
+						getPersonFromDatabase(rs.getString(10), conn));
+				out.add(app);
+			}
+			return out;
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public ArrayList<Appointment> getAppointmentList(Person pers, Connection conn){
 		try{
@@ -287,9 +312,41 @@ public class Database {
 		try{
 			//Create a query
 			Statement stmt = (Statement) conn.createStatement();
-			System.out.println("Statement created");
-			//Execute query
-			stmt.executeUpdate( "");
+			Integer id = app.getAppointmentID();
+//			System.out.println("Statement created");
+			ResultSet rs = stmt.executeQuery(  "SELECT appointment_id FROM larsfkl_felles.appointmentToPerson " +
+								"WHERE email_id = '" + pers.getEmail() + "';");
+			ArrayList<Integer> idList = new ArrayList<Integer>();
+			while (rs.next()){
+				idList.add(Integer.parseInt(rs.getString(1)));
+			}
+			
+			System.out.println(idList);
+			
+			boolean bool = true;
+			
+			for (int i = 0; i < idList.size(); i++){
+				if (idList.get(i) == id){
+					bool = false;
+				}
+			}
+			
+			if (bool == true){
+				stmt.executeUpdate( "Insert into larsfkl_felles.appointmentToPerson (appointment_id, email_id, status_1, hidden, alarm_id)" +
+									"values(" + app.getAppointmentID() + ", '" + pers.getEmail() + "', 1, 0, null);");
+			}
+			else{System.out.println(pers.getName() + " is already signed up for that appointment.");}
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void abandonAppointment(int ID, Person pers, Connection conn){
+		try{
+			//Create a query
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeUpdate( "DELETE FROM larsfkl_felles.appointmentToPerson WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
 		}
 		catch (SQLException e){
 			e.printStackTrace();
