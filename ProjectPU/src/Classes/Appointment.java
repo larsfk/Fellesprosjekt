@@ -375,7 +375,7 @@ public class Appointment {
 	}
 	
 	public void setAlarm(Alarm al){
-		alarm = al;
+		this.alarm = al;
 	}
 	
 	public void setDescription(String descr){
