@@ -10,25 +10,26 @@ public class MainProgram {
 	private String welcome = "Hello!\n";
 	private ArrayList<Person> validPersons;
 	private ArrayList<Appointment> appList;
+	CalendarClient cc;
 	Database db = new Database();
 
 	private  void run() {
-		//Kun testing fra her til.....
-		Person rebecca = new Person("Rebecca", "Home", "3423422", "rebcox@gmail.com","080674555","heisann");
-		CalendarClient cc = new CalendarClient(rebecca);		
-
-		Calendar date1 = Calendar.getInstance();
-		Calendar date2 = Calendar.getInstance();
-		Alarm alarm1 = new Alarm(2013,03,18,12,30,"Kom!!");
-
-		date1.set(date1.HOUR_OF_DAY,10);
-		date2.set(date2.HOUR_OF_DAY, 11);
-
-		Appointment appoint1; 
-		appoint1 = new Appointment(100,date1,date2,"Hos Cox","Progging",alarm1,rebecca);
-		//Calendar stime, Calendar ftime, String meetpl, String descr, Alarm alarm, Person owner, Connection conn){
-		
-		//....her
+//		//Kun testing fra her til.....
+//		Person rebecca = new Person("Rebecca", "Home", "3423422", "rebcox@gmail.com","080674555","heisann");
+//		CalendarClient cc = new CalendarClient(rebecca);		
+//
+//		Calendar date1 = Calendar.getInstance();
+//		Calendar date2 = Calendar.getInstance();
+//		Alarm alarm1 = new Alarm(2013,03,18,12,30,"Kom!!");
+//
+//		date1.set(date1.HOUR_OF_DAY,10);
+//		date2.set(date2.HOUR_OF_DAY, 11);
+//
+//		Appointment appoint1; 
+//		appoint1 = new Appointment(100,date1,date2,"Hos Cox","Progging",alarm1,rebecca);
+//		//Calendar stime, Calendar ftime, String meetpl, String descr, Alarm alarm, Person owner, Connection conn){
+//		
+//		//....her
 
 		validPersons = new ArrayList<Person>();
 		try {
@@ -63,7 +64,7 @@ public class MainProgram {
 		}
 		Boolean brk = true;
 		while(brk){
-			System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3. Edit appointment\n4. Show this calendar\n5. Show several calendars\n6. Log out");
+			System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3. Edit appointment\n4. Show this calendar\n5. Show several calendars\n6. Join Appointment\n7. Log out");
 			int option = sc.nextInt();
 			
 			switch (option){
@@ -79,7 +80,7 @@ public class MainProgram {
 				}
 				Calendar start = Calendar.getInstance();
 				start.clear();
-				start.set(timeListInt[0]-1900, timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4]);
+				start.set(timeListInt[0], timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4]);
 
 				System.out.println("Type finishime (yyyy:mm:dd:hh:mm)");
 				time = sc.next();
@@ -89,7 +90,7 @@ public class MainProgram {
 				}
 				Calendar finish = Calendar.getInstance();
 				finish.clear();
-				finish.set(timeListInt[0]-1900, timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4]);
+				finish.set(timeListInt[0], timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4]);
 				
 				sc.nextLine();
 				
@@ -114,7 +115,7 @@ public class MainProgram {
 				Connection conn;
 				try {
 					conn = db.getConnection();
-					alarm = new Alarm(timeListInt[0]-1900, timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4],timeList[5],conn);
+					alarm = new Alarm(timeListInt[0], timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4],timeList[5],conn);
 					Appointment ap = new Appointment(start,finish,meetpl,description,alarm,person,conn);
 					Integer groupID = db.createGroup(conn);
 					db.joinGroup(person, groupID, conn);
@@ -183,7 +184,7 @@ public class MainProgram {
 						}
 						Calendar startTime = Calendar.getInstance();
 						startTime.clear();
-						startTime.set(startTimeListInt[0]-1900, startTimeListInt[1], startTimeListInt[2], startTimeListInt[3], startTimeListInt[4]);
+						startTime.set(startTimeListInt[0], startTimeListInt[1], startTimeListInt[2], startTimeListInt[3], startTimeListInt[4]);
 						app.setStarttime(startTime);
 						break;
 					
@@ -199,7 +200,7 @@ public class MainProgram {
 						}
 						Calendar finishingTime = Calendar.getInstance();
 						finishingTime.clear();
-						finishingTime.set(finishTimeListInt[0]-1900, finishTimeListInt[1], finishTimeListInt[2], finishTimeListInt[3], finishTimeListInt[4]);
+						finishingTime.set(finishTimeListInt[0], finishTimeListInt[1], finishTimeListInt[2], finishTimeListInt[3], finishTimeListInt[4]);
 						app.setFinishingtime(finishingTime);
 						break;
 						
@@ -219,7 +220,8 @@ public class MainProgram {
 						
 					case 5: //Edit alarm
 						System.out.println("Edit alarm");
-						
+						//delete Alarm
+						//add Alarm
 						break;
 					
 					case 6: //Go back
@@ -246,7 +248,7 @@ public class MainProgram {
 				
 					System.out.println("Choose a appointment: ");
 					for (int i = 0;i<appList.size();i++){
-						System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " @ " + appList.get(i).getMeetingplace() + "\n    " +" Start time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Finish time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getFinishingtime()) + "\n    " + " Start date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()) + " Finish date: " + db.convertCalendarDateToCasualDate(appList.get(i).getFinishingtime()) + "\n    " + "Owner: " + appList.get(i).getOwner());
+						System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " @ " + appList.get(i).getMeetingplace() + " ID: " + appList.get(i).getAppointmentID() + "\n    " +" Start time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Finish time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getFinishingtime()) + "\n    " + " Start date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()) + " Finish date: " + db.convertCalendarDateToCasualDate(appList.get(i).getFinishingtime()) + "\n    " + " Owner: " + appList.get(i).getOwner().getName());
 					}
 					int appointment = sc.nextInt();
 					db.joinAppointment(person, appList.get(appointment), conn);
@@ -254,12 +256,13 @@ public class MainProgram {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				//db.joinAppointment(person, app, conn);
 				break;
 				
 			case 7:
 				brk = false;
-				System.out.println("Welcome back!");
+				System.out.println("Welcome back!\n");
+				MainProgram MP = new MainProgram();
+				MP.run();
 				break;
 				
 			default:
@@ -268,7 +271,7 @@ public class MainProgram {
 			}
 		}
 
-		}
+	}
 		
 	public static void main(String[] args) {
 		MainProgram MP = new MainProgram();
