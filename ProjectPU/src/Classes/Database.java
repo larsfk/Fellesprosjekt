@@ -310,19 +310,15 @@ public class Database {
 	
 	public void joinAppointment(Person pers, Appointment app, Connection conn){
 		try{
-			//Create a query
 			Statement stmt = (Statement) conn.createStatement();
 			Integer id = app.getAppointmentID();
-//			System.out.println("Statement created");
 			ResultSet rs = stmt.executeQuery(  "SELECT appointment_id FROM larsfkl_felles.appointmentToPerson " +
 								"WHERE email_id = '" + pers.getEmail() + "';");
 			ArrayList<Integer> idList = new ArrayList<Integer>();
 			while (rs.next()){
 				idList.add(Integer.parseInt(rs.getString(1)));
 			}
-			
-			System.out.println(idList);
-			
+
 			boolean bool = true;
 			
 			for (int i = 0; i < idList.size(); i++){
@@ -344,7 +340,6 @@ public class Database {
 	
 	public void abandonAppointment(int ID, Person pers, Connection conn){
 		try{
-			//Create a query
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeUpdate( "DELETE FROM larsfkl_felles.appointmentToPerson WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
 		}
@@ -372,10 +367,7 @@ public class Database {
 
 	public void joinGroup(Person pers, Integer groupID, Connection conn){
 		try{
-		//Create a query
 		Statement stmt = (Statement) conn.createStatement();
-		System.out.println("Statement created");
-		//Execute query
 		stmt.executeUpdate( "INSERT into larsfkl_felles.personToGroup (email, groupID) " +
 							"SELECT email, group_id " +
 							"FROM larsfkl_felles.person full join larsfkl_felles.group " +
@@ -389,7 +381,6 @@ public class Database {
 	
 	public void abandonGroup(int ID, Person pers, Connection conn){
 		try{
-			//Create a query
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeUpdate( "DELETE FROM larsfkl_felles.personToGroup " +
 								"WHERE groupID = " + ID + " AND email = '" + pers.getEmail() + "';");
@@ -401,7 +392,6 @@ public class Database {
 	
 	public void removeGroup(int ID, Connection conn){
 		try{
-			//Create a query
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeUpdate( "DELETE FROM larsfkl_felles.group " +
 								"WHERE group_id = " + ID + ";");
@@ -413,16 +403,14 @@ public class Database {
 	
 	public MeetingRoom getMeetingRoom(int ID, Connection conn){
 		try{
-		Statement stmt = (Statement) conn.createStatement();
-		stmt.executeQuery(  "SELECT * FROM larsfkl_felles.meeting_room " +
-							"WHERE room_id = " + ID + ";");
-		ResultSet rs = stmt.getResultSet();
-		rs.next();
-		String Capasity = rs.getString(2);
-		MeetingRoom rom = new MeetingRoom(ID, Integer.parseInt(Capasity));
-		return rom;
-		
-		
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery(  "SELECT * FROM larsfkl_felles.meeting_room " +
+					"WHERE room_id = " + ID + ";");
+			ResultSet rs = stmt.getResultSet();
+			rs.next();
+			String Capasity = rs.getString(2);
+			MeetingRoom rom = new MeetingRoom(ID, Integer.parseInt(Capasity));
+			return rom;
 		}
 		catch (SQLException e){
 			e.printStackTrace();
@@ -483,7 +471,6 @@ public class Database {
 	
 	public void removeMeetingRoom(MeetingRoom rom, Connection conn){
 		try{
-			//Create a query
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeUpdate( "DELETE FROM larsfkl_felles.meeting_room " +
 								"WHERE room_id = " + rom.getID() + ";");
@@ -492,6 +479,4 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
-	
-//	public 
 }
