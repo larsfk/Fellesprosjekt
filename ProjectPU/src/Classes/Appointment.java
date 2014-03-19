@@ -361,9 +361,11 @@ public class Appointment {
 	}
 
 	
-	public void setMeetingplace(String meetpl, Connection conn){
+	public void setMeetingplace(String meetpl){
+		Connection conn;
 		try {
-			db.addToDatabase("update larsfkl_felles.person SET location = '"+ meetpl + "' WHERE email = '" + this.appointmentID + "';", conn);
+			conn = db.getConnection();
+			db.addToDatabase("update larsfkl_felles.appointment SET location = '"+ meetpl + "' WHERE appointment_id = '" + this.appointmentID + "';", conn);
 			this.meetingplace = meetpl;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -376,9 +378,11 @@ public class Appointment {
 		alarm = al;
 	}
 	
-	public void setDescription(String descr, Connection conn){
+	public void setDescription(String descr){
+		Connection conn;
 		try {
-			db.addToDatabase("update larsfkl_felles.person SET description = '"+ descr + "' WHERE email = '" + this.appointmentID + "';", conn);
+			conn = db.getConnection();
+			db.addToDatabase("update larsfkl_felles.appointment SET description = '"+ descr + "' WHERE appointment_id = '" + this.appointmentID + "';", conn);
 			this.description = descr; 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
