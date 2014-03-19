@@ -182,8 +182,18 @@ public class Appointment {
 		return appointmentID;
 	}
 	
-	public String getDate(){
-		return starttime.DAY_OF_MONTH+"."+ (starttime.MONTH)+"."+ (starttime.YEAR); // getYear()+1900);
+	public Calendar getDate(Connection conn){
+		try{
+			Statement stmt = (Statement) conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT start, date FROM larsfkl_felles WHERE appointment_id = " + this.appointmentID + ";");
+			rs.next();
+			Calendar currentStartTime = db.createCalendarFromSQLTimeAndDate(rs.getString(1), rs.getString(2));
+			return currentStartTime;
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+			return null;
+		} 
 	}
 	
 	public Calendar getStarttime(){
@@ -214,6 +224,47 @@ public class Appointment {
 		return owner;
 	}
 	
+	public void setYearOnlyInDB(Integer year, Connection conn){
+		try{
+			System.out.println("StartAar = " + this.starttime.get(Calendar.YEAR) + "  SluttAar = " + this.finishingtime.get(Calendar.YEAR));
+			Statement stmt = (Statement) conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT start, end, date FROM larsfkl_felles.appointment WHERE appointment_id = " + this.appointmentID + ";");
+			rs.next();
+			Calendar start = db.createCalendarFromSQLTimeAndDate(rs.getString(1), rs.getString(3));
+			Calendar end = db.createCalendarFromSQLTimeAndDate(rs.getString(2), rs.getString(3));
+			start.set(Calendar.YEAR, year);
+			end.set(Calendar.YEAR, year);
+			System.out.println("1: " + start.get(Calendar.YEAR) + "  2: " + end.get(Calendar.YEAR));
+			setStarttime(start);
+			setFinishingtime(end);
+			System.out.println("StartAar = " + this.starttime.get(Calendar.YEAR) + "  SluttAar = " + this.finishingtime.get(Calendar.YEAR));
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void setDateOnlyInDB(Calendar cal, Connection conn){
+		try{
+			Statement stmt = (Statement) conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT start, end, date FROM larsfkl_felles WHERE appointment_id = " + this.appointmentID + ";");
+			rs.next();
+			Calendar start = db.createCalendarFromSQLTimeAndDate(rs.getString(1), rs.getString(3));
+			Calendar end = db.createCalendarFromSQLTimeAndDate(rs.getString(2), rs.getString(3));
+			start.set(Calendar.YEAR, cal.get(Calendar.YEAR));
+			start.set(Calendar.MONTH, cal.get(Calendar.MONTH));
+			start.set(Calendar.DATE, cal.get(Calendar.DATE));
+			end.set(Calendar.YEAR, cal.get(Calendar.YEAR));
+			end.set(Calendar.MONTH, cal.get(Calendar.MONTH));
+			end.set(Calendar.DATE, cal.get(Calendar.DATE));
+			setStarttime(start);
+			setFinishingtime(end);
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
 	public void setStarttime(Calendar stime){
 		try {
 			Connection conn = db.getConnection();
@@ -223,16 +274,20 @@ public class Appointment {
 			
 			rs.next();
 			
+			String start = rs.getString(2);
 			String end = rs.getString(3);
-			Calendar endCal = Calendar.getInstance();
-			endCal = db.convertSQLTimeToCalendarTime(end);
-			
+			String date = rs.getString(4);
+			Calendar endCal = db.createCalendarFromSQLTimeAndDate(end, date);
+			String calendar = db.convertCalendarTimeToSQLTime(stime);
+			String dato = db.convertCalendarDateToSQLDate(stime);
 			long dur = calculateDuration(stime, endCal);
-			String durstring = "" + dur;
 			
-			if((endCal.get(Calendar.HOUR_OF_DAY) > stime.get(Calendar.HOUR_OF_DAY)) || ((endCal.get(Calendar.HOUR_OF_DAY) == stime.get(Calendar.HOUR_OF_DAY)) && (endCal.get(Calendar.MINUTE) > stime.get(Calendar.MINUTE)))){
-				db.addToDatabase("update larsfkl_felles.appointment SET start = '" + db.convertCalendarTimeToSQLTime(stime) +"' WHERE appointment_id = " + this.appointmentID + ";", conn);	
+			if((endCal.get(Calendar.HOUR_OF_DAY) > stime.get(Calendar.HOUR_OF_DAY)) 
+					|| ((endCal.get(Calendar.HOUR_OF_DAY) == stime.get(Calendar.HOUR_OF_DAY)) && (endCal.get(Calendar.MINUTE) > stime.get(Calendar.MINUTE)))
+					|| (endCal.get(Calendar.HOUR_OF_DAY) == stime.get(Calendar.HOUR_OF_DAY)) && endCal.get(Calendar.MINUTE) == stime.get(Calendar.MINUTE)){
+				db.addToDatabase("update larsfkl_felles.appointment SET start = '" + calendar +"' WHERE appointment_id = " + this.appointmentID + ";", conn);	
 				db.addToDatabase("update larsfkl_felles.appointment SET duration = " + dur + " WHERE appointment_id = " + this.appointmentID + ";", conn);
+				db.addToDatabase("update larsfkl_felles.appointment SET date = '" + dato + "' Where appointment_id = " + this.appointmentID + ";", conn);
 			}
 			else
 				System.out.println("Det er ikke mulig Œ sette start-tid til Œ v¾re f¿r slutt-tid.");
@@ -264,16 +319,17 @@ public class Appointment {
 			String start = rs.getString(2);
 			String end = rs.getString(3);
 			String date = rs.getString(4);
-			Calendar startCal = Calendar.getInstance();
-			startCal = db.createCalendarFromSQLTimeAndDate(start, date);
+			Calendar startCal = db.createCalendarFromSQLTimeAndDate(start, date);
 			String calendar = db.convertCalendarTimeToSQLTime(ftime);
-			
+			String dato = db.convertCalendarDateToSQLDate(ftime);
 			long dur = calculateDuration(startCal, ftime);
-			String durstring = "" + dur;
 			
-			if((startCal.get(Calendar.HOUR_OF_DAY) < ftime.get(Calendar.HOUR_OF_DAY)) || ((startCal.get(Calendar.HOUR_OF_DAY) == ftime.get(Calendar.HOUR_OF_DAY)) && (startCal.get(Calendar.MINUTE) < ftime.get(Calendar.MINUTE)))){
+			if((startCal.get(Calendar.HOUR_OF_DAY) < ftime.get(Calendar.HOUR_OF_DAY)) 
+					|| ((startCal.get(Calendar.HOUR_OF_DAY) == ftime.get(Calendar.HOUR_OF_DAY)) && (startCal.get(Calendar.MINUTE) < ftime.get(Calendar.MINUTE)))
+					|| (startCal.get(Calendar.HOUR_OF_DAY) == ftime.get(Calendar.HOUR_OF_DAY)) && startCal.get(Calendar.MINUTE) == ftime.get(Calendar.MINUTE)){
 				db.addToDatabase("update larsfkl_felles.appointment SET end = '" + calendar +"' WHERE appointment_id = " + this.appointmentID + ";", conn);	
 				db.addToDatabase("update larsfkl_felles.appointment SET duration = " + dur + " WHERE appointment_id = " + this.appointmentID + ";", conn);
+				db.addToDatabase("update larsfkl_felles.appointment SET date = '" + dato + "' Where appointment_id = " + this.appointmentID + ";", conn);
 			}
 			else
 				System.out.println("Det er ikke mulig Œ sette slutt-tid til Œ v¾re f¿r start-tid.");
@@ -307,8 +363,7 @@ public class Appointment {
 			rs.next();
 			
 			Calendar startTime = Calendar.getInstance();
-			String stime = rs.getString(2);
-			startTime = db.convertSQLTimeToCalendarTime(stime);
+			startTime = db.createCalendarFromSQLTimeAndDate(rs.getString(2), rs.getString(3));			
 			
 			if (dur > 0){
 				duration = dur;
@@ -321,7 +376,6 @@ public class Appointment {
 				
 				Double start = totaltid.doubleValue();
 				Double i = start % 1440;
-//			System.out.println(i);
 				Double j = i/60;
 				Double floorTime = Math.floor(j);
 				Double floorMinute = Math.floor((j - floorTime) * 60);
@@ -336,6 +390,7 @@ public class Appointment {
 				
 				db.addToDatabase("update larsfkl_felles.appointment SET end = '" + db.convertCalendarTimeToSQLTime(finishingtime) +"' WHERE appointment_id = " + this.appointmentID + ";", conn);	
 				db.addToDatabase("update larsfkl_felles.appointment SET duration = " + dur + " WHERE appointment_id = " + this.appointmentID + ";", conn);
+				db.addToDatabase("update larsfkl_felles.appointment SET date = '" + rs.getString(4) + "' Where appointment_id = " + this.appointmentID + ";", conn);
 			}
 			
 		} catch (SQLException e) {
@@ -351,6 +406,12 @@ public class Appointment {
 //		long milsecs1= stime.getTimeInMillis();
 //		long milsecs2 = ftime.getTimeInMillis();
 //		long duration = (milsecs2-milsecs1)/(60 * 1000);
+		this.starttime.set(Calendar.SECOND, 0);
+		this.starttime.set(Calendar.MILLISECOND, 0);
+		this.finishingtime.set(Calendar.SECOND, 0);
+		this.finishingtime.set(Calendar.MILLISECOND, 0);
+		
+		//IKKE SLETT SYSOUT-ENE NEDENFOR
 //		System.out.print("stime = " + stime.get(Calendar.HOUR_OF_DAY) + ":" + stime.get(Calendar.MINUTE) + "   " + stime.get(Calendar.DATE) 
 //				+ "/" + stime.get(Calendar.MONTH) + "-" + stime.get(Calendar.YEAR));
 //		System.out.print(" .. ftime = " + ftime.get(Calendar.HOUR_OF_DAY) + ":" + ftime.get(Calendar.MINUTE) + "   " + ftime.get(Calendar.DATE) 
@@ -414,7 +475,13 @@ public class Appointment {
 	
 	@Override
 	public String toString(){
-		return "AppointmentID: " + appointmentID + ", Calendar: " + getDate();
+		try{
+		return "AppointmentID: " + appointmentID + ", Calendar: " + getDate(db.getConnection());
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 }

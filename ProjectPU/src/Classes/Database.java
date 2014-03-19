@@ -239,7 +239,6 @@ public class Database {
 		Integer i = Integer.parseInt(sToDate[0]);
 		Integer j = Integer.parseInt(sToDate[1]);
 		Integer k = Integer.parseInt(sToDate[2]);
-		i = i - 1900;
 		date.set(Calendar.YEAR, i);
 		date.set(Calendar.MONTH, j);
 		date.set(Calendar.DATE, k);
