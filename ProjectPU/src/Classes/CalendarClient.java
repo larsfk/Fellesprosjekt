@@ -40,12 +40,15 @@ public class CalendarClient {
 	}
 
 	public ArrayList<Appointment> getAppointmentList(Person person){
+		ArrayList<Appointment> app;
 		try {
 			conn = db.getConnection();
+			app = db.getAppointmentList(person, conn);
+			return app;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} return db.getAppointmentList(person, conn);
+		} return null;
 	}
 
 	public void addPersonToCC(Person per){
@@ -60,7 +63,7 @@ public class CalendarClient {
 	}
 
 
-	public String showMyWeekCalendar(){ //Slått sammen denne med showMyCalendar
+	public String showMyWeekCalendar(Person pers){ //Slått sammen denne med showMyCalendar
 
 		//		for(int i = 0; i < calendarList.size(); i++){
 		//			appointments.add(calendarList.get(i).getAppointments());
@@ -68,25 +71,17 @@ public class CalendarClient {
 
 		int dayOfWeek = calendar.DAY_OF_WEEK;
 		int firstDayOfWeek = calendar.getFirstDayOfWeek() + 1;
-		appointments = getAppointmentList(person);
+		appointments = getAppointmentList(pers);
+		System.out.println(dayOfWeek);
+		//Bruke ny getDate(), gjøre om fra Calendar-objekt til String. Velge ut det jeg trenger av denne stringen.
 
 		switch(dayOfWeek) {
-
-		case 0: {
-			int count = 0;
-			for(int i = 0; i< appointments.size(); i++){
-				if(appointments.get(i).getDate() == "" + calendar.get(Calendar.DAY_OF_MONTH) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR)){
-					myCalendar.get(firstDayOfWeek + dayOfWeek + 1).set(count, appointments.get(i));
-					count++;
-				}
-			}
-		}
 
 		case 1: {
 			int count = 0;
 			for(int i = 0; i< appointments.size(); i++){
-				if(appointments.get(i).getDate() == "" + (calendar.get(Calendar.DAY_OF_MONTH) + dayOfWeek) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR)){
-					myCalendar.get(firstDayOfWeek + dayOfWeek + 1).set(count, appointments.get(i));		
+				if(appointments.get(i).getDate() == "" + calendar.get(Calendar.DAY_OF_MONTH) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR)){
+					myCalendar.get(firstDayOfWeek + dayOfWeek + 1).set(count, appointments.get(i));
 					count++;
 				}
 			}
@@ -102,7 +97,7 @@ public class CalendarClient {
 			}
 		}
 
-		case 3:{
+		case 3: {
 			int count = 0;
 			for(int i = 0; i< appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + (calendar.get(Calendar.DAY_OF_MONTH) + dayOfWeek) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR)){
@@ -133,6 +128,16 @@ public class CalendarClient {
 		}
 
 		case 6:{
+			int count = 0;
+			for(int i = 0; i< appointments.size(); i++){
+				if(appointments.get(i).getDate() == "" + (calendar.get(Calendar.DAY_OF_MONTH) + dayOfWeek) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR)){
+					myCalendar.get(firstDayOfWeek + dayOfWeek + 1).set(count, appointments.get(i));		
+					count++;
+				}
+			}
+		}
+
+		case 7:{
 			int count = 0;
 			for(int i = 0; i< appointments.size(); i++){
 				if(appointments.get(i).getDate() == "" + (calendar.get(Calendar.DAY_OF_MONTH) + dayOfWeek) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR)){
