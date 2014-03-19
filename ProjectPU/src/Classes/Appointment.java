@@ -215,7 +215,6 @@ public class Appointment {
 	}
 	
 	public void setStarttime(Calendar stime){
-		
 		try {
 			Connection conn = db.getConnection();
 			Statement stmt = (Statement) conn.createStatement();
@@ -254,7 +253,6 @@ public class Appointment {
 	}
 	
 	public void setFinishingtime(Calendar ftime){
-
 		try {
 			Connection conn = db.getConnection();
 			Statement stmt = (Statement) conn.createStatement();
@@ -329,12 +327,12 @@ public class Appointment {
 //		long milsecs1= stime.getTimeInMillis();
 //		long milsecs2 = ftime.getTimeInMillis();
 //		long duration = (milsecs2-milsecs1)/(60 * 1000);
-		System.out.print("stime = " + stime.get(Calendar.HOUR_OF_DAY) + ":" + stime.get(Calendar.MINUTE) + "   " + stime.get(Calendar.DATE) 
-				+ "/" + stime.get(Calendar.MONTH) + "-" + stime.get(Calendar.YEAR));
-		System.out.print(" .. ftime = " + ftime.get(Calendar.HOUR_OF_DAY) + ":" + ftime.get(Calendar.MINUTE) + "   " + ftime.get(Calendar.DATE) 
-				+ "/" + ftime.get(Calendar.MONTH) + "-" + ftime.get(Calendar.YEAR));
+//		System.out.print("stime = " + stime.get(Calendar.HOUR_OF_DAY) + ":" + stime.get(Calendar.MINUTE) + "   " + stime.get(Calendar.DATE) 
+//				+ "/" + stime.get(Calendar.MONTH) + "-" + stime.get(Calendar.YEAR));
+//		System.out.print(" .. ftime = " + ftime.get(Calendar.HOUR_OF_DAY) + ":" + ftime.get(Calendar.MINUTE) + "   " + ftime.get(Calendar.DATE) 
+//				+ "/" + ftime.get(Calendar.MONTH) + "-" + ftime.get(Calendar.YEAR));
 		long dur = (ftime.getTimeInMillis()-stime.getTimeInMillis())/60000;
-		System.out.println(" ..  Duration: " + dur);
+//		System.out.println(" ..  Duration: " + dur);
 		return  dur; //i minutt
 	}
 
