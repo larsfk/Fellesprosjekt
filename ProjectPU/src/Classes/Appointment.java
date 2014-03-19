@@ -68,13 +68,13 @@ public class Appointment {
 		this.alarm = alarm;
 		
 		try {
-			Integer Syear = this.add1900toCalendarYear(this.starttime.get(Calendar.YEAR));
+			Integer Syear = this.starttime.get(Calendar.YEAR);
 			Integer Smonth = this.starttime.get(Calendar.MONTH);
 			Integer Sday = this.starttime.get(Calendar.DATE);
 			Integer Shour = this.starttime.get(Calendar.HOUR_OF_DAY);
 			Integer Sminute = this.starttime.get(Calendar.MINUTE);
 			
-			Integer Fyear = this.add1900toCalendarYear(this.finishingtime.get(Calendar.YEAR));
+			Integer Fyear = this.finishingtime.get(Calendar.YEAR);
 			Integer Fmonth = this.finishingtime.get(Calendar.MONTH);
 			Integer Fday = this.finishingtime.get(Calendar.DATE);
 			Integer Fhour = this.finishingtime.get(Calendar.HOUR_OF_DAY);
@@ -108,13 +108,13 @@ public class Appointment {
 		this.description = descr;
 		this.alarm = alarm;
 		try {
-			Integer Syear = this.add1900toCalendarYear(this.starttime.get(Calendar.YEAR));
+			Integer Syear = this.starttime.get(Calendar.YEAR);
 			Integer Smonth = this.starttime.get(Calendar.MONTH);
 			Integer Sday = this.starttime.get(Calendar.DATE);
 			Integer Shour = this.starttime.get(Calendar.HOUR_OF_DAY);
 			Integer Sminute = this.starttime.get(Calendar.MINUTE);
 			
-			Integer Fyear = this.add1900toCalendarYear(this.finishingtime.get(Calendar.YEAR));
+			Integer Fyear = this.finishingtime.get(Calendar.YEAR);
 			Integer Fmonth = this.finishingtime.get(Calendar.MONTH);
 			Integer Fday = this.finishingtime.get(Calendar.DATE);
 			Integer Fhour = this.finishingtime.get(Calendar.HOUR_OF_DAY);
@@ -404,13 +404,13 @@ public class Appointment {
 		}
 	}
 	
-	public static int add1900toCalendarYear(Integer year){
-		return year + 1900;
-	}
-	
-	public static Integer subtract1900fromSQLYear(Integer YEAR){
-		return YEAR - 1900;
-	}
+//	public static int add1900toCalendarYear(Integer year){
+//		return year + 1900;
+//	}
+//	
+//	public static Integer subtract1900fromSQLYear(Integer YEAR){
+//		return YEAR - 1900;
+//	}
 	
 	@Override
 	public String toString(){
