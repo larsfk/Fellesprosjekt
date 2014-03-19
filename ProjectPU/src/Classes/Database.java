@@ -296,13 +296,16 @@ public class Database {
 		}
 	}
 	
-	public void createGroup(Connection conn){
+	public Integer createGroup(Connection conn){
 		try{
 		Statement stmt = (Statement) conn.createStatement();
-		stmt.executeUpdate("INSERT INTO larsfkl_felles.group (group_id) VALUES ('" + generateGroupID(conn) + "');");
+		Integer ID = generateGroupID(conn);
+		stmt.executeUpdate("INSERT INTO larsfkl_felles.group (group_id) VALUES ('" + ID + "');");
+		return ID;
 		}
 		catch (SQLException e){
 			e.printStackTrace();
+			return null;
 		}
 	}
 	

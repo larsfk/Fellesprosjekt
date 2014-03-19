@@ -296,29 +296,53 @@ public class Appointment {
 	}
 	
 	public void setFinishingTime(int dur){
-		if (dur > 0){
-			duration = dur;
-			// final long ONE_MINUTE_IN_MILLIS=60000;//millisecs
-			//feiling if-setning pga casting
-			int t = (int) (starttime.getTimeInMillis()/(60000*60));
-			Integer ftime = starttime.get(Calendar.HOUR_OF_DAY);
-			Integer fminute = starttime.get(Calendar.MINUTE);
-			Integer totaltid = (ftime * 60) + fminute + dur;
+		
+		Connection conn;
+		try {
+			conn = db.getConnection();
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery("SELECT * FROM larsfkl_felles.appointment WHERE appointment_id = " + this.appointmentID + ";");
+			ResultSet rs = stmt.getResultSet();
 			
-			Double start = totaltid.doubleValue();
-			Double i = start % 1440;
+			rs.next();
+			
+			Calendar startTime = Calendar.getInstance();
+			String stime = rs.getString(2);
+			startTime = db.convertSQLTimeToCalendarTime(stime);
+			
+			if (dur > 0){
+				duration = dur;
+				// final long ONE_MINUTE_IN_MILLIS=60000;//millisecs
+				//feiling if-setning pga casting
+				int t = (int) (starttime.getTimeInMillis()/(60000*60));
+				Integer ftime = startTime.get(Calendar.HOUR_OF_DAY);
+				Integer fminute = startTime.get(Calendar.MINUTE);
+				Integer totaltid = (ftime * 60) + fminute + dur;
+				
+				Double start = totaltid.doubleValue();
+				Double i = start % 1440;
 //			System.out.println(i);
-			Double j = i/60;
-			Double floorTime = Math.floor(j);
-			Double floorMinute = Math.floor((j - floorTime) * 60);
+				Double j = i/60;
+				Double floorTime = Math.floor(j);
+				Double floorMinute = Math.floor((j - floorTime) * 60);
+				
+				Integer Time = floorTime.intValue();
+				Integer Minute = floorMinute.intValue();
+				
+				
+				finishingtime = Calendar.getInstance();
+				finishingtime.set(finishingtime.HOUR_OF_DAY, Time);
+				finishingtime.set(finishingtime.MINUTE, Minute);
+				
+				db.addToDatabase("update larsfkl_felles.appointment SET end = '" + db.convertCalendarTimeToSQLTime(finishingtime) +"' WHERE appointment_id = " + this.appointmentID + ";", conn);	
+				db.addToDatabase("update larsfkl_felles.appointment SET duration = " + dur + " WHERE appointment_id = " + this.appointmentID + ";", conn);
+			}
 			
-			Integer Time = floorTime.intValue();
-			Integer Minute = floorMinute.intValue();
-					
-			finishingtime = Calendar.getInstance();
-			finishingtime.set(finishingtime.HOUR_OF_DAY, Time);
-			finishingtime.set(finishingtime.MINUTE, Minute);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 	}
 	
 	public long calculateDuration(Calendar stime, Calendar ftime) { 
