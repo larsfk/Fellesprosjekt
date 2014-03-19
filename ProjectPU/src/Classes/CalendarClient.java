@@ -1,6 +1,7 @@
 package Classes;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Calendar;
@@ -39,7 +40,12 @@ public class CalendarClient {
 	}
 
 	public ArrayList<Appointment> getAppointmentList(Person person){
-		db.getAppointmentList(person, db.getConnection());
+		try {
+			conn = db.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} return db.getAppointmentList(person, conn);
 	}
 
 	public void addPersonToCC(Person per){
@@ -62,7 +68,7 @@ public class CalendarClient {
 
 		int dayOfWeek = calendar.DAY_OF_WEEK;
 		int firstDayOfWeek = calendar.getFirstDayOfWeek() + 1;
-		appointments = person.getPersonAppointments(person.getEmail());
+		appointments = getAppointmentList(person);
 
 		switch(dayOfWeek) {
 
