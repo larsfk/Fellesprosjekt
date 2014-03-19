@@ -296,10 +296,10 @@ public class Database {
 		}
 	}
 	
-	public String createGroup(Connection conn){
+	public Integer createGroup(Connection conn){
 		try{
 		Statement stmt = (Statement) conn.createStatement();
-		String ID = generateGroupID(conn).toString();
+		Integer ID = generateGroupID(conn);
 		stmt.executeUpdate("INSERT INTO larsfkl_felles.group (group_id) VALUES ('" + ID + "');");
 		return ID;
 		}
