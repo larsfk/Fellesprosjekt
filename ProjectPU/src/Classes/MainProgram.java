@@ -79,7 +79,7 @@ public class MainProgram {
 			int option = sc.nextInt();
 			
 			switch (option){
-			case 1:
+			case 1: //Add appointment
 				System.out.println("Type starttime (yyyy:mm:dd:hh:mm)");
 				String time = sc.next();
 				//Burde sjekke om input er gyldig verdi om vi faar tid
@@ -141,7 +141,7 @@ public class MainProgram {
 				break;
 				
 				
-			case 2:
+			case 2: //Delete appointment
 				ArrayList<Appointment> appRev = new ArrayList<Appointment>();
 				try {
 					conn = db.getConnection();
@@ -188,9 +188,12 @@ public class MainProgram {
 				for (int i = 0;i<appList.size();i++){
 					System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " @ " + appList.get(i).getMeetingplace() + "\n    " +" Start time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Finish time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getFinishingtime()) + "\n    " + " Start date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()) + " Finish date: " + db.convertCalendarDateToCasualDate(appList.get(i).getFinishingtime()));
 				}
-				
+				System.out.println("Type -1 to go back");
 				chosen = sc.nextInt();
-				Appointment app = appList.get(chosen);
+				if(chosen == -1){
+					break;
+				}
+				Appointment app = appList.get(chosen);					
 				
 				Boolean running = true;
 				while(running){
@@ -261,7 +264,9 @@ public class MainProgram {
 					case 6: //Go back
 						running = false;
 					default:
-						System.out.println("What would you like to edit?\n1. Edit start time\n2. Edit finishing time\n3. Edit description\n4. Edit location\n5. Edit alarm\n6. Back\n");
+						if(running == true){
+							System.out.println("What would you like to edit?\n1. Edit start time\n2. Edit finishing time\n3. Edit description\n4. Edit location\n5. Edit alarm\n6. Back\n");							
+						}
 						break;
 					}
 				}
@@ -284,8 +289,11 @@ public class MainProgram {
 					for (int i = 0;i<appList.size();i++){
 						System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " @ " + appList.get(i).getMeetingplace() + " ID: " + appList.get(i).getAppointmentID() + "\n    " +" Start time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Finish time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getFinishingtime()) + "\n    " + " Start date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()) + " Finish date: " + db.convertCalendarDateToCasualDate(appList.get(i).getFinishingtime()) + "\n    " + " Owner: " + appList.get(i).getOwner().getName(conn));
 					}
+					System.out.println("Type -1 to go back");
 					int appointment = sc.nextInt();
-					db.joinAppointment(person, appList.get(appointment), conn);
+					if(appointment != -1){
+						db.joinAppointment(person, appList.get(appointment), conn);						
+					}
 					conn.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -317,6 +325,10 @@ public class MainProgram {
 				}
 				
 				hide = sc.nextInt();
+				System.out.println("Type -1 to go back");
+				if(hide == -1){
+					break;
+				}
 				Appointment myApp = appList.get(hide);
 				
 				try{
@@ -352,6 +364,10 @@ public class MainProgram {
 				}
 				
 				hide = sc.nextInt();
+				System.out.println("Type -1 to go back");
+				if(hide == -1){
+					break;
+				}
 				Appointment statusApp = appList.get(hide);
 				
 				try{
