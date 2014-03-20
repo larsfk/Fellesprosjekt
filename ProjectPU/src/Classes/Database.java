@@ -481,4 +481,75 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
+	public String isHidden(Appointment app, Person pers, Connection conn){
+		Integer ID = app.getAppointmentID();
+		try{
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeUpdate("SELECT hidden FROM larsfkl_felles.appointmentToPerson " +
+					"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+			ResultSet rs = stmt.getResultSet();
+			rs.next();
+			if (rs.getString(1).equals("1")){
+				return "Hidden";
+			}
+			else if (rs.getString(1).equals("0")){
+				return "Unhidden";
+			}
+			else {System.out.println("Error i isHidden, hidden ikke lik 1/0"); return null;}
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public void changeHidden(Appointment app, Person pers, Connection conn){
+		Integer ID = app.getAppointmentID();
+		try{
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery("SELECT hidden FROM larsfkl_felles.appointmentToPerson " +
+					"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+			ResultSet rs = stmt.getResultSet();
+			rs.next();
+			Integer bool = Integer.parseInt(rs.getString(1));
+			if (bool == 1){
+				stmt.executeUpdate("UPDATE larsfkl_felles.appointmentToPerson SET hidden = 0 " +
+						"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+			}
+			else if (bool == 0){
+				stmt.executeUpdate("UPDATE larsfkl_felles.appointmentToPerson SET hidden = 1 " +
+						"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+			}
+			else {System.out.println("Error i changeHidden, hidden ikke lik 1/0");}
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void changeStatus(Appointment app, Person pers, Connection conn){
+		Integer ID = app.getAppointmentID();
+		try{
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeUpdate("SELECT status_1 FROM larsfkl_felles.appointmentToPerson " +
+					"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+			ResultSet rs = stmt.getResultSet();
+			rs.next();
+			Integer bool = Integer.parseInt(rs.getString(1));
+			if (bool == 1){
+				stmt.executeUpdate("UPDATE larsfkl_felles.appointmentToPerson SET status_1 = 0 " +
+						"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+			}
+			else if (bool == 0){
+				stmt.executeUpdate("UPDATE larsfkl_felles.appointmentToPerson SET status_1 = 1 " +
+						"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+			}
+			else {System.out.println("Error i changeStatus, hidden ikke lik 1/0");}
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
 }

@@ -222,7 +222,7 @@ public class Person {
 		Connection conn;
 		try {
 			conn = db.getConnection();
-			new Appointment(stime, ftime, meetpl, descr, alarm, this, conn);
+			new Appointment(stime, ftime, meetpl, descr, alarm, this, null, conn);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
