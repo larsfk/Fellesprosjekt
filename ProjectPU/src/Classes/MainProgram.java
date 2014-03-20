@@ -48,21 +48,31 @@ public class MainProgram {
 		Person person = null;
 		while (personID < 0 || personID > validPersons.size()){ //Til vi faar et gyldig nr
 			System.out.println("Choose a username: ");
-			for (int i = 0;i<validPersons.size();i++){
-				System.out.println("(" + i + ") " + validPersons.get(i).getName());
-			}
+			try{
+				Connection conn = db.getConnection();
+				for (int i = 0;i<validPersons.size();i++){
+					System.out.println("(" + i + ") " + validPersons.get(i).getName(conn));
+				}
+				conn.close();
+			} catch (SQLException e){e.printStackTrace();}
 			personID = sc.nextInt();
 			person = validPersons.get(personID);
 		}
-		String password = person.getPassword(); //Hente dette fra databasen
-		String typedPassword = ""; //kanskje "null"?
-		while (password.compareTo(typedPassword) != 0){
-			System.out.println("Type password");
-			typedPassword = sc.next();
-			if(!typedPassword.equals(password)){
-				System.out.println("Wrong password!");
+		try{
+			Connection conn = db.getConnection();
+			String password = person.getPassword(conn); //Hente dette fra databasen
+			String typedPassword = ""; //kanskje "null"?
+			while (password.compareTo(typedPassword) != 0){
+				System.out.println("Type password");
+				typedPassword = sc.next();
+				if(!typedPassword.equals(password)){
+					System.out.println("Wrong password!");
+				}
 			}
-		}
+			conn.close();
+		} catch (SQLException e) {e.printStackTrace();}
+
+		
 		Boolean brk = true;
 		while(brk){
 			System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3. Edit appointment\n4. Show this calendar\n5. Show several calendars\n6. Join Appointment\n7. Hide/unhide appointment\n8. Change status\n9. Log out");
@@ -110,9 +120,8 @@ public class MainProgram {
 				//System.out.println("Choose available room:");
 				//getAvailableMeetingRooms();
 				//int room = sc.nextInt();
-				
-				Alarm alarm;
 				Connection conn;
+				Alarm alarm;
 				try {
 					conn = db.getConnection();
 					Integer groupID = db.createGroup(conn);
@@ -137,6 +146,7 @@ public class MainProgram {
 				try {
 					conn = db.getConnection();
 					appRev = db.getAppointmentList(person, conn);
+					conn.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -188,21 +198,26 @@ public class MainProgram {
 					int option_edit = sc.nextInt();
 					switch(option_edit){
 					case 1: //Edit start time
-						System.out.println("Type starttime (yyyy:mm:dd:hh:mm)");
-						String stime = sc.next();
-						//Burde sjekke om input er gyldig verdi om vi faar tid
-						String[] startTimeList = stime.split(":"); //splitter input paa punktum
-						Integer[] startTimeListInt = new Integer[5];
-						for (int i = 0; i < 5; i++){
-							startTimeListInt[i] = Integer.parseInt(startTimeList[i]);
-						}
-						Calendar startTime = Calendar.getInstance();
-						startTime.clear();
-						startTime.set(startTimeListInt[0], startTimeListInt[1], startTimeListInt[2], startTimeListInt[3], startTimeListInt[4]);
-						app.setStarttime(startTime);
-						break;
-					
+						try{
+							Connection conn2 = db.getConnection();
+							System.out.println("Type starttime (yyyy:mm:dd:hh:mm)");
+							String stime = sc.next();
+							//Burde sjekke om input er gyldig verdi om vi faar tid
+							String[] startTimeList = stime.split(":"); //splitter input paa punktum
+							Integer[] startTimeListInt = new Integer[5];
+							for (int i = 0; i < 5; i++){
+								startTimeListInt[i] = Integer.parseInt(startTimeList[i]);
+							}
+							Calendar startTime = Calendar.getInstance();
+							startTime.clear();
+							startTime.set(startTimeListInt[0], startTimeListInt[1], startTimeListInt[2], startTimeListInt[3], startTimeListInt[4]);
+							app.setStarttime(startTime, conn2);
+							conn2.close();
+							break;
+						} catch (SQLException e){e.printStackTrace();}
 					case 2: //Edit finishing time
+						try{
+						Connection conn2 = db.getConnection();
 						System.out.println("Type finishingtime (yyyy:mm:dd:hh:mm)");
 						String ftime = sc.next();
 						//Burde sjekke om input er gyldig verdi om vi faar tid
@@ -214,23 +229,29 @@ public class MainProgram {
 						Calendar finishingTime = Calendar.getInstance();
 						finishingTime.clear();
 						finishingTime.set(finishTimeListInt[0], finishTimeListInt[1], finishTimeListInt[2], finishTimeListInt[3], finishTimeListInt[4]);
-						app.setFinishingtime(finishingTime);
+						app.setFinishingtime(finishingTime, conn2);
+						conn2.close();
 						break;
-						
+						} catch (SQLException e){e.printStackTrace();}
 					case 3: //Edit description
-						sc.nextLine();
-						System.out.println("Edit description");
-						String desc = sc.nextLine();
-						app.setDescription(desc);
-						break;
-						
+						try{
+							Connection conn2 = db.getConnection();
+							sc.nextLine();
+							System.out.println("Edit description");
+							String desc = sc.nextLine();
+							app.setDescription(desc, conn2);
+							break;
+						}catch (SQLException e){e.printStackTrace();}
 					case 4: //Edit location
+						try{
+						Connection conn2 = db.getConnection();
 						sc.nextLine();
 						System.out.println("Edit location");
 						String loc = sc.nextLine();
-						app.setMeetingplace(loc);
+						app.setMeetingplace(loc, conn2);
+						conn2.close();
 						break;
-						
+						} catch (SQLException e){e.printStackTrace();}
 					case 5: //Edit alarm
 						System.out.println("Edit alarm");
 						//delete Alarm
@@ -261,7 +282,7 @@ public class MainProgram {
 				
 					System.out.println("Choose a appointment: ");
 					for (int i = 0;i<appList.size();i++){
-						System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " @ " + appList.get(i).getMeetingplace() + " ID: " + appList.get(i).getAppointmentID() + "\n    " +" Start time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Finish time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getFinishingtime()) + "\n    " + " Start date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()) + " Finish date: " + db.convertCalendarDateToCasualDate(appList.get(i).getFinishingtime()) + "\n    " + " Owner: " + appList.get(i).getOwner().getName());
+						System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " @ " + appList.get(i).getMeetingplace() + " ID: " + appList.get(i).getAppointmentID() + "\n    " +" Start time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Finish time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getFinishingtime()) + "\n    " + " Start date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()) + " Finish date: " + db.convertCalendarDateToCasualDate(appList.get(i).getFinishingtime()) + "\n    " + " Owner: " + appList.get(i).getOwner().getName(conn));
 					}
 					int appointment = sc.nextInt();
 					db.joinAppointment(person, appList.get(appointment), conn);
