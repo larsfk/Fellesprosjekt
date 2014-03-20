@@ -30,7 +30,7 @@ public class Alarm {
 		this.description = description;
 		
 		try {
-			Integer Syear = this.add1900toCalendarYear(this.start.get(Calendar.YEAR));
+			Integer Syear = this.start.get(Calendar.YEAR);
 			Integer Smonth = this.start.get(Calendar.MONTH);
 			Integer Sday = this.start.get(Calendar.DATE);
 			Integer Shour = this.start.get(Calendar.HOUR_OF_DAY);
@@ -98,9 +98,9 @@ public class Alarm {
 		start.set(start.MINUTE, minute);
 	}
 	
-	public static int add1900toCalendarYear(Integer year){
-		return year + 1900;
-	}
+//	public static int add1900toCalendarYear(Integer year){
+//		return year + 1900;
+//	}
 	
 	@Override
 	public String toString() {
