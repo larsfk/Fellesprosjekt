@@ -486,7 +486,7 @@ public class Database {
 		Integer ID = app.getAppointmentID();
 		try{
 			Statement stmt = (Statement) conn.createStatement();
-			stmt.executeUpdate("SELECT hidden FROM larsfkl_felles.appointmentToPerson " +
+			stmt.executeQuery("SELECT hidden FROM larsfkl_felles.appointmentToPerson " +
 					"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
 			ResultSet rs = stmt.getResultSet();
 			rs.next();
@@ -532,7 +532,7 @@ public class Database {
 		Integer ID = app.getAppointmentID();
 		try{
 			Statement stmt = (Statement) conn.createStatement();
-			stmt.executeUpdate("SELECT status_1 FROM larsfkl_felles.appointmentToPerson " +
+			stmt.executeQuery("SELECT status_1 FROM larsfkl_felles.appointmentToPerson " +
 					"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
 			ResultSet rs = stmt.getResultSet();
 			rs.next();
