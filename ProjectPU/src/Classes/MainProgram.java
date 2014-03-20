@@ -71,7 +71,6 @@ public class MainProgram {
 			case 1:
 				System.out.println("Type starttime (yyyy:mm:dd:hh:mm)");
 				String time = sc.next();
-				System.out.println(time);
 				//Burde sjekke om input er gyldig verdi om vi faar tid
 				String[] timeList = time.split(":"); //splitter input paa punktum
 				Integer[] timeListInt = new Integer[5];
@@ -175,7 +174,6 @@ public class MainProgram {
 					case 1: //Edit start time
 						System.out.println("Type starttime (yyyy:mm:dd:hh:mm)");
 						String stime = sc.next();
-						System.out.println(stime);
 						//Burde sjekke om input er gyldig verdi om vi faar tid
 						String[] startTimeList = stime.split(":"); //splitter input paa punktum
 						Integer[] startTimeListInt = new Integer[5];
@@ -191,7 +189,6 @@ public class MainProgram {
 					case 2: //Edit finishing time
 						System.out.println("Type finishingtime (yyyy:mm:dd:hh:mm)");
 						String ftime = sc.next();
-						System.out.println(ftime);
 						//Burde sjekke om input er gyldig verdi om vi faar tid
 						String[] finishTimeList = ftime.split(":"); //splitter input paa punktum
 						Integer[] finishTimeListInt = new Integer[5];
