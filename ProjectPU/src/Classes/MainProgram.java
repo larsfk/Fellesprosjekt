@@ -64,7 +64,7 @@ public class MainProgram {
 		}
 		Boolean brk = true;
 		while(brk){
-			System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3. Edit appointment\n4. Show this calendar\n5. Show several calendars\n6. Join Appointment\n7. Log out");
+			System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3. Edit appointment\n4. Show this calendar\n5. Show several calendars\n6. Join Appointment\n7. Hide appointment\n8. Log out");
 			int option = sc.nextInt();
 			
 			switch (option){
@@ -114,14 +114,17 @@ public class MainProgram {
 				Connection conn;
 				try {
 					conn = db.getConnection();
-					alarm = new Alarm(timeListInt[0], timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4],timeList[5],conn);
-					Appointment ap = new Appointment(start,finish,meetpl,description,alarm,person,conn);
 					Integer groupID = db.createGroup(conn);
 					db.joinGroup(person, groupID, conn);
+					alarm = new Alarm(timeListInt[0], timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4],timeList[5],conn);
+					Appointment ap = new Appointment(start,finish,meetpl,description,alarm,person,groupID,conn);
 					System.out.println("You created and joined group: " + groupID + "\n");
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} catch (IllegalArgumentException iae){
+					//Kanskje blir alt utført i try slettet når vi kommer hit?
+					iae.printStackTrace();
 				}
 				break;
 				
@@ -220,7 +223,7 @@ public class MainProgram {
 						//delete Alarm
 						//add Alarm
 						break;
-					
+						
 					case 6: //Go back
 						running = false;
 					default:
@@ -255,7 +258,10 @@ public class MainProgram {
 				}
 				break;
 				
-			case 7:
+			case 7: //Hide appointment
+				break;
+				
+			case 8:
 				brk = false;
 				System.out.println("Welcome back!\n");
 				MainProgram MP = new MainProgram();
@@ -263,7 +269,7 @@ public class MainProgram {
 				break;
 				
 			default:
-				System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3.Edit appointment\n4. Show this calendar\n5. Show several calendars\n6. Join appointment\n7. Log out");
+				System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3.Edit appointment\n4. Show this calendar\n5. Show several calendars\n6. Join appointment\n7. Hide appointment\n8. Log out");
 				break;
 			}
 		}
