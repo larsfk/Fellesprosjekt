@@ -93,7 +93,7 @@ public class Appointment {
 								+ descr + "','" 
 								+ meetpl +  "','" 
 								+ this.duration +"', '1','" + groupID + "','" 
-								+ getOwner().getEmail() + "');", conn);
+								+ getOwner().getEmail(conn) + "');", conn);
 			db.joinAppointment(owner, this, conn);
 		}
 		catch (SQLException e) {
@@ -137,7 +137,7 @@ public class Appointment {
 								+ descr + "','" 
 								+ meetpl +  "','" 
 								+ this.duration +"', '1','" + groupID + "','" 
-								+ getOwner().getEmail() + "');", conn);
+								+ getOwner().getEmail(conn) + "');", conn);
 			db.joinAppointment(owner, this, conn);
 		}
 		catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException f){
@@ -244,8 +244,8 @@ public class Appointment {
 			start.set(Calendar.YEAR, year);
 			end.set(Calendar.YEAR, year);
 			System.out.println("1: " + start.get(Calendar.YEAR) + "  2: " + end.get(Calendar.YEAR));
-			setStarttime(start);
-			setFinishingtime(end);
+			setStarttime(start, conn);
+			setFinishingtime(end, conn);
 			System.out.println("StartAar = " + this.starttime.get(Calendar.YEAR) + "  SluttAar = " + this.finishingtime.get(Calendar.YEAR));
 		}
 		catch (SQLException e){
@@ -266,17 +266,16 @@ public class Appointment {
 			end.set(Calendar.YEAR, cal.get(Calendar.YEAR));
 			end.set(Calendar.MONTH, cal.get(Calendar.MONTH));
 			end.set(Calendar.DATE, cal.get(Calendar.DATE));
-			setStarttime(start);
-			setFinishingtime(end);
+			setStarttime(start, conn);
+			setFinishingtime(end, conn);
 		}
 		catch (SQLException e){
 			e.printStackTrace();
 		}
 	}
 	
-	public void setStarttime(Calendar stime){
+	public void setStarttime(Calendar stime, Connection conn){
 		try {
-			Connection conn = db.getConnection();
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery("SELECT * FROM larsfkl_felles.appointment WHERE appointment_id = " + this.appointmentID + ";");
 			ResultSet rs = stmt.getResultSet();
@@ -299,7 +298,6 @@ public class Appointment {
 				db.addToDatabase("update larsfkl_felles.appointment SET date = '" + dato + "' Where appointment_id = " + this.appointmentID + ";", conn);
 			}
 			else System.out.println("Det er ikke mulig Œ sette start-tid til Œ v¾re f¿r slutt-tid.");
-			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -315,9 +313,8 @@ public class Appointment {
 //		System.out.println("startime.year = " + starttime.get(Calendar.YEAR));
 	}
 	
-	public void setFinishingtime(Calendar ftime){
+	public void setFinishingtime(Calendar ftime, Connection conn){
 		try {
-			Connection conn = db.getConnection();
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery("SELECT * FROM larsfkl_felles.appointment WHERE appointment_id = " + this.appointmentID + ";");
 			ResultSet rs = stmt.getResultSet();
@@ -340,7 +337,6 @@ public class Appointment {
 				db.addToDatabase("update larsfkl_felles.appointment SET date = '" + dato + "' Where appointment_id = " + this.appointmentID + ";", conn);
 			}
 			else System.out.println("Det er ikke mulig aa sette slutt-tid til aa vaere foer start-tid.");
-			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -455,13 +451,10 @@ public class Appointment {
 	}
 
 	
-	public void setMeetingplace(String meetpl){
-		Connection conn;
+	public void setMeetingplace(String meetpl, Connection conn){
 		try {
-			conn = db.getConnection();
 			db.addToDatabase("update larsfkl_felles.appointment SET location = '"+ meetpl + "' WHERE appointment_id = '" + this.appointmentID + "';", conn);
 			this.meetingplace = meetpl;
-			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -473,8 +466,7 @@ public class Appointment {
 		this.alarm = al;
 	}
 	
-	public void setDescription(String descr){
-		Connection conn;
+	public void setDescription(String descr, Connection conn){
 		try {
 			conn = db.getConnection();
 			db.addToDatabase("update larsfkl_felles.appointment SET description = '"+ descr + "' WHERE appointment_id = '" + this.appointmentID + "';", conn);
@@ -510,13 +502,7 @@ public class Appointment {
 	
 	@Override
 	public String toString(){
-		try{
-		return "AppointmentID: " + appointmentID + ", Calendar: " + getDate(db.getConnection());
-		}
-		catch (SQLException e){
-			e.printStackTrace();
-			return null;
-		}
+		return "AppointmentID: " + this.appointmentID + ", Description: " + this.getDescription();
 	}
 	
 }

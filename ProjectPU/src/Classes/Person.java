@@ -42,17 +42,14 @@ public class Person {
 		this.tlf = tlf;
 	}
 
-	public String getName() {
+	public String getName(Connection conn) {
 		try {
-			Connection conn = db.getConnection();
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery("SELECT name FROM larsfkl_felles.person where email = '" + email + "';");
 			ResultSet rs = stmt.getResultSet();
 			
 			rs.next();
 			String name = rs.getString(1);
-			rs.close();
-			
 			return name;
 
 		} catch (SQLException e) {
@@ -62,17 +59,14 @@ public class Person {
 		return null;
 	}
 
-	public String getOffice() {
+	public String getOffice(Connection conn) {
 		try {
-			Connection conn = db.getConnection();
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery("SELECT office FROM larsfkl_felles.person where email = '" + email + "';");
 			ResultSet rs = stmt.getResultSet();
 			
 			rs.next();
 			String office = rs.getString(1);
-			rs.close();
-			
 			return office;
 
 		} catch (SQLException e) {
@@ -82,17 +76,14 @@ public class Person {
 		return null;
 	}
 
-	public String getSSN() {
+	public String getSSN(Connection conn) {
 		try {
-			Connection conn = db.getConnection();
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery("SELECT SSN FROM larsfkl_felles.person where email = '" + email + "';");
 			ResultSet rs = stmt.getResultSet();
 			
 			rs.next();
 			String SSN = rs.getString(1);
-			rs.close();
-			
 			return SSN;
 
 		} catch (SQLException e) {
@@ -102,17 +93,14 @@ public class Person {
 		return null;
 	}
 
-	public String getEmail() {
+	public String getEmail(Connection conn) {
 		try {
-			Connection conn = db.getConnection();
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery("SELECT email FROM larsfkl_felles.person where email = '" + email + "';");
 			ResultSet rs = stmt.getResultSet();
 			
 			rs.next();
 			String email = rs.getString(1);
-			rs.close();
-			
 			return email;
 
 		} catch (SQLException e) {
@@ -122,72 +110,58 @@ public class Person {
 		return null;
 	}
 
-	public String getPassword() {
+	public String getPassword(Connection conn) {
 		try {
-			Connection conn = db.getConnection();
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery("SELECT password FROM larsfkl_felles.person where email = '" + email + "';");
 			ResultSet rs = stmt.getResultSet();
 			
 			rs.next();
 			String password = rs.getString(1);
-			rs.close();
-			
 			return password;
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public String getTlf() {
+	public String getTlf(Connection conn) {
 		try {
-			Connection conn = db.getConnection();
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery("SELECT tlf FROM larsfkl_felles.person where email = '" + email + "';");
 			ResultSet rs = stmt.getResultSet();
 			
 			rs.next();
 			String tlf = rs.getString(1);
-			rs.close();
-			
 			return tlf;
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
-	public void setName(String name) {
+	public void setName(String name, Connection conn) {
 		try {
-			Connection conn = db.getConnection();
 			db.addToDatabase("update larsfkl_felles.person SET name = '"+ name + "' WHERE email = '" + this.email + "';", conn);
 			this.name = name;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	
 	
 	public void setOffice(String office, Connection conn) {
 		try {
 			db.addToDatabase("update larsfkl_felles.person SET office = '"+ office + "' WHERE email = '" + this.email + "';", conn);
+			this.office = office;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.office = office;
 	}
 	
-	public void setEmail(String email) {
+	public void setEmail(String email, Connection conn) {
 		try {
-			Connection conn = db.getConnection();
 			db.addToDatabase("update larsfkl_felles.person SET email = '"+ email + "' WHERE email = '" + this.email + "';", conn);
 			this.email = email;
 		} catch (SQLException e) {
@@ -196,9 +170,8 @@ public class Person {
 		}
 	}
 	
-	public void setPassword(String password) {
+	public void setPassword(String password, Connection conn) {
 		try {
-			Connection conn = db.getConnection();
 			db.addToDatabase("update larsfkl_felles.person SET password = '"+ password + "' WHERE email = '" + this.email + "';", conn);
 			this.password = password;
 		} catch (SQLException e) {
@@ -207,9 +180,8 @@ public class Person {
 		}
 	}
 
-	public void setTlf(String tlf) {
+	public void setTlf(String tlf, Connection conn) {
 		try {
-			Connection conn = db.getConnection();
 			db.addToDatabase("update larsfkl_felles.person SET tlf = '"+ tlf + "' WHERE email = '" + this.email + "';", conn);
 			this.tlf = tlf;
 		} catch (SQLException e) {
@@ -237,43 +209,43 @@ public class Person {
 		return false;
 	}
 	
-	public void hideAppointment(Appointment appoint){ //Ta inn appointment
-		try {
-			Connection conn = db.getConnection();
-			Statement stmt = (Statement) conn.createStatement();
-			stmt.executeUpdate("update larsfkl_felles.appointmentToPerson SET hidden = 1 WHERE email_id = '" + this.email + "' AND appointment_id = " + appoint.getAppointmentID() + ";");
-			System.out.println(appoint.getAppointmentID() + " " + this.getEmail() + " hidden");
-//			db.addToDatabase("update larsfkl_felles.appointmentToPerson SET hidden = 1 WHERE email_id = '" + this.email + "' AND appointment_id = " + appoint.getAppointmentID() + ";", conn);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (int i = 0;i<appointmentList.size();i++){
-			if (appointmentList.get(i).getAppointment().equals(appoint)){
-				appointmentList.get(i).setHidden(true);
-				break;
-			}			
-		}
-	}
-	
-	public void unHideAppointment(Appointment appoint){
-		try {
-			Connection conn = db.getConnection();
-			Statement stmt = (Statement) conn.createStatement();
-			stmt.executeUpdate("update larsfkl_felles.appointmentToPerson SET hidden = 0 WHERE email_id = '" + this.email + "' AND appointment_id = " + appoint.getAppointmentID() + ";");
-			System.out.println(appoint.getAppointmentID() + " " + this.getEmail() + " unhidden");
-//			db.addToDatabase("update larsfkl_felles.appointmentToPerson SET hidden = 1 WHERE email_id = '" + this.email + "' AND appointment_id = " + appoint.getAppointmentID() + ";", conn);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (int i = 0;i<appointmentList.size();i++){
-			if (appointmentList.get(i).getAppointment() == appoint){
-				appointmentList.get(i).setHidden(false);
-				break;
-			}			
-		}
-	}
+//	public void hideAppointment(Appointment appoint){ //Ta inn appointment
+//		try {
+//			Connection conn = db.getConnection();
+//			Statement stmt = (Statement) conn.createStatement();
+//			stmt.executeUpdate("update larsfkl_felles.appointmentToPerson SET hidden = 1 WHERE email_id = '" + this.email + "' AND appointment_id = " + appoint.getAppointmentID() + ";");
+//			System.out.println(appoint.getAppointmentID() + " " + this.getEmail() + " hidden");
+////			db.addToDatabase("update larsfkl_felles.appointmentToPerson SET hidden = 1 WHERE email_id = '" + this.email + "' AND appointment_id = " + appoint.getAppointmentID() + ";", conn);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		for (int i = 0;i<appointmentList.size();i++){
+//			if (appointmentList.get(i).getAppointment().equals(appoint)){
+//				appointmentList.get(i).setHidden(true);
+//				break;
+//			}			
+//		}
+//	}
+//	
+//	public void unHideAppointment(Appointment appoint){
+//		try {
+//			Connection conn = db.getConnection();
+//			Statement stmt = (Statement) conn.createStatement();
+//			stmt.executeUpdate("update larsfkl_felles.appointmentToPerson SET hidden = 0 WHERE email_id = '" + this.email + "' AND appointment_id = " + appoint.getAppointmentID() + ";");
+//			System.out.println(appoint.getAppointmentID() + " " + this.getEmail() + " unhidden");
+////			db.addToDatabase("update larsfkl_felles.appointmentToPerson SET hidden = 1 WHERE email_id = '" + this.email + "' AND appointment_id = " + appoint.getAppointmentID() + ";", conn);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		for (int i = 0;i<appointmentList.size();i++){
+//			if (appointmentList.get(i).getAppointment() == appoint){
+//				appointmentList.get(i).setHidden(false);
+//				break;
+//			}			
+//		}
+//	}
 	public void addatp(AppointmentToPerson atp){
 		appointmentList.add(atp);
 	}

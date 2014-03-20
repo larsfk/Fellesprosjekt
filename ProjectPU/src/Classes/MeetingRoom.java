@@ -12,21 +12,18 @@ public class MeetingRoom {
 	private int ID;
 	private int Capasity;
 	private ArrayList<Appointment> AppointmentList = new ArrayList<Appointment>();
-	private int length;
 	Database db = new Database();
 
 	public MeetingRoom(int ID, int Capasity){
 		this.ID = ID;
 		this.Capasity = Capasity;
 		this.AppointmentList.add(0, null);
-		length = 0;
 	}
 
 	public MeetingRoom(int ID, int Capasity, Connection conn){
 		this.ID = ID;
 		this.Capasity = Capasity;
 		this.AppointmentList.add(0, null);
-		length = 0;
 		try{
 			conn = db.getConnection();
 			db.addToDatabase("INSERT INTO larsfkl_felles.meeting_room (room_id, capasity) VALUES (" + ID + " , " + Capasity + ");", conn);
@@ -35,27 +32,11 @@ public class MeetingRoom {
 			e.printStackTrace();
 		}
 	}
-
-	public void reserveRoom(Appointment Q){
-		try{
-			if (Q.getStarttime().get(Calendar.YEAR) == -1){
-				throw new NullPointerException();
-			}
-			if (length == 0){
-				AppointmentList.set(0, Q);
-				length = 1;
-			}
-			else{
-				AppointmentList.add(Q);	
-			}
-		}
-
-		catch (NullPointerException e){
-			System.out.println("AppointmentList har ingen startdato");
-			e.printStackTrace();
-		}
+	
+	public ArrayList<Appointment> getAppointmentList(Connection conn){
+		this.AppointmentList = db.getListOfAppointmentsInMeetingroom(this, conn);
+		return this.AppointmentList;
 	}
-
 
 	public void removeAppointment(int ID){
 		for (int i = 0; i < AppointmentList.size(); i++){
@@ -65,13 +46,15 @@ public class MeetingRoom {
 		}
 	}
 
-	public boolean isFree(Calendar start, Calendar end){
+	public boolean isFree(Calendar start, Calendar end){ //Denne funker ikke
+		System.out.println("Sjekker om rommet er ledig mellom " + db.convertCalendarTimeToSQLTime(start) + " og " + db.convertCalendarTimeToSQLTime(end));
 		for (int i = 0; i < AppointmentList.size(); i++){
 			if ((AppointmentList.get(i).getStarttime().compareTo(start) < 0 && AppointmentList.get(i).getFinishingtime().compareTo(end) > 0)
 					|| (AppointmentList.get(i).getStarttime().compareTo(start) > 0 && AppointmentList.get(i).getStarttime().compareTo(end) < 0)
 					|| (AppointmentList.get(i).getFinishingtime().compareTo(start) > 0 && AppointmentList.get(i).getFinishingtime().compareTo(end) < 0)
 					|| (AppointmentList.get(i).getStarttime().compareTo(start) < 0 && AppointmentList.get(i).getFinishingtime().compareTo(end) < 0)
 					|| (AppointmentList.get(i).getStarttime().compareTo(end) > 0 && AppointmentList.get(i).getFinishingtime().compareTo(end) > 0)){
+				System.out.println("Rommet er ikke ledig mellom " + db.convertCalendarTimeToSQLTime(start) + " og " + db.convertCalendarTimeToSQLTime(end));
 				return false;
 			}
 		}
@@ -89,7 +72,8 @@ public class MeetingRoom {
 			rs.next();
 			String name = rs.getString(1);
 			rs.close();
-
+			conn.close();
+			this.Capasity = Integer.parseInt(name);
 			return Capasity;
 
 		} catch (SQLException e) {
@@ -99,7 +83,7 @@ public class MeetingRoom {
 		return -1;
 	}
 
-	public int getID(){
+	public Integer getID(){
 		try {
 			Connection conn = db.getConnection();
 			Statement stmt = (Statement) conn.createStatement();
@@ -115,8 +99,8 @@ public class MeetingRoom {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
-		return -1;
 	}
 
 	public ArrayList<Appointment> getAppointmentList(){

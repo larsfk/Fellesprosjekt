@@ -42,9 +42,9 @@ public class TestAppointment extends TestCase {
 			stime.set(stime.MINUTE, 00);
 			ftime.set(ftime.HOUR_OF_DAY, 20);
 			ftime.set(ftime.MINUTE, 30);
-			appointment.setFinishingtime(ftime);
-			appointment.setStarttime(stime);
-			
+			appointment.setFinishingtime(ftime, conn);
+			appointment.setStarttime(stime, conn);
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -105,7 +105,8 @@ public class TestAppointment extends TestCase {
 			assertEquals(30, end1.get(Calendar.MINUTE));
 			assertEquals(meetpl, location);
 			assertEquals(descr, description);
-			assertEquals(Ivar.getEmail(), owner);
+			assertEquals(Ivar.getEmail(conn), owner);
+			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -122,12 +123,12 @@ public class TestAppointment extends TestCase {
 			Calendar newFtime = Calendar.getInstance();
 			newFtime.set(newFtime.HOUR_OF_DAY, 18);
 			newFtime.set(newFtime.MINUTE, 10);
-			appointment.setFinishingtime(newFtime);
+			appointment.setFinishingtime(newFtime, conn);
 			init();
 			end1 = db.convertSQLTimeToCalendarTime(end);
 			assertEquals(newFtime.get(Calendar.HOUR_OF_DAY), end1.get(Calendar.HOUR_OF_DAY));
 			assertEquals(newFtime.get(Calendar.MINUTE), end1.get(Calendar.MINUTE));
-			
+			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -162,14 +163,12 @@ public class TestAppointment extends TestCase {
 			Calendar newStime = Calendar.getInstance();
 			newStime.set(newStime.HOUR_OF_DAY, 18);
 			newStime.set(newStime.MINUTE, 10);
-			appointment.setStarttime(newStime);
+			appointment.setStarttime(newStime, conn);
 			init();
 			start1 = db.convertSQLTimeToCalendarTime(start);
 			assertEquals(newStime.get(Calendar.HOUR_OF_DAY), start1.get(Calendar.HOUR_OF_DAY));
 			assertEquals(newStime.get(Calendar.MINUTE), start1.get(Calendar.MINUTE));
-			
-			
-			
+			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -187,7 +186,7 @@ public class TestAppointment extends TestCase {
 			init();
 			int dur2 = Integer.parseInt(duration);
 			assertEquals(dur, dur2);
-			
+			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

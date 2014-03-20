@@ -192,8 +192,8 @@ public class Database {
 		try{
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery(  "SELECT appointment_id " +
-								"FROM larsfkl_felles.appointment " +
-								"WHERE owner = '" + pers.getEmail() + "';");
+								"FROM larsfkl_felles.appointmentToPerson " +
+								"WHERE email_id = '" + pers.getEmail(conn) + "';");
 			ResultSet rs = stmt.getResultSet();
 			ArrayList<Appointment> appList = new ArrayList<Appointment>();
 			ArrayList<Integer> IDList = new ArrayList<Integer>();
@@ -312,7 +312,7 @@ public class Database {
 			Statement stmt = (Statement) conn.createStatement();
 			Integer id = app.getAppointmentID();
 			ResultSet rs = stmt.executeQuery(  "SELECT appointment_id FROM larsfkl_felles.appointmentToPerson " +
-								"WHERE email_id = '" + pers.getEmail() + "';");
+								"WHERE email_id = '" + pers.getEmail(conn) + "';");
 			ArrayList<Integer> idList = new ArrayList<Integer>();
 			while (rs.next()){
 				idList.add(Integer.parseInt(rs.getString(1)));
@@ -328,9 +328,9 @@ public class Database {
 			
 			if (bool == true){
 				stmt.executeUpdate( "Insert into larsfkl_felles.appointmentToPerson (appointment_id, email_id, status_1, hidden, alarm_id)" +
-									"values(" + app.getAppointmentID() + ", '" + pers.getEmail() + "', 1, 0, null);");
+									"values(" + app.getAppointmentID() + ", '" + pers.getEmail(conn) + "', 1, 0, null);");
 			}
-			else{System.out.println(pers.getName() + " is already signed up for that appointment.");}
+			else{System.out.println(pers.getName(conn) + " is already signed up for that appointment.");}
 		}
 		catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException f){
 			System.out.println("error, men fint");
@@ -344,7 +344,7 @@ public class Database {
 	public void abandonAppointment(int ID, Person pers, Connection conn){
 		try{
 			Statement stmt = (Statement) conn.createStatement();
-			stmt.executeUpdate( "DELETE FROM larsfkl_felles.appointmentToPerson WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+			stmt.executeUpdate( "DELETE FROM larsfkl_felles.appointmentToPerson WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail(conn) + "';");
 		}
 		catch (SQLException e){
 			e.printStackTrace();
@@ -374,7 +374,7 @@ public class Database {
 		stmt.executeUpdate( "INSERT into larsfkl_felles.personToGroup (email, groupID) " +
 							"SELECT email, group_id " +
 							"FROM larsfkl_felles.person full join larsfkl_felles.group " +
-							"WHERE email = '" + pers.getEmail() + "' and group_id = "  + groupID + ";");
+							"WHERE email = '" + pers.getEmail(conn) + "' and group_id = "  + groupID + ";");
 		}
 		
 		catch (SQLException e){
@@ -386,7 +386,7 @@ public class Database {
 		try{
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeUpdate( "DELETE FROM larsfkl_felles.personToGroup " +
-								"WHERE groupID = " + ID + " AND email = '" + pers.getEmail() + "';");
+								"WHERE groupID = " + ID + " AND email = '" + pers.getEmail(conn) + "';");
 		}
 		catch (SQLException e){
 			e.printStackTrace();
@@ -488,7 +488,7 @@ public class Database {
 		try{
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery("SELECT hidden FROM larsfkl_felles.appointmentToPerson " +
-					"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+					"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail(conn) + "';");
 			ResultSet rs = stmt.getResultSet();
 			rs.next();
 			if (rs.getString(1).equals("1")){
@@ -510,7 +510,7 @@ public class Database {
 		try{
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery("SELECT status_1 FROM larsfkl_felles.appointmentToPerson " +
-					"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+					"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail(conn) + "';");
 			ResultSet rs = stmt.getResultSet();
 			rs.next();
 			if (rs.getString(1).equals("1")){
@@ -532,17 +532,17 @@ public class Database {
 		try{
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery("SELECT hidden FROM larsfkl_felles.appointmentToPerson " +
-					"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+					"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail(conn) + "';");
 			ResultSet rs = stmt.getResultSet();
 			rs.next();
 			Integer bool = Integer.parseInt(rs.getString(1));
 			if (bool == 1){
 				stmt.executeUpdate("UPDATE larsfkl_felles.appointmentToPerson SET hidden = 0 " +
-						"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+						"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail(conn) + "';");
 			}
 			else if (bool == 0){
 				stmt.executeUpdate("UPDATE larsfkl_felles.appointmentToPerson SET hidden = 1 " +
-						"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+						"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail(conn) + "';");
 			}
 			else {System.out.println("Error i changeHidden, hidden ikke lik 1/0");}
 		}
@@ -556,17 +556,17 @@ public class Database {
 		try{
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeQuery("SELECT status_1 FROM larsfkl_felles.appointmentToPerson " +
-					"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+					"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail(conn) + "';");
 			ResultSet rs = stmt.getResultSet();
 			rs.next();
 			Integer bool = Integer.parseInt(rs.getString(1));
 			if (bool == 1){
 				stmt.executeUpdate("UPDATE larsfkl_felles.appointmentToPerson SET status_1 = 0 " +
-						"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+						"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail(conn) + "';");
 			}
 			else if (bool == 0){
 				stmt.executeUpdate("UPDATE larsfkl_felles.appointmentToPerson SET status_1 = 1 " +
-						"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+						"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail(conn) + "';");
 			}
 			else {System.out.println("Error i changeStatus, hidden ikke lik 1/0");}
 		}
@@ -579,11 +579,13 @@ public class Database {
 		try{
 			Statement stmt = (Statement) conn.createStatement();
 			stmt.executeUpdate("UPDATE larsfkl_felles.appointmentToPerson SET alarm_id = "+ al.getAlarmID() +
-					" WHERE appointment_id = " + app.getAppointmentID() + " AND email_id = '" + pers.getEmail() + "';");
+					" WHERE appointment_id = " + app.getAppointmentID() + " AND email_id = '" + pers.getEmail(conn) + "';");
 		}
 		catch (SQLException e){
 			e.printStackTrace();
 		}
 	}
+	
+
 	
 }
