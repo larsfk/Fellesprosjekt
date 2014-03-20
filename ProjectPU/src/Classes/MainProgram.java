@@ -118,6 +118,8 @@ public class MainProgram {
 					Integer groupID = db.createGroup(conn);
 					alarm = new Alarm(timeListInt[0], timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4],timeList[5],conn);
 					Appointment ap = new Appointment(start,finish,meetpl,description,alarm,person,groupID,conn);
+					db.joinGroup(person, groupID, conn);
+					db.setAlarm(ap, person, alarm, conn);
 					System.out.println("You created and joined group: " + groupID + "\n");
 					conn.close();
 				} catch (SQLException e) {
@@ -131,19 +133,27 @@ public class MainProgram {
 				
 				
 			case 2:
-				int numApp = cc.getAppointmentList(person).size(); //Number of appointments in the active calendar
+				ArrayList<Appointment> appRev = new ArrayList<Appointment>();
+				try {
+					conn = db.getConnection();
+					appRev = db.getAppointmentList(person, conn);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				int appID = -1;
 				while (appID < 0){ // ||appID > numApp
 					System.out.println("Which appointment would you like to delete?");
-					for (int i = 0;i<numApp;i++){ 
-						System.out.println("(" + i + ") " + cc.getAppointmentList(person).get(i)); //returns element i in calendar appointments
+					for (int i = 0;i<appRev.size();i++){ 
+						System.out.println("(" + i + ") " + appRev.get(i)); //returns element i in calendar appointments
 					}
 					appID = sc.nextInt();
 				}
 
 				try {
 					conn = db.getConnection();
-					cc.deleteAppointment(cc.getAppointmentList(person).get(appID),conn);
+					db.removeAppointment(appRev.get(appID).getAppointmentID(), conn);
 					System.out.println("Appointment deleted.");
 					conn.close();
 				} catch (SQLException e) {
