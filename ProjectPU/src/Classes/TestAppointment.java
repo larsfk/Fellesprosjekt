@@ -57,7 +57,7 @@ public class TestAppointment extends TestCase {
 			conn = db.getConnection();
 			appointment = db.getAppointment(23, conn);
 			Ivar = new Person("Ivar", "P15", "12345678", "ivarivar@ivar.no", "111", "Ivar", conn);
-			app = new Appointment(stime, ftime, meetpl, descr, alarm, Ivar, conn);
+			app = new Appointment(stime, ftime, meetpl, descr, alarm, Ivar, null, conn);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
