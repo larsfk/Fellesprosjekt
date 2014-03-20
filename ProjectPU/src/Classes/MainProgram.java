@@ -35,6 +35,7 @@ public class MainProgram {
 		try {
 			Connection conn = db.getConnection();
 			validPersons = db.getPersonList(conn);
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -64,7 +65,7 @@ public class MainProgram {
 		}
 		Boolean brk = true;
 		while(brk){
-			System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3. Edit appointment\n4. Show this calendar\n5. Show several calendars\n6. Join Appointment\n7. Hide appointment\n8. Log out");
+			System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3. Edit appointment\n4. Show this calendar\n5. Show several calendars\n6. Join Appointment\n7. Hide/unhide appointment\n8. Change status\n9. Log out");
 			int option = sc.nextInt();
 			
 			switch (option){
@@ -103,7 +104,7 @@ public class MainProgram {
 				time = sc.next();
 				timeList = time.split(":"); //splitter input paa punktum
 				for (int i = 0;i<5;i++){
-					timeListInt[i] = Integer.parseInt(timeList[i]);
+					timeListInt[i] = Integer.parseInt(timeList[i]);				
 				}
 				
 				//System.out.println("Choose available room:");
@@ -115,10 +116,10 @@ public class MainProgram {
 				try {
 					conn = db.getConnection();
 					Integer groupID = db.createGroup(conn);
-					db.joinGroup(person, groupID, conn);
 					alarm = new Alarm(timeListInt[0], timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4],timeList[5],conn);
 					Appointment ap = new Appointment(start,finish,meetpl,description,alarm,person,groupID,conn);
 					System.out.println("You created and joined group: " + groupID + "\n");
+					conn.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -144,6 +145,7 @@ public class MainProgram {
 					conn = db.getConnection();
 					cc.deleteAppointment(cc.getAppointmentList(person).get(appID),conn);
 					System.out.println("Appointment deleted.");
+					conn.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -156,6 +158,7 @@ public class MainProgram {
 				try {
 					conn = db.getConnection();
 					appList = db.getAppointmentList(person, conn);
+					conn.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -252,6 +255,7 @@ public class MainProgram {
 					}
 					int appointment = sc.nextInt();
 					db.joinAppointment(person, appList.get(appointment), conn);
+					conn.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -259,9 +263,77 @@ public class MainProgram {
 				break;
 				
 			case 7: //Hide appointment
+				int hide = -1;
+				appList = new ArrayList<Appointment>();
+				try {
+					conn = db.getConnection();
+					appList = db.getAppointmentList(person, conn);
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				System.out.println("Choose the appointment you want to hide: ");
+				for (int i = 0;i<appList.size();i++){
+					try{
+						conn = db.getConnection();
+						System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " @ " + appList.get(i).getMeetingplace() + "\n    " +" Start time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Finish time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getFinishingtime()) + "\n    " + " Start date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()) + " Finish date: " + db.convertCalendarDateToCasualDate(appList.get(i).getFinishingtime()) + "\n     " + db.isHidden(appList.get(i),person,conn));
+						conn.close();
+					} catch(SQLException e){
+						e.printStackTrace();
+					}
+				}
+				
+				hide = sc.nextInt();
+				Appointment myApp = appList.get(hide);
+				
+				try{
+					conn = db.getConnection();
+					db.changeHidden(myApp,person,conn);
+					conn.close();
+				} catch(SQLException e){
+					e.printStackTrace();
+				}
+				
+				break;
+			case 8: //Change status
+				int status = -1;
+				appList = new ArrayList<Appointment>();
+				try {
+					conn = db.getConnection();
+					appList = db.getAppointmentList(person, conn);
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				System.out.println("Choose the appointment you want to change status: ");
+				for (int i = 0;i<appList.size();i++){
+					try{
+						conn = db.getConnection();
+						System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " @ " + appList.get(i).getMeetingplace() + "\n    " +" Start time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Finish time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getFinishingtime()) + "\n    " + " Start date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()) + " Finish date: " + db.convertCalendarDateToCasualDate(appList.get(i).getFinishingtime()) + "\n     Status: " + db.getStatus(appList.get(i),person,conn));						
+						conn.close();
+					} catch(SQLException e){
+						e.printStackTrace();
+					}
+				}
+				
+				hide = sc.nextInt();
+				Appointment statusApp = appList.get(hide);
+				
+				try{
+					conn = db.getConnection();
+					db.changeStatus(statusApp,person,conn);
+					conn.close();
+				} catch(SQLException e){
+					e.printStackTrace();
+				}
+				
 				break;
 				
-			case 8:
+			case 9:
 				brk = false;
 				System.out.println("Welcome back!\n");
 				MainProgram MP = new MainProgram();
@@ -269,7 +341,7 @@ public class MainProgram {
 				break;
 				
 			default:
-				System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3.Edit appointment\n4. Show this calendar\n5. Show several calendars\n6. Join appointment\n7. Hide appointment\n8. Log out");
+				System.out.println("What would you like to do?\n1. Add appointment\n2. Delete appointment\n3.Edit appointment\n4. Show this calendar\n5. Show several calendars\n6. Join appointment\n7. Hide/unhide appointment\n8. Change status\n9. Log out");
 				break;
 			}
 		}
