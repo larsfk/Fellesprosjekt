@@ -13,7 +13,7 @@ import java.util.Calendar;
 public class Database {
 
 	public Connection getConnection() throws SQLException {
-
+		
 		Connection conn = null;
 		conn = DriverManager.getConnection("jdbc:mysql://mysql.stud.ntnu.no:3306/larsfkl_felles","larsfkl_felles","bademadrass");
 //		System.out.println("Connected to database");
@@ -497,6 +497,28 @@ public class Database {
 				return "Unhidden";
 			}
 			else {System.out.println("Error i isHidden, hidden ikke lik 1/0"); return null;}
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public String getStatus(Appointment app, Person pers, Connection conn){
+		Integer ID = app.getAppointmentID();
+		try{
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeQuery("SELECT status_1 FROM larsfkl_felles.appointmentToPerson " +
+					"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
+			ResultSet rs = stmt.getResultSet();
+			rs.next();
+			if (rs.getString(1).equals("1")){
+				return "Hidden";
+			}
+			else if (rs.getString(1).equals("0")){
+				return "Unhidden";
+			}
+			else {System.out.println("Error i getStatus, hidden ikke lik 1/0"); return null;}
 		}
 		catch (SQLException e){
 			e.printStackTrace();
