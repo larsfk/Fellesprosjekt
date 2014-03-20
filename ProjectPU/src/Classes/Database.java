@@ -334,6 +334,7 @@ public class Database {
 		}
 		catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException f){
 			System.out.println("error, men fint");
+			f.printStackTrace();
 		}
 		catch (SQLException e){
 			e.printStackTrace();
@@ -568,6 +569,17 @@ public class Database {
 						"WHERE appointment_id = " + ID + " AND email_id = '" + pers.getEmail() + "';");
 			}
 			else {System.out.println("Error i changeStatus, hidden ikke lik 1/0");}
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+
+	public void setAlarm(Appointment app, Person pers, Alarm al, Connection conn){
+		try{
+			Statement stmt = (Statement) conn.createStatement();
+			stmt.executeUpdate("UPDATE larsfkl_felles.appointmentToPerson SET alarm_id = "+ al.getAlarmID() +
+					" WHERE appointment_id = " + app.getAppointmentID() + " AND email_id = '" + pers.getEmail() + "';");
 		}
 		catch (SQLException e){
 			e.printStackTrace();

@@ -66,6 +66,8 @@ public class Appointment {
 //		System.out.println("Calculating duration for " + this.appointmentID + ", " + this.getOwner().getEmail() + "   " + this.description);
 		this.duration = calculateDuration(starttime, finishingtime);
 		this.alarm = alarm;
+		Integer key = db.generateAppointmentID(conn);
+		this.appointmentID = key;
 		
 		try {
 			Integer Syear = this.starttime.get(Calendar.YEAR);
@@ -84,7 +86,7 @@ public class Appointment {
 //			System.out.println("Faar " + Fyear + " Fh " + Fhour);
 			
 			db.addToDatabase(   "insert into larsfkl_felles.appointment(appointment_id,start,end,date,description,location,duration,room_id,groupID,owner) " +
-								"values (" + db.generateAppointmentID(conn) + ", '" 
+								"values (" + key + ", '" 
 								+ Shour + ":" + Sminute + "','" 
 								+ Fhour + ":" + Fminute + "','" 
 								+ Syear + "-" + Smonth + "-" + Sday + "','" 
@@ -92,7 +94,7 @@ public class Appointment {
 								+ meetpl +  "','" 
 								+ this.duration +"', '1','" + groupID + "','" 
 								+ getOwner().getEmail() + "');", conn);
-			db.joinAppointment(this.owner, this, conn);
+			db.joinAppointment(owner, this, conn);
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -109,6 +111,8 @@ public class Appointment {
 		this.meetingplace = meetpl;
 		this.description = descr;
 		this.alarm = alarm;
+		Integer key = db.generateAppointmentID(conn);
+		this.appointmentID = key;
 		try {
 			Integer Syear = this.starttime.get(Calendar.YEAR);
 			Integer Smonth = this.starttime.get(Calendar.MONTH);
@@ -121,7 +125,7 @@ public class Appointment {
 			Integer Fday = this.finishingtime.get(Calendar.DATE);
 			Integer Fhour = this.finishingtime.get(Calendar.HOUR_OF_DAY);
 			Integer Fminute = this.finishingtime.get(Calendar.MINUTE);
-			Integer key = db.generateAppointmentID(conn);
+			
 //			System.out.println("Saar " + Syear + " Sh " + Shour);
 //			System.out.println("Faar " + Fyear + " Fh " + Fhour);
 			
@@ -134,9 +138,7 @@ public class Appointment {
 								+ meetpl +  "','" 
 								+ this.duration +"', '1','" + groupID + "','" 
 								+ getOwner().getEmail() + "');", conn);
-			db.addToDatabase(   "Insert into appointmentToPerson (appointment_id, email_id, status_1, hidden, alarm_id)" + 
-								"values (" + key + ", '" + getOwner().getEmail() + "', 1, 0, null);", conn);
-			db.joinAppointment(this.owner, this, conn);
+			db.joinAppointment(owner, this, conn);
 		}
 		catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException f){
 			System.out.println("Her er det error, men funker fett");
@@ -337,7 +339,7 @@ public class Appointment {
 				db.addToDatabase("update larsfkl_felles.appointment SET duration = " + dur + " WHERE appointment_id = " + this.appointmentID + ";", conn);
 				db.addToDatabase("update larsfkl_felles.appointment SET date = '" + dato + "' Where appointment_id = " + this.appointmentID + ";", conn);
 			}
-			else System.out.println("Det er ikke mulig Œ sette slutt-tid til Œ v¾re f¿r start-tid.");
+			else System.out.println("Det er ikke mulig aa sette slutt-tid til aa vaere foer start-tid.");
 			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

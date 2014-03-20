@@ -10,8 +10,10 @@ public class Alarm {
 	private String description;
 	private Calendar start;
 	Database db = new Database();
+	private Integer alarmID;
 	
-	public Alarm(int year, int month, int date, int hourOfDay, int minute, String description){
+	public Alarm(Integer ID, int year, int month, int date, int hourOfDay, int minute, String description){
+		this.alarmID = ID;
 		this.start = Calendar.getInstance();
 		this.setStart(year, month, date, hourOfDay, minute);
 		this.description = description;
@@ -28,7 +30,8 @@ public class Alarm {
 		this.start = Calendar.getInstance();
 		this.setStart(year, month, date, hourOfDay, minute);
 		this.description = description;
-		
+		Integer key = db.generateAlarmID(conn);
+		this.alarmID = key;
 		try {
 			Integer Syear = this.start.get(Calendar.YEAR);
 			Integer Smonth = this.start.get(Calendar.MONTH);
@@ -41,7 +44,7 @@ public class Alarm {
 //			System.out.println("Faar " + Fyear + " Fh " + Fhour);
 			
 			db.addToDatabase(   "insert into larsfkl_felles.alarm(alarm_id,time,date,type) " +
-					"values (" + db.generateAlarmID(conn) + ", '" 
+					"values (" + key + ", '" 
 					+ Shour + ":" + Sminute + "','" 
 					+ Syear + "-" + Smonth + "-" + Sday + "','" 
 					+ getDescription() + "');", conn);
@@ -76,6 +79,10 @@ public class Alarm {
 //			e.printStackTrace();
 //		}
 //	}
+	
+	public Integer getAlarmID(){
+		return this.alarmID;
+	}
 	
 	public String getDescription() {
 		return description;

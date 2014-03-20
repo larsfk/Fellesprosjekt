@@ -20,7 +20,7 @@ public class TestAppointment extends TestCase {
 	static Calendar ftime = Calendar.getInstance();
 	static String meetpl = "NTNU";
 	static String descr = "Progging";
-	static Alarm alarm = new Alarm(114, 2, 12, 9, 00, "Husk progging");
+	static Alarm alarm = new Alarm(2, 114, 2, 12, 9, 00, "Husk progging");
 	static String appID, start, end, description, location, duration, roomID, groupID, owner;
 	static Calendar start1 = Calendar.getInstance();
 	static Calendar end1 = Calendar.getInstance();
