@@ -171,7 +171,7 @@ public class MainProgram {
 				
 				Boolean running = true;
 				while(running){
-					System.out.println("What would you like to edit?\n1. Edit start time\n2. Edit finishing time\n3. Edit description\n4. Edit location\n5. Edit alarm\n6. Join appointment\n7. Log out");
+					System.out.println("What would you like to edit?\n1. Edit start time\n2. Edit finishing time\n3. Edit description\n4. Edit location\n5. Edit alarm\n6. Back");
 					int option_edit = sc.nextInt();
 					switch(option_edit){
 					case 1: //Edit start time
