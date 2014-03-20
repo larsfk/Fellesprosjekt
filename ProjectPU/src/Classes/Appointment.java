@@ -185,7 +185,7 @@ public class Appointment {
 	public Calendar getDate(Connection conn){
 		try{
 			Statement stmt = (Statement) conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT start, date FROM larsfkl_felles WHERE appointment_id = " + this.appointmentID + ";");
+			ResultSet rs = stmt.executeQuery("SELECT start, date FROM larsfkl_felles.appointment WHERE appointment_id = " + this.appointmentID + ";");
 			rs.next();
 			Calendar currentStartTime = db.createCalendarFromSQLTimeAndDate(rs.getString(1), rs.getString(2));
 			return currentStartTime;
