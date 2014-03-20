@@ -54,7 +54,7 @@ public class Appointment {
 	}
 	
 	
-	public Appointment(Calendar stime, Calendar ftime, String meetpl, String descr, Alarm alarm, Person owner, Connection conn){
+	public Appointment(Calendar stime, Calendar ftime, String meetpl, String descr, Alarm alarm, Person owner, Integer groupID, Connection conn){
 		if (stime.after(ftime)){
 			throw new IllegalArgumentException("Starttime cannot be after finishtime");
 		}
@@ -83,15 +83,16 @@ public class Appointment {
 //			System.out.println("Saar " + Syear + " Sh " + Shour);
 //			System.out.println("Faar " + Fyear + " Fh " + Fhour);
 			
-			db.addToDatabase(   "insert into larsfkl_felles.appointment(appointment_id,start,end,date,description,location,duration,room_id,group_id,owner) " +
+			db.addToDatabase(   "insert into larsfkl_felles.appointment(appointment_id,start,end,date,description,location,duration,room_id,groupID,owner) " +
 								"values (" + db.generateAppointmentID(conn) + ", '" 
 								+ Shour + ":" + Sminute + "','" 
 								+ Fhour + ":" + Fminute + "','" 
 								+ Syear + "-" + Smonth + "-" + Sday + "','" 
 								+ descr + "','" 
 								+ meetpl +  "','" 
-								+ this.duration +"','"  + "1" + "','" + "0" + "','" 
+								+ this.duration +"','"  + groupID + "','" + "0" + "','" 
 								+ getOwner().getEmail() + "');", conn);
+			db.joinAppointment(this.owner, this, conn);
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -100,9 +101,10 @@ public class Appointment {
 
 	}
 	
-	public Appointment(Calendar stime, int dur, String meetpl, String descr, Alarm alarm, Person owner, Connection conn){
+	public Appointment(Calendar stime, int dur, String meetpl, String descr, Alarm alarm, Person owner, Integer groupID, Connection conn){
 		this.owner = owner;
 		this.starttime = stime;
+		setFinishingTime(dur);
 		this.duration = dur;
 		this.meetingplace = meetpl;
 		this.description = descr;
@@ -123,22 +125,27 @@ public class Appointment {
 //			System.out.println("Saar " + Syear + " Sh " + Shour);
 //			System.out.println("Faar " + Fyear + " Fh " + Fhour);
 			
-			db.addToDatabase(   "Insert into larsfkl_felles.appointment(appointment_id,start,end,date,description,location,duration,room_id,group_id,owner) " +
+			db.addToDatabase(   "Insert into larsfkl_felles.appointment(appointment_id,start,end,date,description,location,duration,room_id,groupID,owner) " +
 								"values (" + key + ", '" 
 								+ Shour + ":" + Sminute + "','" 
 								+ Fhour + ":" + Fminute + "','" 
 								+ Syear + "-" + Smonth + "-" + Sday + "','" 
 								+ descr + "','" 
 								+ meetpl +  "','" 
-								+ this.duration +"','"  + "1" + "','" + "51" + "','" 
+								+ this.duration +"','"  + "1" + "','" + groupID + "','" 
 								+ getOwner().getEmail() + "');", conn);
 			db.addToDatabase(   "Insert into appointmentToPerson (appointment_id, email_id, status_1, hidden, alarm_id)" + 
 								"values (" + key + ", '" + getOwner().getEmail() + "', 1, 0, null);", conn);
+			db.joinAppointment(this.owner, this, conn);
+		}
+		catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException f){
+			System.out.println("Her er det error, men funker fett");
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	
 	
@@ -352,8 +359,33 @@ public class Appointment {
 	}
 	
 	public void setFinishingTime(int dur){
-		
-		Connection conn;
+		if (dur > 0){
+			duration = dur;
+			// final long ONE_MINUTE_IN_MILLIS=60000;//millisecs
+			//feiling if-setning pga casting
+			int t = (int) (starttime.getTimeInMillis()/(60000*60));
+			Integer ftime = starttime.get(Calendar.HOUR_OF_DAY);
+			Integer fminute = starttime.get(Calendar.MINUTE);
+			Integer totaltid = (ftime * 60) + fminute + dur;
+			
+			Double start = totaltid.doubleValue();
+			Double i = start % 1440;
+			Double j = i/60;
+			Double floorTime = Math.floor(j);
+			Double floorMinute = Math.floor((j - floorTime) * 60);
+			
+			Integer Time = floorTime.intValue();
+			Integer Minute = floorMinute.intValue();
+			
+			
+			finishingtime = Calendar.getInstance();
+			finishingtime.set(finishingtime.HOUR_OF_DAY, Time);
+			finishingtime.set(finishingtime.MINUTE, Minute);
+		}
+	}
+	
+	public void setFinishingTime(int dur, Connection conn){
+
 		try {
 			conn = db.getConnection();
 			Statement stmt = (Statement) conn.createStatement();

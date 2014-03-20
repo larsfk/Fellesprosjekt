@@ -332,6 +332,9 @@ public class Database {
 			}
 			else{System.out.println(pers.getName() + " is already signed up for that appointment.");}
 		}
+		catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException f){
+			System.out.println("error, men fint");
+		}
 		catch (SQLException e){
 			e.printStackTrace();
 		}
