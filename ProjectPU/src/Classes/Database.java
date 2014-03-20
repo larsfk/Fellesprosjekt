@@ -513,10 +513,10 @@ public class Database {
 			ResultSet rs = stmt.getResultSet();
 			rs.next();
 			if (rs.getString(1).equals("1")){
-				return "Hidden";
+				return "Going";
 			}
 			else if (rs.getString(1).equals("0")){
-				return "Unhidden";
+				return "Not going";
 			}
 			else {System.out.println("Error i getStatus, hidden ikke lik 1/0"); return null;}
 		}

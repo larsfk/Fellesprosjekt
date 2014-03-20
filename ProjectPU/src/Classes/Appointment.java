@@ -296,9 +296,8 @@ public class Appointment {
 				db.addToDatabase("update larsfkl_felles.appointment SET duration = " + dur + " WHERE appointment_id = " + this.appointmentID + ";", conn);
 				db.addToDatabase("update larsfkl_felles.appointment SET date = '" + dato + "' Where appointment_id = " + this.appointmentID + ";", conn);
 			}
-			else
-				System.out.println("Det er ikke mulig Œ sette start-tid til Œ v¾re f¿r slutt-tid.");
-			
+			else System.out.println("Det er ikke mulig Œ sette start-tid til Œ v¾re f¿r slutt-tid.");
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -338,9 +337,8 @@ public class Appointment {
 				db.addToDatabase("update larsfkl_felles.appointment SET duration = " + dur + " WHERE appointment_id = " + this.appointmentID + ";", conn);
 				db.addToDatabase("update larsfkl_felles.appointment SET date = '" + dato + "' Where appointment_id = " + this.appointmentID + ";", conn);
 			}
-			else
-				System.out.println("Det er ikke mulig Œ sette slutt-tid til Œ v¾re f¿r start-tid.");
-			
+			else System.out.println("Det er ikke mulig Œ sette slutt-tid til Œ v¾re f¿r start-tid.");
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -423,6 +421,7 @@ public class Appointment {
 				db.addToDatabase("update larsfkl_felles.appointment SET end = '" + db.convertCalendarTimeToSQLTime(finishingtime) +"' WHERE appointment_id = " + this.appointmentID + ";", conn);	
 				db.addToDatabase("update larsfkl_felles.appointment SET duration = " + dur + " WHERE appointment_id = " + this.appointmentID + ";", conn);
 				db.addToDatabase("update larsfkl_felles.appointment SET date = '" + rs.getString(4) + "' Where appointment_id = " + this.appointmentID + ";", conn);
+				conn.close();
 			}
 			
 		} catch (SQLException e) {
@@ -460,6 +459,7 @@ public class Appointment {
 			conn = db.getConnection();
 			db.addToDatabase("update larsfkl_felles.appointment SET location = '"+ meetpl + "' WHERE appointment_id = '" + this.appointmentID + "';", conn);
 			this.meetingplace = meetpl;
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -477,6 +477,7 @@ public class Appointment {
 			conn = db.getConnection();
 			db.addToDatabase("update larsfkl_felles.appointment SET description = '"+ descr + "' WHERE appointment_id = '" + this.appointmentID + "';", conn);
 			this.description = descr; 
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
