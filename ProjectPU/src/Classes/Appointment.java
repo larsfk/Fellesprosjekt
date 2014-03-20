@@ -90,7 +90,7 @@ public class Appointment {
 								+ Syear + "-" + Smonth + "-" + Sday + "','" 
 								+ descr + "','" 
 								+ meetpl +  "','" 
-								+ this.duration +"','"  + groupID + "','" + "0" + "','" 
+								+ this.duration +"', '1','" + groupID + "','" 
 								+ getOwner().getEmail() + "');", conn);
 			db.joinAppointment(this.owner, this, conn);
 		}
@@ -132,7 +132,7 @@ public class Appointment {
 								+ Syear + "-" + Smonth + "-" + Sday + "','" 
 								+ descr + "','" 
 								+ meetpl +  "','" 
-								+ this.duration +"','"  + "1" + "','" + groupID + "','" 
+								+ this.duration +"', '1','" + groupID + "','" 
 								+ getOwner().getEmail() + "');", conn);
 			db.addToDatabase(   "Insert into appointmentToPerson (appointment_id, email_id, status_1, hidden, alarm_id)" + 
 								"values (" + key + ", '" + getOwner().getEmail() + "', 1, 0, null);", conn);
