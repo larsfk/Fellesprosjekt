@@ -174,8 +174,8 @@ public class Database {
 			Alarm al = null;
 			while (rs.next()){
 				app = new Appointment(Integer.parseInt(rs.getString(1)), 
-						convertSQLTimeToCalendarTime(rs.getString(2)), 
-						convertSQLTimeToCalendarTime(rs.getString(3)), 
+						createCalendarFromSQLTimeAndDate(rs.getString(2), rs.getString(4)), 
+						createCalendarFromSQLTimeAndDate(rs.getString(3), rs.getString(4)), 
 						rs.getString(6), rs.getString(5), al, 
 						getPersonFromDatabase(rs.getString(10), conn));
 				out.add(app);

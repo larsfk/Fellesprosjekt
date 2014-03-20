@@ -24,7 +24,12 @@ public class Appointment {
 
 	public Appointment(int AppID, Calendar stime, Calendar ftime, String meetpl, String descr, Alarm alarm, Person owner){
 		if (stime.after(ftime)){
+			try{
+			Connection conn = db.getConnection();
+			System.out.println(AppID + " " + owner.getEmail(conn) + descr + " start: " + db.convertCalendarTimeToSQLTime(stime) + " end: " + db.convertCalendarTimeToSQLTime(ftime));
+			conn.close();
 			throw new IllegalArgumentException("Starttime cannot be after finishtime");
+			} catch (SQLException e){ e.printStackTrace();}
 		}
 		/*
 		 * 
