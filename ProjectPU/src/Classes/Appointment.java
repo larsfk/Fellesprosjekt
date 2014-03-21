@@ -507,7 +507,7 @@ public class Appointment {
 	
 	@Override
 	public String toString(){
-		return "AppointmentID: " + this.appointmentID + ", Description: " + this.getDescription();
+		return "AppointmentID: \t" + this.appointmentID + ",\t Description: " + this.getDescription();
 	}
 	
 }

@@ -160,7 +160,7 @@ public class MainProgram {
 				while (appID < 0){ // ||appID > numApp
 					System.out.println("Which appointment would you like to delete?");
 					for (int i = 0;i<appRev.size();i++){ 
-						System.out.println("(" + i + ") " + appRev.get(i)); //returns element i in calendar appointments
+						System.out.println("(" + i + ") \t" + appRev.get(i)); //returns element i in calendar appointments
 					}
 					appID = sc.nextInt();
 				}
