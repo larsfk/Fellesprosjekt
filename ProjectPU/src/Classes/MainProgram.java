@@ -156,15 +156,21 @@ public class MainProgram {
 					e.printStackTrace();
 				}
 				
-				int appID = -1;
+				int appID = -2;
 				while (appID < 0){ // ||appID > numApp
 					System.out.println("Which appointment would you like to delete?");
 					for (int i = 0;i<appRev.size();i++){ 
 						System.out.println("(" + i + ") \t" + appRev.get(i)); //returns element i in calendar appointments
 					}
+					System.out.println("\nType -1 to go back");
 					appID = sc.nextInt();
+					if (appID == -1){
+						break;
+					}
 				}
-
+				if (appID == -1){
+					break;
+				}
 				try {
 					conn = db.getConnection();
 					db.removeAppointment(appRev.get(appID).getAppointmentID(), conn);
@@ -348,9 +354,8 @@ public class MainProgram {
 						e.printStackTrace();
 					}
 				}
-				
-				hide = sc.nextInt();
 				System.out.println("Type -1 to go back");
+				hide = sc.nextInt();
 				if(hide == -1){
 					break;
 				}
@@ -387,13 +392,13 @@ public class MainProgram {
 						e.printStackTrace();
 					}
 				}
-				
-				hide = sc.nextInt();
 				System.out.println("Type -1 to go back");
-				if(hide == -1){
+				status = sc.nextInt();
+				
+				if(status == -1){
 					break;
 				}
-				Appointment statusApp = appList.get(hide);
+				Appointment statusApp = appList.get(status);
 				
 				try{
 					conn = db.getConnection();
