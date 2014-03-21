@@ -62,12 +62,13 @@ public class CalendarClient {
 		 */
 	}
 
-	public String showMyWeekCalendar(Person pers){ //Slått sammen denne med showMyCalendar
+	public String showMyWeekCalendar(Person pers){ //Slaatt sammen denne med showMyCalendar
 
 
 		calendar = Calendar.getInstance();
 		int firstDayOfWeek = calendar.getFirstDayOfWeek() + 3;
 		int week = calendar.get(Calendar.DAY_OF_WEEK_IN_MONTH);
+		int week2 = calendar.get(Calendar.WEEK_OF_YEAR);
 		appointments = getAppointmentList(pers);
 		
 		if(week == 2)
@@ -305,10 +306,221 @@ public class CalendarClient {
 		}
 		 return "  Mon 			  Tues			   Wed 			  Thu 			  Fri 			  Sat 			  Sun \n" + s;
 	}
+	
+	public ArrayList<ArrayList<Appointment>> getWeekCalendar(Person pers){
+		ArrayList<Appointment> Mandag;
+		ArrayList<Appointment> Tirsdag;
+		ArrayList<Appointment> Onsdag;
+		ArrayList<Appointment> Torsdag;
+		ArrayList<Appointment> Fredag;
+		ArrayList<Appointment> Lordag;
+		ArrayList<Appointment> Sondag;
+		
+		Calendar mandag = Calendar.getInstance();
+		Calendar tirsdag = Calendar.getInstance();
+		Calendar onsdag = Calendar.getInstance();
+		Calendar torsdag = Calendar.getInstance();
+		Calendar fredag = Calendar.getInstance();
+		Calendar lordag = Calendar.getInstance();
+		Calendar sondag = Calendar.getInstance();
+		Calendar lol = Calendar.getInstance();
+		
+		mandag.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		tirsdag.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
+		onsdag.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+		torsdag.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
+		fredag.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+		lordag.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+		sondag.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+		
+		Integer maaned = (lol.get(Calendar.MONTH) + 1);
+		Integer ma = mandag.get(Calendar.DATE);
+		Integer ti = tirsdag.get(Calendar.DATE);
+		Integer on = onsdag.get(Calendar.DATE);
+		Integer to = torsdag.get(Calendar.DATE);
+		Integer fr = fredag.get(Calendar.DATE);
+		Integer lo = lordag.get(Calendar.DATE);
+		Integer so = sondag.get(Calendar.DATE);
+		
+		mandag.set(Calendar.MONTH, maaned);
+		mandag.set(Calendar.DAY_OF_MONTH, ma);
+		tirsdag.set(Calendar.MONTH, maaned);
+		tirsdag.set(Calendar.DAY_OF_MONTH, ti);
+		onsdag.set(Calendar.MONTH, maaned);
+		onsdag.set(Calendar.DAY_OF_MONTH, on);
+		torsdag.set(Calendar.MONTH, maaned);
+		torsdag.set(Calendar.DAY_OF_MONTH, to);
+		fredag.set(Calendar.MONTH, maaned);
+		fredag.set(Calendar.DAY_OF_MONTH, fr);
+		lordag.set(Calendar.MONTH, maaned);
+		lordag.set(Calendar.DAY_OF_MONTH, lo);
+		sondag.set(Calendar.MONTH, maaned);
+		sondag.set(Calendar.DAY_OF_MONTH, so);
+		
+		Mandag = db.getPersonsAppointmentsGivenDay(pers, mandag, conn);
+		Tirsdag = db.getPersonsAppointmentsGivenDay(pers, tirsdag, conn);
+		Onsdag = db.getPersonsAppointmentsGivenDay(pers, onsdag, conn);
+		Torsdag = db.getPersonsAppointmentsGivenDay(pers, torsdag, conn);
+		Fredag = db.getPersonsAppointmentsGivenDay(pers, fredag, conn);
+		Lordag = db.getPersonsAppointmentsGivenDay(pers, lordag, conn);
+		Sondag = db.getPersonsAppointmentsGivenDay(pers, sondag, conn);
+		
+		ArrayList<ArrayList<Appointment>> weekCalendar = new ArrayList<ArrayList<Appointment>>();
+		weekCalendar.add(Mandag);
+		weekCalendar.add(Tirsdag);
+		weekCalendar.add(Onsdag);
+		weekCalendar.add(Torsdag);
+		weekCalendar.add(Fredag);
+		weekCalendar.add(Lordag);
+		weekCalendar.add(Sondag);
+		
+		return weekCalendar;
+	}
+	
+	public void printWeekCalendar(Person pers){
+		ArrayList<Appointment> Mandag;
+		ArrayList<Appointment> Tirsdag;
+		ArrayList<Appointment> Onsdag;
+		ArrayList<Appointment> Torsdag;
+		ArrayList<Appointment> Fredag;
+		ArrayList<Appointment> Lordag;
+		ArrayList<Appointment> Sondag;
+		
+		Calendar mandag = Calendar.getInstance();
+		Calendar tirsdag = Calendar.getInstance();
+		Calendar onsdag = Calendar.getInstance();
+		Calendar torsdag = Calendar.getInstance();
+		Calendar fredag = Calendar.getInstance();
+		Calendar lordag = Calendar.getInstance();
+		Calendar sondag = Calendar.getInstance();
+		Calendar lol = Calendar.getInstance();
+		
+		mandag.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		tirsdag.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
+		onsdag.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+		torsdag.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
+		fredag.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+		lordag.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+		sondag.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+		
+		Integer maaned = (lol.get(Calendar.MONTH) + 1);
+		Integer ma = mandag.get(Calendar.DATE);
+		Integer ti = tirsdag.get(Calendar.DATE);
+		Integer on = onsdag.get(Calendar.DATE);
+		Integer to = torsdag.get(Calendar.DATE);
+		Integer fr = fredag.get(Calendar.DATE);
+		Integer lo = lordag.get(Calendar.DATE);
+		Integer so = sondag.get(Calendar.DATE);
+		
+		mandag.set(Calendar.MONTH, maaned);
+		mandag.set(Calendar.DAY_OF_MONTH, ma);
+		tirsdag.set(Calendar.MONTH, maaned);
+		tirsdag.set(Calendar.DAY_OF_MONTH, ti);
+		onsdag.set(Calendar.MONTH, maaned);
+		onsdag.set(Calendar.DAY_OF_MONTH, on);
+		torsdag.set(Calendar.MONTH, maaned);
+		torsdag.set(Calendar.DAY_OF_MONTH, to);
+		fredag.set(Calendar.MONTH, maaned);
+		fredag.set(Calendar.DAY_OF_MONTH, fr);
+		lordag.set(Calendar.MONTH, maaned);
+		lordag.set(Calendar.DAY_OF_MONTH, lo);
+		sondag.set(Calendar.MONTH, maaned);
+		sondag.set(Calendar.DAY_OF_MONTH, so);
+		
+		Mandag = db.getPersonsAppointmentsGivenDay(pers, mandag, conn);
+		Tirsdag = db.getPersonsAppointmentsGivenDay(pers, tirsdag, conn);
+		Onsdag = db.getPersonsAppointmentsGivenDay(pers, onsdag, conn);
+		Torsdag = db.getPersonsAppointmentsGivenDay(pers, torsdag, conn);
+		Fredag = db.getPersonsAppointmentsGivenDay(pers, fredag, conn);
+		Lordag = db.getPersonsAppointmentsGivenDay(pers, lordag, conn);
+		Sondag = db.getPersonsAppointmentsGivenDay(pers, sondag, conn);
+		
+		ArrayList<ArrayList<Appointment>> weekCalendar = new ArrayList<ArrayList<Appointment>>();
+		weekCalendar.add(Mandag);
+		weekCalendar.add(Tirsdag);
+		weekCalendar.add(Onsdag);
+		weekCalendar.add(Torsdag);
+		weekCalendar.add(Fredag);
+		weekCalendar.add(Lordag);
+		weekCalendar.add(Sondag);
+		
+		
+		System.out.println("\nMandag " + db.convertCalendarDateToCasualDate(mandag) + ":");
+		if (weekCalendar.get(0).size() > 0){
+			for (int i = 0; i < weekCalendar.get(0).size(); i++){
+				System.out.println(db.convertCalendarTimeToSQLTime(weekCalendar.get(0).get(i).getStarttime()) +
+						" to " + db.convertCalendarTimeToSQLTime(weekCalendar.get(0).get(i).getFinishingtime()) +
+						" ID: " + weekCalendar.get(0).get(i).getAppointmentID() + ", " + 
+						weekCalendar.get(0).get(i).getDescription() + " @ " + weekCalendar.get(0).get(i).getMeetingplace());
+			}
+		} else System.out.println("No appointments on Monday");
+		
+		System.out.println("\nTirsdag " + db.convertCalendarDateToCasualDate(tirsdag) + ":");
+		if (weekCalendar.get(1).size() > 0){
+			for (int i = 0; i < weekCalendar.get(1).size(); i++){
+				System.out.println(db.convertCalendarTimeToSQLTime(weekCalendar.get(1).get(i).getStarttime()) +
+						" to " + db.convertCalendarTimeToSQLTime(weekCalendar.get(1).get(i).getFinishingtime()) +
+						" ID: " + weekCalendar.get(1).get(i).getAppointmentID() + ", " + 
+						weekCalendar.get(1).get(i).getDescription() + " @ " + weekCalendar.get(1).get(i).getMeetingplace());
+			}
+		} else System.out.println("No appointments on Tuesday");
+		
+		System.out.println("\nOnsdag " + db.convertCalendarDateToCasualDate(onsdag) + ":");
+		if (weekCalendar.get(2).size() > 0){
+			for (int i = 0; i < weekCalendar.get(2).size(); i++){
+				System.out.println(db.convertCalendarTimeToSQLTime(weekCalendar.get(2).get(i).getStarttime()) +
+						" to " + db.convertCalendarTimeToSQLTime(weekCalendar.get(2).get(i).getFinishingtime()) +
+						" ID: " + weekCalendar.get(2).get(i).getAppointmentID() + ", " + 
+						weekCalendar.get(2).get(i).getDescription() + " @ " + weekCalendar.get(2).get(i).getMeetingplace());
+			}
+		} else System.out.println("No appointments on Wednesday");
+		
+		System.out.println("\nTorsdag " + db.convertCalendarDateToCasualDate(torsdag) + ":");
+		if (weekCalendar.get(3).size() > 0){
+			for (int i = 0; i < weekCalendar.get(3).size(); i++){
+				System.out.println(db.convertCalendarTimeToSQLTime(weekCalendar.get(3).get(i).getStarttime()) +
+						" to " + db.convertCalendarTimeToSQLTime(weekCalendar.get(3).get(i).getFinishingtime()) +
+						" ID: " + weekCalendar.get(3).get(i).getAppointmentID() + ", " + 
+						weekCalendar.get(3).get(i).getDescription() + " @ " + weekCalendar.get(3).get(i).getMeetingplace());
+			}
+		} else {System.out.println("No appointments on Thursday");}
+		
+		System.out.println("\nFredag " + db.convertCalendarDateToCasualDate(fredag) + ":");
+		if (weekCalendar.get(4).size() > 0){
+			for (int i = 0; i < weekCalendar.get(4).size(); i++){
+				System.out.println(db.convertCalendarTimeToSQLTime(weekCalendar.get(4).get(i).getStarttime()) +
+						" to " + db.convertCalendarTimeToSQLTime(weekCalendar.get(4).get(i).getFinishingtime()) +
+						" ID: " + weekCalendar.get(4).get(i).getAppointmentID() + ", " + 
+						weekCalendar.get(4).get(i).getDescription() + " @ " + weekCalendar.get(4).get(i).getMeetingplace());
+			}
+		} else System.out.println("No appointments on Friday");
+		
+		System.out.println("\nSaturday " + db.convertCalendarDateToCasualDate(lordag) + ":");
+		if (weekCalendar.get(5).size() > 0){
+			for (int i = 0; i < weekCalendar.get(5).size(); i++){
+				System.out.println(db.convertCalendarTimeToSQLTime(weekCalendar.get(5).get(i).getStarttime()) +
+						" to " + db.convertCalendarTimeToSQLTime(weekCalendar.get(5).get(i).getFinishingtime()) +
+						" ID: " + weekCalendar.get(5).get(i).getAppointmentID() + ", " + 
+						weekCalendar.get(5).get(i).getDescription() + " @ " + weekCalendar.get(5).get(i).getMeetingplace());
+			}
+		} else System.out.println("No appointments on Saturday");
+		
+		System.out.println("\nSunday " + db.convertCalendarDateToCasualDate(sondag) + ":");
+		if (weekCalendar.get(6).size() > 0){
+			for (int i = 0; i < weekCalendar.get(6).size(); i++){
+				System.out.println(db.convertCalendarTimeToSQLTime(weekCalendar.get(6).get(i).getStarttime()) +
+						" to " + db.convertCalendarTimeToSQLTime(weekCalendar.get(6).get(i).getFinishingtime()) +
+						" ID: " + weekCalendar.get(6).get(i).getAppointmentID() + ", " + 
+						weekCalendar.get(6).get(i).getDescription() + " @ " + weekCalendar.get(6).get(i).getMeetingplace() + "\n\n");
+			}
+		} else System.out.println("No appointments on Sunday\n");
+	}
+	
+	
 
 	public String showGroupCalendar(){
 
-		//		Må ha string i Participant med mail med tilhørende participants for å kunne vise kalenderne til alle i denne gruppen
+		//		Maa ha string i Participant med mail med tilhoerende participants for aa kunne vise kalenderne til alle i denne gruppen
 
 		//		ArrayList<Appointment> appointments = person.getPUCalendar().getAppointments();
 		//		for(int i = 0; i < appointments.size(); i++){

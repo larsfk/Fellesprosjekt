@@ -190,10 +190,11 @@ public class Database {
 
 	public ArrayList<Appointment> getAppointmentList(Person pers, Connection conn){
 		try{
-			Statement stmt = (Statement) conn.createStatement();
+			Connection conn2 = getConnection();
+			Statement stmt = (Statement) conn2.createStatement();
 			stmt.executeQuery(  "SELECT appointment_id " +
 								"FROM larsfkl_felles.appointmentToPerson " +
-								"WHERE email_id = '" + pers.getEmail(conn) + "';");
+								"WHERE email_id = '" + pers.getEmail(conn2) + "';");
 			ResultSet rs = stmt.getResultSet();
 			ArrayList<Appointment> appList = new ArrayList<Appointment>();
 			ArrayList<Integer> IDList = new ArrayList<Integer>();
@@ -204,12 +205,12 @@ public class Database {
 				IDList.add(i, Integer.parseInt(rs.getString(1)));
 				i++;
 			}
-
+//			System.out.println(IDList);
 			for (int j = 0; j < IDList.size(); j++){
 				//				System.out.println(getAppointment(IDList.get(j), conn).getMeetingplace());
-				appList.add(getAppointment(IDList.get(j), conn));
+				appList.add(getAppointment(IDList.get(j), conn2));
 			}
-
+			conn2.close();
 			return appList;
 		}
 		catch (SQLException e){
@@ -277,8 +278,13 @@ public class Database {
 		
 		Integer t = time.get(Calendar.HOUR_OF_DAY);
 		Integer m = time.get(Calendar.MINUTE);
+		
 		String T = t.toString();
 		String M = m.toString();
+		
+		if (m < 10){
+			M = "0" + m.toString();
+		}
 		return (T + ":" + M);
 		
 	}
@@ -584,6 +590,29 @@ public class Database {
 		catch (SQLException e){
 			e.printStackTrace();
 		}
+	}
+	
+	public ArrayList<Appointment> getPersonsAppointmentsGivenDay(Person pers, Calendar cal, Connection conn){
+//		try{
+//			Statement stmt = (Statement) conn.createStatement();
+//			stmt.executeQuery("");
+//			ResultSet rs = stmt.getResultSet();
+			ArrayList<Appointment> appsToday = new ArrayList<Appointment>();
+			ArrayList<Appointment> all = getAppointmentList(pers, conn);
+			
+			for (int i = 0; i < all.size(); i++){
+//				System.out.println(convertCalendarDateToSQLDate(cal) 
+//						+ " + " + convertCalendarDateToSQLDate(all.get(i).getStarttime())
+//						+ " ID: " + all.get(i).getAppointmentID() + " Desc: " + all.get(i).getDescription());
+				if (convertCalendarDateToSQLDate(cal).equals(convertCalendarDateToSQLDate(all.get(i).getStarttime()))){
+					appsToday.add(all.get(i));
+//					System.out.println("Legger til " + all.get(i).getAppointmentID());
+				}
+			}
+			
+			return appsToday;
+//		} catch (SQLException e){e.printStackTrace();return null;}
+		
 	}
 	
 

@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class MainProgram {
 	private String welcome = "Hello!\n";
-	private ArrayList<Person> validPersons;
+	private ArrayList<Person> allPersons;
 	private ArrayList<Appointment> appList;
 	CalendarClient cc;
 	Database db = new Database();
@@ -31,10 +31,10 @@ public class MainProgram {
 //		
 //		//....her
 
-		validPersons = new ArrayList<Person>();
+		allPersons = new ArrayList<Person>();
 		try {
 			Connection conn = db.getConnection();
-			validPersons = db.getPersonList(conn);
+			allPersons = db.getPersonList(conn);
 			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -45,22 +45,26 @@ public class MainProgram {
 		Scanner sc = new Scanner(System.in);
 
 		int personID = -1; 
-		Person person = null;
-		while (personID < 0 || personID > validPersons.size()){ //Til vi faar et gyldig nr
+		Person chosenPerson = null;
+		while (personID < 0 || personID > allPersons.size()){ //Til vi faar et gyldig nr
 			System.out.println("Choose a username: ");
 			try{
 				Connection conn = db.getConnection();
-				for (int i = 0;i<validPersons.size();i++){
-					System.out.println("(" + i + ") " + validPersons.get(i).getName(conn));
+				for (int i = 0;i<allPersons.size();i++){
+					System.out.println("(" + i + ") \t" + allPersons.get(i).getName(conn) ); //+ " \t\t" + validPersons.get(i).getEmail(conn) + "\n");
 				}
 				conn.close();
 			} catch (SQLException e){e.printStackTrace();}
+			System.out.println("\nWrite -42 to quit...");
 			personID = sc.nextInt();
-			person = validPersons.get(personID);
+			if(personID == -42){
+				return;
+			}
+			chosenPerson = allPersons.get(personID);
 		}
 		try{
 			Connection conn = db.getConnection();
-			String password = person.getPassword(conn); //Hente dette fra databasen
+			String password = chosenPerson.getPassword(conn); //Hente dette fra databasen
 			String typedPassword = ""; //kanskje "null"?
 			while (password.compareTo(typedPassword) != 0){
 				System.out.println("Type password");
@@ -126,9 +130,9 @@ public class MainProgram {
 					conn = db.getConnection();
 					Integer groupID = db.createGroup(conn);
 					alarm = new Alarm(timeListInt[0], timeListInt[1], timeListInt[2], timeListInt[3], timeListInt[4],timeList[5],conn);
-					Appointment ap = new Appointment(start,finish,meetpl,description,alarm,person,groupID,conn);
-					db.joinGroup(person, groupID, conn);
-					db.setAlarm(ap, person, alarm, conn);
+					Appointment ap = new Appointment(start,finish,meetpl,description,alarm,chosenPerson,groupID,conn);
+					db.joinGroup(chosenPerson, groupID, conn);
+					db.setAlarm(ap, chosenPerson, alarm, conn);
 					System.out.println("You created and joined group: " + groupID + "\n");
 					conn.close();
 				} catch (SQLException e) {
@@ -145,7 +149,7 @@ public class MainProgram {
 				ArrayList<Appointment> appRev = new ArrayList<Appointment>();
 				try {
 					conn = db.getConnection();
-					appRev = db.getAppointmentList(person, conn);
+					appRev = db.getAppointmentList(chosenPerson, conn);
 					conn.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -177,7 +181,7 @@ public class MainProgram {
 				appList = new ArrayList<Appointment>();
 				try {
 					conn = db.getConnection();
-					appList = db.getAppointmentList(person, conn);
+					appList = db.getAppointmentList(chosenPerson, conn);
 					conn.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -271,14 +275,35 @@ public class MainProgram {
 					}
 				}
 				
-			case 4:
-				//Skrive ut kalender, TONY
-				//System.out.println(cc.showMyWeekCalendar());
+			case 4: //Skrive ut kalender
+				CalendarClient cc = new CalendarClient(chosenPerson);
+				cc.printWeekCalendar(chosenPerson);
 				break;
 			case 5:
 				//Skrive ut flere kalendere, TONY
 				//System.out.println(cc.showGroupCalendar());
+
+				ArrayList <Person> allPersons2 = new ArrayList<Person>();
+				Person showThisPersonsWeekCalendar = null;
+				try {
+					Connection conn2 = db.getConnection();
+					allPersons2 = db.getPersonList(conn2);
+					int persID = -1;
+					while (persID < 0 || persID > allPersons2.size()){ //Til vi faar et gyldig nr
+						System.out.println("Choose a person to show his/her week calendar: ");
+						for (int i = 0;i<allPersons.size();i++){
+							System.out.println("(" + i + ") \t" + allPersons.get(i).getName(conn2) ); //+ " \t\t" + validPersons.get(i).getEmail(conn) + "\n");
+						}
+						persID = sc.nextInt();
+						showThisPersonsWeekCalendar = allPersons2.get(persID);
+					}
+					conn2.close();
+				} catch (SQLException e){e.printStackTrace();}
+				
+				CalendarClient cc2 = new CalendarClient(showThisPersonsWeekCalendar);
+				cc2.printWeekCalendar(showThisPersonsWeekCalendar);
 				break;
+				
 			case 6: //Join appointment
 				appList = new ArrayList<Appointment>();
 				try {
@@ -292,7 +317,7 @@ public class MainProgram {
 					System.out.println("Type -1 to go back");
 					int appointment = sc.nextInt();
 					if(appointment != -1){
-						db.joinAppointment(person, appList.get(appointment), conn);						
+						db.joinAppointment(chosenPerson, appList.get(appointment), conn);						
 					}
 					conn.close();
 				} catch (SQLException e) {
@@ -306,7 +331,7 @@ public class MainProgram {
 				appList = new ArrayList<Appointment>();
 				try {
 					conn = db.getConnection();
-					appList = db.getAppointmentList(person, conn);
+					appList = db.getAppointmentList(chosenPerson, conn);
 					conn.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -317,7 +342,7 @@ public class MainProgram {
 				for (int i = 0;i<appList.size();i++){
 					try{
 						conn = db.getConnection();
-						System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " @ " + appList.get(i).getMeetingplace() + "\n    " +" Start time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Finish time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getFinishingtime()) + "\n    " + " Start date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()) + " Finish date: " + db.convertCalendarDateToCasualDate(appList.get(i).getFinishingtime()) + "\n     " + db.isHidden(appList.get(i),person,conn));
+						System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " @ " + appList.get(i).getMeetingplace() + "\n    " +" Start time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Finish time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getFinishingtime()) + "\n    " + " Start date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()) + " Finish date: " + db.convertCalendarDateToCasualDate(appList.get(i).getFinishingtime()) + "\n     " + db.isHidden(appList.get(i),chosenPerson,conn));
 						conn.close();
 					} catch(SQLException e){
 						e.printStackTrace();
@@ -333,7 +358,7 @@ public class MainProgram {
 				
 				try{
 					conn = db.getConnection();
-					db.changeHidden(myApp,person,conn);
+					db.changeHidden(myApp,chosenPerson,conn);
 					conn.close();
 				} catch(SQLException e){
 					e.printStackTrace();
@@ -345,7 +370,7 @@ public class MainProgram {
 				appList = new ArrayList<Appointment>();
 				try {
 					conn = db.getConnection();
-					appList = db.getAppointmentList(person, conn);
+					appList = db.getAppointmentList(chosenPerson, conn);
 					conn.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -356,7 +381,7 @@ public class MainProgram {
 				for (int i = 0;i<appList.size();i++){
 					try{
 						conn = db.getConnection();
-						System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " @ " + appList.get(i).getMeetingplace() + "\n    " +" Start time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Finish time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getFinishingtime()) + "\n    " + " Start date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()) + " Finish date: " + db.convertCalendarDateToCasualDate(appList.get(i).getFinishingtime()) + "\n     Status: " + db.getStatus(appList.get(i),person,conn));						
+						System.out.println("(" + i + ") " + "'" + appList.get(i).getDescription() + "'" + " @ " + appList.get(i).getMeetingplace() + "\n    " +" Start time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getStarttime()) + " Finish time: " + db.convertCalendarTimeToSQLTime(appList.get(i).getFinishingtime()) + "\n    " + " Start date: " + db.convertCalendarDateToCasualDate(appList.get(i).getStarttime()) + " Finish date: " + db.convertCalendarDateToCasualDate(appList.get(i).getFinishingtime()) + "\n     Status: " + db.getStatus(appList.get(i),chosenPerson,conn));						
 						conn.close();
 					} catch(SQLException e){
 						e.printStackTrace();
@@ -372,7 +397,7 @@ public class MainProgram {
 				
 				try{
 					conn = db.getConnection();
-					db.changeStatus(statusApp,person,conn);
+					db.changeStatus(statusApp,chosenPerson,conn);
 					conn.close();
 				} catch(SQLException e){
 					e.printStackTrace();
@@ -398,6 +423,7 @@ public class MainProgram {
 	public static void main(String[] args) {
 		MainProgram MP = new MainProgram();
 		MP.run();
+		System.out.println("Good bye!");
 	}
 
 }
