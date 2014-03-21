@@ -511,9 +511,10 @@ public class CalendarClient {
 				System.out.println(db.convertCalendarTimeToSQLTime(weekCalendar.get(6).get(i).getStarttime()) +
 						" to " + db.convertCalendarTimeToSQLTime(weekCalendar.get(6).get(i).getFinishingtime()) +
 						" ID: " + weekCalendar.get(6).get(i).getAppointmentID() + ", " + 
-						weekCalendar.get(6).get(i).getDescription() + " @ " + weekCalendar.get(6).get(i).getMeetingplace() + "\n\n");
+						weekCalendar.get(6).get(i).getDescription() + " @ " + weekCalendar.get(6).get(i).getMeetingplace());
 			}
 		} else System.out.println("No appointments on Sunday\n");
+		System.out.println("\n");
 	}
 	
 	

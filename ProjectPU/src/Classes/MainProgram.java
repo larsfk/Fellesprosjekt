@@ -280,7 +280,7 @@ public class MainProgram {
 						break;
 					}
 				}
-				
+				break;
 			case 4: //Skrive ut kalender
 				CalendarClient cc = new CalendarClient(chosenPerson);
 				cc.printWeekCalendar(chosenPerson);
